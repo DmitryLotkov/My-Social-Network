@@ -1,0 +1,13 @@
+.nav{
+    padding: 20px;
+    grid-area: n;
+    background-color: lightgreen;
+    text-align: left;
+}
+.NavItem a{
+    color: white;
+    text-decoration: none;
+}
+.NavItem a.active{
+    color: goldenrod;
+}

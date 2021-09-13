@@ -1,0 +1,17 @@
+.AllMessages{
+    background-color: #004464;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    grid-gap: 10px;
+    width: 612px;
+    padding: 10px;
+}
+.messages{
+    background-color: #1b6d94
+}
+.dialogs{
+    background-color: #ffffff;
+}
+.dialogs .active{
+    background-color: #8dc63f;
+}
