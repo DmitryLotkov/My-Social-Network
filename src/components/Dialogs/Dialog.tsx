@@ -10,12 +10,10 @@ type ChatsPropsType = {
     AllChats: Array<ChatPropsType>
 }
 export function Dialog(props: ChatsPropsType) {
+    let dialogItem = props.AllChats.map(m => <div><NavLink to={"/dialogs/" +m.id}>{m.name}</NavLink></div>)
     return (
         <div className={styles.dialog + " " + styles.active}>
-            <NavLink to={"/dialogs/" + props.AllChats[0].id}>{props.AllChats[0].name}</NavLink><br/>
-            <NavLink to={"/dialogs/" + props.AllChats[1].id}>{props.AllChats[1].name}</NavLink><br/>
-            <NavLink to={"/dialogs/" + props.AllChats[2].id}>{props.AllChats[2].name}</NavLink><br/>
-            <NavLink to={"/dialogs/" + props.AllChats[3].id}>{props.AllChats[3].name}</NavLink><br/>
+            {dialogItem}
         </div>
     );
 }
