@@ -19,7 +19,7 @@ export function NavBar(){
                     <NavLink to={"/photos"} activeClassName={s.active}>Photos</NavLink>
                 </div>
                 <div className={s.NavItem}>
-                    <a>Settings</a>
+                    <NavLink to={"/settings"}>Settings</NavLink>
                 </div>
             </nav>
 
