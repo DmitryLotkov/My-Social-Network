@@ -1,17 +1,13 @@
 import React from "react";
 import {Post} from "./MyPosts/Post/Post";
 import styles from "./MyPosts.module.css"
-import {v1} from "uuid";
+import {IndexPropsType} from "../../App";
 
+export function MyPosts(props: IndexPropsType) {
 
-export function MyPosts() {
-
-    const postsData = [
-        {id: v1(), message: "How are you?", likesCount: 11},
-        {id: v1(), message: "What is your name?", likesCount: 16},
-        {id: v1(), message: "What are you waiting for?", likesCount: 11},
-    ];
-    let postsElements = postsData.map(p =><Post message={p.message} likeCount={p.likesCount}/>)
+    let postsElements = props.postsData?.map(p => <Post key={p.id}
+                                                 message={p.message}
+                                                 likeCount={p.likesCount}/>)
     return (
 
         <div className={styles.postBlock}>
