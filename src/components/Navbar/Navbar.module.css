@@ -1,13 +1,23 @@
 .nav{
     padding: 20px;
     grid-area: n;
-    background-color: lightgreen;
+    background-color: #ffffff;
     text-align: left;
 }
 .NavItem a{
-    color: white;
+    color: #6d6e71;
     text-decoration: none;
+    display: block;
+    padding: 15px 0;
+    border-bottom: 1px solid #f1f2f2
+}
+.NavItem a::after{
+
 }
 .NavItem a.active{
     color: goldenrod;
+}
+.ChatBlock {
+    margin: 40px 0 20px;
+    text-align: center;
 }

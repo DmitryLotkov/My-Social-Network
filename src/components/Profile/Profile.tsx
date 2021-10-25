@@ -2,14 +2,13 @@ import React from "react";
 import styles from "./Profile.module.css"
 import {MyPosts} from "./MyPosts";
 import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
-import {IndexPropsType} from "../../App";
+import {RootStateType} from "../../Redux/state";
 
-
-export function Profile(props:IndexPropsType){
+export function Profile(props: RootStateType){
     return(
             <div className={styles.content}>
                 <ProfileInfo/>
-                <MyPosts postsData={props.postsData}/>
+                <MyPosts ProfilePage={props.ProfilePage}/>
             </div>
     );
 }
