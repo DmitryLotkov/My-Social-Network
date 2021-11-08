@@ -5,7 +5,7 @@ import chatStyles from "./ChatBlock.module.css"
 export function ChatBlock(props: OnlineFriendType) {
 
     return (
-            <div>
+            <div className={chatStyles.onlineFriendsWrapper}>
                 <img className={chatStyles.imgProfilePhoto} src={props.avatar} alt={"onlineFriendAvatar"}/>
                 <span className={chatStyles.OnlineDot}/>
             </div>

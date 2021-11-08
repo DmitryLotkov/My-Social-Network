@@ -7,7 +7,7 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Events} from "./components/Events/Events";
 import {Photos} from "./components/Photos/Photos";
-import {state} from "./Redux/state"
+import {state, updateNewPostText, addMessageCallBack} from "./Redux/state"
 
 
 function App() {
@@ -18,7 +18,11 @@ function App() {
                 <Header/>
                 <NavBar SideBar={state.SideBar}/>
                 <div className={"App-wrapper-content"}>
-                    <Route path="/profile" render={() => <Profile ProfilePage={state.ProfilePage}/>}/>
+                    <Route path="/profile" render={() => <Profile updateNewPostText={updateNewPostText}
+                                                                  addPostCallBack={addMessageCallBack}
+                                                                  postData={state.ProfilePage.postsData}
+                                                                  newPostText={state.ProfilePage.NewPostText}/>
+                    }/>
                     <Route path="/dialogs" render={() => <Dialogs DialogPage={state.DialogPage}/>}/>
                     <Route path={"/events"} render={() => <Events/>}/>
                     <Route path={"/photos"} render={() => <Photos/>}/>
