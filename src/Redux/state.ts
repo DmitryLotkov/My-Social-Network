@@ -1,12 +1,14 @@
 import {v1} from "uuid";
 
-let rerenderEntireTree = (state:RootStateType) =>{
-    console.log("State was rendered")
-}
-export let subscriber = (observer: (state: RootStateType) => void) =>{
-    rerenderEntireTree = observer
-}
 
+export type StoreType = {
+   _state: RootStateType
+    addMessageCallBack: (postMessage: string)=>void
+    updateNewPostText: (newText: string) => void
+    callSubscriber: (_state:RootStateType) => void
+    subscriber: (observer: (_state:RootStateType) => void) => void
+    getState:() => RootStateType
+}
 export type MessagesType = {
     id: string
     message: string
@@ -42,8 +44,8 @@ export type RootStateType = {
     ProfilePage: ProfilePageType,
     SideBar: SideBarType,
 }
-
-export const state: RootStateType = {
+export let store: StoreType = {
+    _state: {
     DialogPage: {
         newMessageText: "",
         dialogs: [
@@ -52,14 +54,14 @@ export const state: RootStateType = {
             {id: v1(), name: "Anton Dovgalo", avatar: "https://themified.com/friend-finder/images/users/user-6.jpg"},
             {id: v1(), name: "Maya Vishnevskaya", avatar: "https://themified.com/friend-finder/images/users/user-2.jpg"},
         ]
-    ,
-    messages: [
-        {id: v1(), message: "What is the weather forecast for tomorrow?"},
-        {id: v1(), message: "It seems to bee good)"},
-        {id: v1(), message: "Do you know Sarah?"},
-        {id: v1(), message: "How are you?"},
-        {id: v1(), message: "What are you waiting for?"},
-    ],
+        ,
+        messages: [
+            {id: v1(), message: "What is the weather forecast for tomorrow?"},
+            {id: v1(), message: "It seems to bee good)"},
+            {id: v1(), message: "Do you know Sarah?"},
+            {id: v1(), message: "How are you?"},
+            {id: v1(), message: "What are you waiting for?"},
+        ],
     },
     ProfilePage:{
         NewPostText: "",
@@ -83,27 +85,44 @@ export const state: RootStateType = {
         ],
     },
 
-}
-
-export let addMessageCallBack = (postMessage: string) => {
-    if(postMessage){
-        const newPost = {
-            id: v1(), message: postMessage, likesCount: 0}
-        state.ProfilePage.postsData.push(newPost);
-        rerenderEntireTree(state);
+},
+    addMessageCallBack (postMessage: string) {
+        if(postMessage){
+            const newPost = {
+                id: v1(), message: postMessage, likesCount: 0}
+            this._state.ProfilePage.postsData.push(newPost);
+            this.callSubscriber(this._state);
+        }
+    },
+    updateNewPostText(newText: string) {
+        this._state.ProfilePage.NewPostText = newText;
+        this.callSubscriber(this._state);
+    },
+    callSubscriber(_state:RootStateType){
+        console.log("State was rendered")
+    },
+    subscriber (observer: (_state:RootStateType) => void){
+        this.callSubscriber = observer
+    },
+    getState(){
+        return this._state
     }
 }
-export const updateNewPostText = (newText: string) =>{
-    state.ProfilePage.NewPostText = newText;
-    rerenderEntireTree(state);
-}
-export const addFriendMessage = (friendMessage: string) => {
+
+
+
+
+
+
+
+
+/*export const addFriendMessage = (friendMessage: string) => {
     if(friendMessage) {
         const newFriendMessage = {
             id:v1(), message: friendMessage, date: new Date()}
-        state.DialogPage.messages.push(newFriendMessage)
+        _state.DialogPage.messages.push(newFriendMessage)
     }
     // rerenderEntireTree();
-}
+}*/
 
 

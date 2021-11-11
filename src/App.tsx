@@ -7,10 +7,14 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Events} from "./components/Events/Events";
 import {Photos} from "./components/Photos/Photos";
-import {state, updateNewPostText, addMessageCallBack} from "./Redux/state"
+import {StoreType} from "./Redux/state"
 
+type PropsType = {
+    store: StoreType
+}
+const App: React.FC<PropsType> = (props) => {
 
-function App() {
+    const state = props.store.getState()
 
     return (
         <BrowserRouter>
@@ -18,8 +22,8 @@ function App() {
                 <Header/>
                 <NavBar SideBar={state.SideBar}/>
                 <div className={"App-wrapper-content"}>
-                    <Route path="/profile" render={() => <Profile updateNewPostText={updateNewPostText}
-                                                                  addPostCallBack={addMessageCallBack}
+                    <Route path="/profile" render={() => <Profile updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+                                                                  addPostCallBack={props.store.addMessageCallBack.bind(props.store)}
                                                                   postData={state.ProfilePage.postsData}
                                                                   newPostText={state.ProfilePage.NewPostText}/>
                     }/>
