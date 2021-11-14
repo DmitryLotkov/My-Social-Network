@@ -12,9 +12,9 @@ import {StoreType} from "./Redux/state"
 type PropsType = {
     store: StoreType
 }
-const App: React.FC<PropsType> = (props) => {
-
-    const state = props.store.getState()
+const App = (props: PropsType) => {
+    debugger
+    const state = props.store.getState();
 
     return (
         <BrowserRouter>
@@ -22,12 +22,12 @@ const App: React.FC<PropsType> = (props) => {
                 <Header/>
                 <NavBar SideBar={state.SideBar}/>
                 <div className={"App-wrapper-content"}>
-                    <Route path="/profile" render={() => <Profile updateNewPostText={props.store.updateNewPostText.bind(props.store)}
-                                                                  addPostCallBack={props.store.addMessageCallBack.bind(props.store)}
+                    <Route path="/profile" render={() => <Profile dispatch={props.store.dispatch.bind(props.store)}
+
                                                                   postData={state.ProfilePage.postsData}
                                                                   newPostText={state.ProfilePage.NewPostText}/>
                     }/>
-                    <Route path="/dialogs" render={() => <Dialogs DialogPage={state.DialogPage}/>}/>
+                    <Route path={"/dialogs"} render={() => <Dialogs DialogPage={state.DialogPage}/>}/>
                     <Route path={"/events"} render={() => <Events/>}/>
                     <Route path={"/photos"} render={() => <Photos/>}/>
                 </div>

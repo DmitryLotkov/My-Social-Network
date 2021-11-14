@@ -3,10 +3,10 @@ import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import React from "react";
 import App from "./App";
-import {store} from "./Redux/state";
+import {RootStateType, store} from "./Redux/state";
 
 
-export let rerenderEntireTree = (store:any)=> {
+export let rerenderEntireTree = (state:RootStateType)=> {
     ReactDOM.render(
         <React.StrictMode>
             <App store={store} />
@@ -22,4 +22,4 @@ export let rerenderEntireTree = (store:any)=> {
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 rerenderEntireTree(store.getState());
-store.subscriber(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);

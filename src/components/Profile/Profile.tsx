@@ -2,11 +2,10 @@ import React from "react";
 import styles from "./Profile.module.css"
 import {MyPosts} from "./MyPosts";
 import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
-import {PostType} from "../../Redux/state";
+import {ActionsTypes, PostType} from "../../Redux/state";
 type ProfilePropsType = {
-    addPostCallBack: (postMessage:string) => void
+    dispatch: (action: ActionsTypes) => void
     postData: Array<PostType>,
-    updateNewPostText: (postText: string) => void
     newPostText: string
 }
 
@@ -15,9 +14,8 @@ export function Profile(props: ProfilePropsType){
     return(
             <div className={styles.content}>
                 <ProfileInfo/>
-                <MyPosts addPostCallBack={props.addPostCallBack}
+                <MyPosts dispatch={props.dispatch}
                          postsData={props.postData}
-                         updateNewPostText= {props.updateNewPostText}
                          newPostText={props.newPostText}/>
             </div>
     );
