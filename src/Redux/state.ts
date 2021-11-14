@@ -1,20 +1,25 @@
 import {v1} from "uuid";
-export type ActionsTypes = AddPostActionType | ChangeNewTextType
 
-type AddPostActionType = {
-    type: "ADD-POST"
-    postMessage: string
+export type ActionsTypes = ReturnType<typeof addPostActionAC> | ReturnType<typeof updateNewPostTextAC>
+export const addPostActionAC = (postText: string) => {
+    return {
+        type: "ADD-POST",
+        postMessage: postText
+    } as const
 }
-type ChangeNewTextType = {
-    type: "UPDATE-NEW-POST-TEXT"
-    newText: string
+export const updateNewPostTextAC = (text: string) =>{
+    return {
+        type: "UPDATE-NEW-POST-TEXT",
+        newText: text
+    } as const
 }
+
 export type StoreType = {
     _state: RootStateType
     callSubscriber: (_state: RootStateType) => void
     subscribe: (observer: (_state: RootStateType) => void) => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | ChangeNewTextType) => void
+    dispatch: (action: ActionsTypes) => void
 }
 export type MessagesType = {
     id: string
@@ -131,13 +136,5 @@ export let store: StoreType = {
     }
 
 
-/*export const addFriendMessage = (friendMessage: string) => {
-    if(friendMessage) {
-        const newFriendMessage = {
-            id:v1(), message: friendMessage, date: new Date()}
-        _state.DialogPage.messages.push(newFriendMessage)
-    }
-    // rerenderEntireTree();
-}*/
 
 
