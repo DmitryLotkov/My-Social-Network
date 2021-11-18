@@ -13,7 +13,7 @@ type PropsType = {
     store: StoreType
 }
 const App = (props: PropsType) => {
-    debugger
+
     const state = props.store.getState();
 
     return (
@@ -23,11 +23,14 @@ const App = (props: PropsType) => {
                 <NavBar SideBar={state.SideBar}/>
                 <div className={"App-wrapper-content"}>
                     <Route path="/profile" render={() => <Profile dispatch={props.store.dispatch.bind(props.store)}
-
                                                                   postData={state.ProfilePage.postsData}
-                                                                  newPostText={state.ProfilePage.NewPostText}/>
+                                                                  newPostText={state.ProfilePage.NewPostText}
+                                                                 />
                     }/>
-                    <Route path={"/dialogs"} render={() => <Dialogs DialogPage={state.DialogPage}/>}/>
+                    <Route path={"/dialogs"} render={() => <Dialogs DialogPage={state.DialogPage}
+                                                                    newMessageText={state.DialogPage.newMessageText}
+                                                                    dispatch={props.store.dispatch.bind(props.store)}/>
+                    }/>
                     <Route path={"/events"} render={() => <Events/>}/>
                     <Route path={"/photos"} render={() => <Photos/>}/>
                 </div>

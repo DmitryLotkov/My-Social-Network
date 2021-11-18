@@ -15,7 +15,10 @@ export function MyPosts(props: MyPostsPropsType) {
     let postsElements = props.postsData.map(p => <Post key={p.id}
                                                        message={p.message}
                                                        likeCount={p.likesCount}/>)
+
     let newPostElement = React.createRef<HTMLTextAreaElement>();
+
+    console.log(newPostElement)
 
     let addPost = () => {
         /*if(newPostElement.current){
