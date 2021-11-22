@@ -20,19 +20,19 @@ export function NavBar(props: NavBarPropsType) {
     return (
         <nav className={s.nav}>
             <div className={s.NavItem}>
-                <NavLink to={"/profile"} activeClassName={s.active}>Profile</NavLink>
+                <NavLink  to={"/profile"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })} >Profile</NavLink>
             </div>
             <div className={s.NavItem}>
-                <NavLink to={"/dialogs"} activeClassName={s.active}>Messages</NavLink>
+                <NavLink to={"/dialogs"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Messages</NavLink>
             </div>
             <div className={s.NavItem}>
-                <NavLink to={"/events"} activeClassName={s.active}>Events</NavLink>
+                <NavLink to={"/events"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Events</NavLink>
             </div>
             <div className={s.NavItem}>
-                <NavLink to={"/photos"} activeClassName={s.active}>Photos</NavLink>
+                <NavLink to={"/photos"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Photos</NavLink>
             </div>
             <div className={s.NavItem}>
-                <NavLink to={"/settings"}>Settings</NavLink>
+                <NavLink to={"/settings"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Settings</NavLink>
             </div>
             <div className={chatStyles.ChatBlock}>
                 <span className={chatStyles.Title}>Chat online</span>
