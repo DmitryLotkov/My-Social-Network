@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Profile.module.css"
 import {MyPosts} from "./MyPosts";
 import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
-import {ActionsTypes, PostType} from "../../Redux/state";
+import {ActionsTypes, PostType} from "../../Redux/store";
 type ProfilePropsType = {
     dispatch: (action: ActionsTypes) => void
     postData: Array<PostType>,

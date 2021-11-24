@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogPageType, MessagesType} from "./state";
+import {ActionsTypes, DialogPageType, MessagesType} from "./store";
 import {v1} from "uuid";
 
 export const addMessageAC = (messageText: string) => {
@@ -13,7 +13,38 @@ export const updateNewMessageTextAC = (text: string) => {
         newText: text
     } as const
 }
-const dialogsReducer = (state: DialogPageType, action: ActionsTypes) => {
+
+let initialState: DialogPageType = {
+        newMessageText: "",
+        dialogs: [
+            {
+                id: v1(),
+                name: "Dmitry Lomonosov",
+                avatar: "https://themified.com/friend-finder/images/users/user-4.jpg"
+            },
+            {id: v1(), name: "Sarah Konor", avatar: "https://themified.com/friend-finder/images/users/user-3.jpg"},
+            {
+                id: v1(),
+                name: "Anton Dovgalo",
+                avatar: "https://themified.com/friend-finder/images/users/user-6.jpg"
+            },
+            {
+                id: v1(),
+                name: "Maya Vishnevskaya",
+                avatar: "https://themified.com/friend-finder/images/users/user-2.jpg"
+            },
+        ]
+        ,
+        messages: [
+            {id: v1(), message: "What is the weather forecast for tomorrow?"},
+            {id: v1(), message: "It seems to bee good)"},
+            {id: v1(), message: "Do you know Sarah?"},
+            {id: v1(), message: "How are you?"},
+            {id: v1(), message: "What are you waiting for?"},
+        ],
+    }
+
+const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case "ADD-DIALOG-MESSAGE":
             if (action.newMessage) {

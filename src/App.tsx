@@ -7,10 +7,11 @@ import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Events} from "./components/Events/Events";
 import {Photos} from "./components/Photos/Photos";
-import {StoreType} from "./Redux/state"
+
+import {AppStoreType} from "./Redux/reduxStore";
 
 type PropsType = {
-    store: StoreType
+    store: AppStoreType
 }
 const App = (props: PropsType) => {
 
@@ -22,20 +23,20 @@ const App = (props: PropsType) => {
                 <Header/>
                 <NavBar SideBar={state.SideBar}/>
                 <div className={"App-wrapper-content"}>
-<Routes>
-    <Route path="/profile" element={<Profile dispatch={props.store.dispatch.bind(props.store)}
-                                             postData={state.ProfilePage.postsData}
-                                             newPostText={state.ProfilePage.NewPostText}
-    />
-    }/>
-    <Route path={"/dialogs"} element={<Dialogs DialogPage={state.DialogPage}
-                                               newMessageText={state.DialogPage.newMessageText}
-                                               dispatch={props.store.dispatch.bind(props.store)}/>
-    }/>
-    <Route path={"/events"} element={ <Events/>}/>
-    <Route path={"/photos"} element={<Photos/>}/>
+                    <Routes>
+                        <Route path="/profile" element={<Profile dispatch={props.store.dispatch.bind(props.store)}
+                                                                 postData={state.ProfilePage.postsData}
+                                                                 newPostText={state.ProfilePage.NewPostText}
+                        />
+                        }/>
+                        <Route path={"/dialogs"} element={<Dialogs DialogPage={state.DialogPage}
+                                                                   newMessageText={state.DialogPage.newMessageText}
+                                                                   dispatch={props.store.dispatch.bind(props.store)}/>
+                        }/>
+                        <Route path={"/events"} element={<Events/>}/>
+                        <Route path={"/photos"} element={<Photos/>}/>
 
-</Routes>
+                    </Routes>
 
 
                 </div>
