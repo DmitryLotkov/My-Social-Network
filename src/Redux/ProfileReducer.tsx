@@ -1,9 +1,8 @@
 import {v1} from "uuid";
 import {ActionsTypes, PostType, ProfilePageType} from "./store";
-export const addPostActionAC = (postText: string) => {
+export const addPostActionAC = () => {
     return {
         type: "ADD-POST",
-        postMessage: postText
     } as const
 }
 export const updateNewPostTextAC = (text: string) => {
@@ -24,9 +23,9 @@ let initialState: ProfilePageType = {
 const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case "ADD-POST":
-            if (action.postMessage) {
+            if (state.NewPostText) {
                 const newPost: PostType = {
-                    id: v1(), message: action.postMessage, likesCount: 0
+                    id: v1(), message: state.NewPostText, likesCount: 0
                 }
                 state.postsData.push(newPost);
             }

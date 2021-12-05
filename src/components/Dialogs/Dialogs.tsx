@@ -2,18 +2,14 @@ import React, {ChangeEvent} from "react";
 import styles from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {
-    ActionsTypes,
+import {DialogPageType} from "../../Redux/store";
 
-    DialogPageType,
-
-} from "../../Redux/store";
-import {addMessageAC, updateNewMessageTextAC} from "../../Redux/DialogsReducer";
 
 type DialogsPropsType = {
     DialogPage: DialogPageType
     newMessageText: string
-    dispatch: (action: ActionsTypes) => void
+    updateNewMessageText: (text: string) => void
+    addMessageText: () => void
 }
 
 export function Dialogs(props: DialogsPropsType) {
@@ -21,20 +17,16 @@ export function Dialogs(props: DialogsPropsType) {
     let newMessageText = React.createRef<HTMLTextAreaElement>();
 
     let DialogsPostOnchange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageTextAC(e.currentTarget.value))
-        console.log(e.currentTarget.value);
+        props.updateNewMessageText(e.currentTarget.value)
     }
     let addNewMessageText = () => {
-        if (newMessageText.current) {
-            props.dispatch(addMessageAC(newMessageText.current?.value));
-            props.dispatch(updateNewMessageTextAC(""));
-        }
+        props.addMessageText();
+        props.updateNewMessageText("");
     }
 
     let messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}
                                                                          message={m.message}
                                                                          id={m.id}/>)
-
 
     return (
         <div className={styles.AllMessages}>

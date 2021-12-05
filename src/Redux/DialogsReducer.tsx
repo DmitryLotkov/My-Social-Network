@@ -1,10 +1,9 @@
 import {ActionsTypes, DialogPageType, MessagesType} from "./store";
 import {v1} from "uuid";
 
-export const addMessageAC = (messageText: string) => {
+export const addMessageAC = () => {
     return {
         type: "ADD-DIALOG-MESSAGE",
-        newMessage: messageText
     } as const
 }
 export const updateNewMessageTextAC = (text: string) => {
@@ -47,9 +46,9 @@ let initialState: DialogPageType = {
 const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case "ADD-DIALOG-MESSAGE":
-            if (action.newMessage) {
+            if (state.newMessageText) {
                 const newMessage: MessagesType = {
-                    id: v1(), message: action.newMessage
+                    id: v1(), message: state.newMessageText
                 }
                 state.messages.push(newMessage);
             }
