@@ -2,11 +2,12 @@ import React, {ChangeEvent} from "react";
 import styles from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogPageType} from "../../Redux/store";
+
+import {DialogsStateType} from "../../Redux/DialogsReducer";
 
 
 type DialogsPropsType = {
-    DialogPage: DialogPageType
+    DialogPage: DialogsStateType
     newMessageText: string
     updateNewMessageText: (text: string) => void
     addMessageText: () => void
@@ -22,6 +23,7 @@ export function Dialogs(props: DialogsPropsType) {
     let addNewMessageText = () => {
         props.addMessageText();
         props.updateNewMessageText("");
+
     }
 
     let messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}

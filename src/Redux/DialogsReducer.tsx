@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogPageType, MessagesType} from "./store";
+import {ActionsTypes} from "./store";
 import {v1} from "uuid";
 
 export const addMessageAC = () => {
@@ -12,8 +12,21 @@ export const updateNewMessageTextAC = (text: string) => {
         newText: text
     } as const
 }
-
-let initialState: DialogPageType = {
+export type MessagesType = {
+    id: string
+    message: string
+}
+export type DialogsType = {
+    id: string
+    name: string
+    avatar: string
+}
+export type DialogsStateType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMessageText: string
+}
+let initialState: DialogsStateType = {
         newMessageText: "",
         dialogs: [
             {
@@ -43,19 +56,25 @@ let initialState: DialogPageType = {
         ],
     }
 
-const dialogsReducer = (state: DialogPageType = initialState, action: ActionsTypes) => {
+const dialogsReducer = (state: DialogsStateType = initialState, action: ActionsTypes):DialogsStateType => {
     switch (action.type) {
-        case "ADD-DIALOG-MESSAGE":
-            if (state.newMessageText) {
+        case "ADD-DIALOG-MESSAGE":{
+            let copyState = {...state, messages: [...state.messages]};
+            if (copyState.newMessageText) {
                 const newMessage: MessagesType = {
                     id: v1(), message: state.newMessageText
                 }
-                state.messages.push(newMessage);
+                copyState.messages.push(newMessage);
             }
-            return state;
-        case "UPDATE-NEW-MESSAGE-TEXT":
-            state.newMessageText = action.newText;
-            return state;
+            return copyState;
+        }
+
+        case "UPDATE-NEW-MESSAGE-TEXT":{
+            let stateCopy = {...state};
+            stateCopy.newMessageText = action.newText;
+            return stateCopy;
+        }
+
         default:
             return state
     }

@@ -1,5 +1,17 @@
 import {v1} from "uuid";
-import {ActionsTypes, PostType, ProfilePageType} from "./store";
+import {ActionsTypes} from "./store";
+
+
+export type ProfilePageType = {
+    postsData: Array<PostType>
+    NewPostText: string
+}
+export type PostType = {
+    id: string
+    message: string
+    likesCount: number
+}
+
 export const addPostActionAC = () => {
     return {
         type: "ADD-POST",
@@ -20,19 +32,24 @@ let initialState: ProfilePageType = {
         {id: v1(), message: "What are you waiting for?", likesCount: 11},
     ]
 }
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
-        case "ADD-POST":
-            if (state.NewPostText) {
+        case "ADD-POST":{
+            const stateCopy = {...state, postsData:[...state.postsData]};
+            if (stateCopy.NewPostText) {
                 const newPost: PostType = {
-                    id: v1(), message: state.NewPostText, likesCount: 0
-                }
-                state.postsData.push(newPost);
+                    id: v1(), message: stateCopy.NewPostText, likesCount: 0
+                };
+                stateCopy.postsData.push(newPost);
+                //stateCopy.NewPostText = "";
             }
-            return state;
-        case "UPDATE-NEW-POST-TEXT":
-            state.NewPostText = action.newText;
-            return state
+            return stateCopy;
+        }
+        case "UPDATE-NEW-POST-TEXT":{
+            const stateCopy = {...state};
+            stateCopy.NewPostText = action.newText;
+            return stateCopy
+        }
         default:
             return state;
     }
