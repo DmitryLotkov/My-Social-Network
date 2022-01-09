@@ -7,11 +7,12 @@
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr 10fr;
   grid-gap: 10px;
-  width: 1900px;
+  justify-content: center;
 }
 .App-wrapper-content{
   grid-area: c;
   background-color: #eeec90;
+  width: 50.5%;
 }
 
 

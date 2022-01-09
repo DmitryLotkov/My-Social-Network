@@ -32,8 +32,12 @@ export function NavBar(props: NavBarPropsType) {
                 <NavLink to={"/photos"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Photos</NavLink>
             </div>
             <div className={s.NavItem}>
+                <NavLink to={"/users"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Find Friends</NavLink>
+            </div>
+            <div className={s.NavItem}>
                 <NavLink to={"/settings"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Settings</NavLink>
             </div>
+
             <div className={chatStyles.ChatBlock}>
                 <span className={chatStyles.Title}>Chat online</span>
                 {onlineFriends}

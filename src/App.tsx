@@ -8,6 +8,9 @@ import {Events} from "./components/Events/Events";
 import {Photos} from "./components/Photos/Photos";
 import {store} from "./Redux/reduxStore";
 import {DialogContainer} from "./components/Dialogs/DialogsContainer"
+import UsersContainer from "./components/Users/UsersContainer";
+
+
 
 const App = () => {
 
@@ -16,15 +19,16 @@ const App = () => {
     return (
             <div className={"app-wrapper"}>
                 <Header/>
-                <NavBar SideBar={state.SideBar}/>
-                <div className={"App-wrapper-content"}>
-                    <Routes>
-                        <Route path="/profile" element={<Profile/>}/>
-                        <Route path={"/dialogs"} element={<DialogContainer/>}/>
-                        <Route path={"/events"} element={<Events/>}/>
-                        <Route path={"/photos"} element={<Photos/>}/>
-                    </Routes>
-                </div>
+                    <NavBar SideBar={state.SideBar}/>
+                    <div className={"App-wrapper-content"}>
+                        <Routes>
+                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path={"/dialogs"} element={<DialogContainer/>}/>
+                            <Route path={"/events"} element={<Events/>}/>
+                            <Route path={"/photos"} element={<Photos/>}/>
+                            <Route path={"/users"} element={<UsersContainer/>}/>
+                        </Routes>
+                    </div>
             </div>
     );
 }
