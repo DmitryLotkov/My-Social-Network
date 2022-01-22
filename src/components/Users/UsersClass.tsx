@@ -1,8 +1,8 @@
 import React from "react";
 import {UserType} from "../../Redux/UsersReducer";
 import style from "./users.module.css"
-import axios from "axios";
 import userPhoto from "./../../Images/defaultUserImage.jpg";
+import axios from "axios";
 
 type UserPropsType = {
     users: UserType[]
@@ -10,7 +10,6 @@ type UserPropsType = {
     unfollow: (userID: string) => void
     setUsers: (users: UserType[]) => void
 }
-
 let defaultUserPhoto:string = userPhoto;
 /*let users = [
     {
@@ -46,31 +45,34 @@ let defaultUserPhoto:string = userPhoto;
         location: {city: "Paris", country: "France,"}
     },
 ]*/
-export const Users = (props: UserPropsType) => {
-    if (props.users.length === 0) {
+export class UsersClass extends React.Component<UserPropsType>{
 
-            if (props.users.length === 0) {
-                axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                        props.setUsers(response.data.items)
-                    }
-                )
+    componentDidMount() {
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                debugger;
+                this.props.setUsers(response.data.items);
             }
-
+        )
     }
-    return (
-        <div className={style.wrapper}>
-            {props.users.map(u =>
+
+    render(){
+        return (
+
+            <div className={style.wrapper}>
+            {this.props.users.map(u =>
                 <div key={u.id}>
                     <div className={style.friendBlock}>
                         <div className={style.avatarButton}>
-                            <img className={style.avatar} src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={"user"}/>
+                            <img className={style.avatar} src={u.photos.small ? u.photos.small:defaultUserPhoto
+                                }
+                                alt={"user"}/>
                             <span className={style.button}>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(u.id)
+                                    this.props.unfollow(u.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    this.props.follow(u.id)
                                 }}>follow</button>
                             }
                             </span>
@@ -78,11 +80,11 @@ export const Users = (props: UserPropsType) => {
                         <div className={style.inner}>
                             <div className={style.nameStatus}>
                                 <div className={style.name}>{u.name}</div>
-                                <div className={style.status}>{`Status: ${u.status}`}</div>
+                                <div className={style.status}>{ `Status:  ${u.status}`}</div>
                             </div>
                             <div className={style.location}>
-                                <div className={style.country}>{`u.location.country`}</div>
-                                <div>{`u.location.city`}</div>
+                                <div className={style.country}>{"u.location.country"}</div>
+                                <div>{"u.location.city"}</div>
                             </div>
                         </div>
 
@@ -91,4 +93,5 @@ export const Users = (props: UserPropsType) => {
                 </div>)}
         </div>
     )
+    }
 }
