@@ -1,4 +1,3 @@
-
 import {ActionsTypes} from "./store";
 
 export type LocationType = {
@@ -19,7 +18,11 @@ export type UserType = {
 }
 export type UsersType = {
     users: UserType[]
+    pageSize: number
+    totalUserCount: number
+    currentPage: number
 }
+
 export const followAC = (userID: string) => {
     return {
         type: "FOLLOW",
@@ -38,8 +41,23 @@ export const setUsersAC = (users: UserType[]) =>{
         users: users,
     } as const
 }
+export const setCurrentPageAC = (currentPage:number) =>{
+    return {
+        type: "SET_CURRENT_PAGE",
+        currentPage: currentPage,
+    } as const
+}
+export const setUsersTotalCountAC = (serverTotalUsersCount:number) =>{
+    return{
+        type:"SET-TOTAL-USERS-COUNT",
+        totalUserCount: serverTotalUsersCount
+    } as const
+}
 let initialState: UsersType = {
-    users: []
+    users: [],
+    pageSize: 22,
+    totalUserCount: 1,
+    currentPage: 1,
 }
 export const userReducer = (state = initialState, action: ActionsTypes):UsersType => {
     switch (action.type) {
@@ -50,7 +68,13 @@ export const userReducer = (state = initialState, action: ActionsTypes):UsersTyp
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false}:u)}
         }
         case "SET-USERS":{
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        }
+        case "SET_CURRENT_PAGE":{
+            return {...state,currentPage:action.currentPage}
+        }
+        case "SET-TOTAL-USERS-COUNT":{
+            return {...state, totalUserCount: action.totalUserCount}
         }
         default:
             return state;

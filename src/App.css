@@ -1,18 +1,31 @@
 .app-wrapper{
-  margin: 0 auto;
-  display: grid;
+
+  /*display: grid;
   grid-template-areas:
   "h h"
   "n c";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 1fr 10fr;
-  grid-gap: 10px;
-  justify-content: center;
+  grid-gap: 10px;*/
+  /*display: flex;
+  flex-direction: column;
+  width: 100%;*/
+
 }
 .App-wrapper-content{
-  grid-area: c;
+
   background-color: #eeec90;
   width: 50.5%;
 }
+.mainContent{
+  display: flex;
 
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  border: 1px solid;
+  max-width: 1050px;
+}
 

@@ -12,23 +12,25 @@ import UsersContainer from "./components/Users/UsersContainer";
 
 
 
+
 const App = () => {
 
     const state = store.getState();
 
     return (
-            <div className={"app-wrapper"}>
+            <div>
                 <Header/>
+                <div className={"mainContent"}>
+
                     <NavBar SideBar={state.SideBar}/>
-                    <div className={"App-wrapper-content"}>
                         <Routes>
-                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path={"/profile"} element={<Profile/>}/>
                             <Route path={"/dialogs"} element={<DialogContainer/>}/>
                             <Route path={"/events"} element={<Events/>}/>
                             <Route path={"/photos"} element={<Photos/>}/>
-                            <Route path={"/users"} element={<UsersContainer />}/>
+                            <Route path={"/users"} element={<UsersContainer/>}/>
                         </Routes>
-                    </div>
+                </div>
             </div>
     );
 }

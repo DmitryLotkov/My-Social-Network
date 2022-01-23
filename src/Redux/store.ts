@@ -2,7 +2,13 @@ import {v1} from "uuid";
 import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
 import profileReducer, {addPostActionAC, updateNewPostTextAC} from "./ProfileReducer";
 import sidebarReducer from "./NavBarReducer";
-import {followAC, setUsersAC, unFollowAC} from "./UsersReducer";
+import {
+    followAC,
+    setCurrentPageAC,
+    setUsersAC,
+    setUsersTotalCountAC,
+    unFollowAC
+} from "./UsersReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
@@ -10,7 +16,10 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewMessageTextAC>|
     ReturnType<typeof followAC>|
     ReturnType<typeof unFollowAC>|
-    ReturnType<typeof setUsersAC>
+    ReturnType<typeof setUsersAC>|
+    ReturnType<typeof setCurrentPageAC>|
+    ReturnType<typeof setUsersTotalCountAC>
+
 
 
 
