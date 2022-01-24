@@ -71,3 +71,8 @@
 .pagesWrapper{
     max-width: 1rem;
 }
+
+.preloaderContainer{
+    display: flex;
+    justify-content: center;
+}

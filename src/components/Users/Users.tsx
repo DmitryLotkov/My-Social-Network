@@ -12,6 +12,7 @@ type UsersPresentationComponentType ={
     users: UserType[]
     follow: (userID: string) => void
     unfollow: (userID: string) => void
+
 }
 export function Users(props:UsersPresentationComponentType){
 

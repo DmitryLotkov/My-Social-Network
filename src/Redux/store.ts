@@ -6,7 +6,7 @@ import {
     followAC,
     setCurrentPageAC,
     setUsersAC,
-    setUsersTotalCountAC,
+    setUsersTotalCountAC, toggleIsFetchingAC,
     unFollowAC
 } from "./UsersReducer";
 
@@ -18,7 +18,8 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof unFollowAC>|
     ReturnType<typeof setUsersAC>|
     ReturnType<typeof setCurrentPageAC>|
-    ReturnType<typeof setUsersTotalCountAC>
+    ReturnType<typeof setUsersTotalCountAC>|
+    ReturnType<typeof toggleIsFetchingAC>
 
 
 

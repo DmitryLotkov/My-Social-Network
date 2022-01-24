@@ -21,6 +21,7 @@ export type UsersType = {
     pageSize: number
     totalUserCount: number
     currentPage: number
+    isFetching: boolean
 }
 
 export const followAC = (userID: string) => {
@@ -53,11 +54,19 @@ export const setUsersTotalCountAC = (serverTotalUsersCount:number) =>{
         totalUserCount: serverTotalUsersCount
     } as const
 }
+export const toggleIsFetchingAC = (isFetching: boolean) =>{
+    return{
+        type: "IS-FETCHING",
+        isFetching: isFetching,
+    } as const
+}
+
 let initialState: UsersType = {
     users: [],
     pageSize: 22,
     totalUserCount: 1,
     currentPage: 1,
+    isFetching: true,
 }
 export const userReducer = (state = initialState, action: ActionsTypes):UsersType => {
     switch (action.type) {
@@ -75,6 +84,9 @@ export const userReducer = (state = initialState, action: ActionsTypes):UsersTyp
         }
         case "SET-TOTAL-USERS-COUNT":{
             return {...state, totalUserCount: action.totalUserCount}
+        }
+        case "IS-FETCHING":{
+            return {...state, isFetching: action.isFetching}
         }
         default:
             return state;
