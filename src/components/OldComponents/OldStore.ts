@@ -1,7 +1,7 @@
 import {v1} from "uuid";
 import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "../../Redux/DialogsReducer";
 import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
-import sidebarReducer from "../../Redux/NavBarReducer";
+
 import {
     follow,
     setCurrentPage,
@@ -134,7 +134,7 @@ export let oldStore: StoreType = {
     dispatch(action: ActionsTypes) {
         this._state.DialogPage = dialogsReducer(this._state.DialogPage, action);
         //this._state.ProfilePage = profileReducer(this._state.ProfilePage, action);
-        this._state.SideBar = sidebarReducer(this._state.SideBar, action);
+        //this._state.SideBar = sidebarReducer(this._state.SideBar, action);
 
         this.callSubscriber(this._state);
     }
