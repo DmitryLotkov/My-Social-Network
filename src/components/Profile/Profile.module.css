@@ -1,7 +1,12 @@
 .content{
-    background-color: #eeec90;
     width: 100%;
+    border: 1px solid ;
+    margin-left: 1rem;
+    padding: 15px 15px 6px;
+    border-radius: 4px;
 }
+
 .content img {
     height: 200px;
+    border-radius: 4px;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import s from "./Navbar.module.css"
 import chatStyles from "./ChatBlock.module.css"
 import {NavLink} from "react-router-dom";
-import {SideBarType} from "../../Redux/store";
+import {SideBarType} from "../OldComponents/OldStore";
 import {ChatBlock} from "./ChatBlock";
 
 type NavBarPropsType = {

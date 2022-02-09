@@ -1,8 +1,8 @@
 import React from "react";
 import {UserType} from "../../Redux/UsersReducer";
-import style from "./users.module.css"
+import style from "../Users/users.module.css"
 import axios from "axios";
-import userPhoto from "./../../Images/defaultUserImage.jpg";
+import userPhoto from "../../Images/defaultUserImage.jpg";
 
 type UserPropsType = {
     users: UserType[]

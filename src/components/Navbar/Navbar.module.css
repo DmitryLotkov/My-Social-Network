@@ -3,6 +3,7 @@
     grid-area: n;
     background-color: #ffffff;
     text-align: left;
+    border: 1px solid;
 }
 .NavItem a{
     color: #6d6e71;

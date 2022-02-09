@@ -1,25 +1,27 @@
 import {v1} from "uuid";
-import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
-import profileReducer, {addPostActionAC, updateNewPostTextAC} from "./ProfileReducer";
-import sidebarReducer from "./NavBarReducer";
+import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "../../Redux/DialogsReducer";
+import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
+import sidebarReducer from "../../Redux/NavBarReducer";
 import {
-    followAC,
-    setCurrentPageAC,
-    setUsersAC,
-    setUsersTotalCountAC, toggleIsFetchingAC,
-    unFollowAC
-} from "./UsersReducer";
+    follow,
+    setCurrentPage,
+    setUsers,
+    setUsersTotalCount, toggleIsFetching,
+    unFollow
+} from "../../Redux/UsersReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>|
-    ReturnType<typeof followAC>|
-    ReturnType<typeof unFollowAC>|
-    ReturnType<typeof setUsersAC>|
-    ReturnType<typeof setCurrentPageAC>|
-    ReturnType<typeof setUsersTotalCountAC>|
-    ReturnType<typeof toggleIsFetchingAC>
+    ReturnType<typeof follow>|
+    ReturnType<typeof unFollow>|
+    ReturnType<typeof setUsers>|
+    ReturnType<typeof setCurrentPage>|
+    ReturnType<typeof setUsersTotalCount>|
+    ReturnType<typeof toggleIsFetching>|
+    ReturnType<typeof setUserProfileAC>
+
 
 
 
@@ -52,7 +54,7 @@ export type OnlineFriendType = {
 export type SideBarType = {
     onlineFriends: Array<OnlineFriendType>
 }
-export type ProfilePageType = {
+export type ProfilePageTypeOld = {
     postsData: Array<PostType>
     NewPostText: string
 }
@@ -63,10 +65,10 @@ export type DialogPageType = {
 }
 export type RootStateType = {
     DialogPage: DialogPageType,
-    ProfilePage: ProfilePageType,
+    ProfilePage: ProfilePageTypeOld,
     SideBar: SideBarType,
 }
-export let store: StoreType = {
+export let oldStore: StoreType = {
     _state: {
         DialogPage: {
             newMessageText: "",
@@ -131,7 +133,7 @@ export let store: StoreType = {
     },
     dispatch(action: ActionsTypes) {
         this._state.DialogPage = dialogsReducer(this._state.DialogPage, action);
-        this._state.ProfilePage = profileReducer(this._state.ProfilePage, action);
+        //this._state.ProfilePage = profileReducer(this._state.ProfilePage, action);
         this._state.SideBar = sidebarReducer(this._state.SideBar, action);
 
         this.callSubscriber(this._state);

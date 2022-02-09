@@ -1,4 +1,4 @@
-import {OnlineFriendType} from "../../Redux/store";
+import {OnlineFriendType} from "../OldComponents/OldStore";
 import React from "react";
 import chatStyles from "./ChatBlock.module.css"
 

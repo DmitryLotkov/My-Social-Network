@@ -1,4 +1,4 @@
-import {ActionsTypes, SideBarType} from "./store";
+import {SideBarType} from "../components/OldComponents/OldStore";
 import {v1} from "uuid";
 
 let initialState: SideBarType = {
@@ -14,7 +14,7 @@ let initialState: SideBarType = {
         {id: v1(), avatar: "https://themified.com/friend-finder/images/users/user-8.jpg"},
     ],
 }
-const sidebarReducer = (state: SideBarType = initialState, action: ActionsTypes) => {
+const sidebarReducer = (state: SideBarType = initialState) => {
     return state
 }
 export default sidebarReducer;

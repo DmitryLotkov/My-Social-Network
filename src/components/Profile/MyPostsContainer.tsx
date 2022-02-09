@@ -1,26 +1,26 @@
 import {addPostActionAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
 import {MyPosts} from "./MyPosts";
-import {AppStateType} from "../../Redux/reduxStore";
+import {AppRootState} from "../../Redux/reduxStore";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 
 
 /*type MyPostsPropsType = {
 
-    store: AppStoreType
+    oldStore: AppStoreType
 }*/
 
 /*export function MyPostsContainer(props: MyPostsPropsType) {
 
-    let state = props.store.getState();
+    let state = props.oldStore.getState();
 
     let addPost = () => {
-        props.store.dispatch(addPostActionAC())
-        props.store.dispatch(updateNewPostTextAC(""))
+        props.oldStore.dispatch(addPostActionAC())
+        props.oldStore.dispatch(updateNewPostTextAC(""))
 
     }
     const onPostChange = (text: string) => {
-        props.store.dispatch(updateNewPostTextAC(text))
+        props.oldStore.dispatch(updateNewPostTextAC(text))
     }
 
     return (
@@ -32,7 +32,7 @@ import {Dispatch} from "redux";
     );
 }*/
 
-let mapStateToProps = (state:AppStateType) => {
+let mapStateToProps = (state:AppRootState) => {
     return {
         newPostText: state.ProfilePage.NewPostText,
         postsData: state.ProfilePage.postsData,
