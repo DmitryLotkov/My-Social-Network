@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
-import {setUserProfileAC} from "../../Redux/ProfileReducer";
+import {setUserProfileAC, userProfileType} from "../../Redux/ProfileReducer";
 import {useParams} from "react-router-dom";
 
 
@@ -11,7 +11,7 @@ export const ProfileContainerFC: FC = React.memo(() => {
     const params = useParams<'userId'>();
     let userId = params.userId;
 
-    const profile = useSelector<AppRootState, any>(state => state.ProfilePage.profile);
+    const profile = useSelector<AppRootState, userProfileType>(state => state.ProfilePage.profile);
 
     const dispatch = useDispatch();
     useEffect(() => {

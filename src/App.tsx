@@ -25,7 +25,7 @@ const App = () => {
                 <Routes>
                     <Route path={"/*"} element={<div>404</div>}/>
                     <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
-                    <Route path={"/profile"} element={<Navigate to={'/profile/2'}/>}/>
+                    <Route path={"/profile"} element={<Navigate to={'/profile/21748'}/>}/>
                     <Route path={"/dialogs"} element={<DialogContainer/>}/>
                     <Route path={"/events"} element={<Events/>}/>
                     <Route path={"/photos"} element={<Photos/>}/>

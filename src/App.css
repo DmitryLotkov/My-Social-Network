@@ -21,14 +21,13 @@
   display: flex;
   overflow: auto;
   height: calc(100vh + 3rem);
-  width: 100%;
   padding-right: 10px;
   padding-left: 10px;
   margin-right: auto;
   margin-left: auto;
   border: 1px solid;
   max-width: 1050px;
-
+  width: 100%;
 }
 
 body{

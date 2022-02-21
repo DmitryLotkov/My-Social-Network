@@ -1,5 +1,6 @@
 import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "./ProfileReducer";
 import {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
+import { setUserAC} from "./authReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
@@ -11,7 +12,8 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof setCurrentPage>|
     ReturnType<typeof setUsersTotalCount>|
     ReturnType<typeof toggleIsFetching>|
-    ReturnType<typeof setUserProfileAC>
+    ReturnType<typeof setUserProfileAC>|
+    ReturnType<typeof setUserAC>
 
 export type LocationType = {
     city: string

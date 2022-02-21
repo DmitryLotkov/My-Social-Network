@@ -31,8 +31,17 @@
     max-width: 1050px;
     align-items: center;
     border: 1px white solid;
+    justify-content: space-between;
 }
 .logo{
     display: flex;
     align-items: center;
+}
+.loginBlock{
+    text-decoration: none;
+    color: white;
+}
+.loginBlock a{
+    text-decoration: none;
+    color: white;
 }
