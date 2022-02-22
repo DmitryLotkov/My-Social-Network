@@ -98,7 +98,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         }
         case "SET-USER-PROFILE": {
             return {
-                ...state, profile: action.profile
+                ...state, profile: action.profile,
             }
         }
 

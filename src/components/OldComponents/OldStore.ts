@@ -3,23 +3,23 @@ import dialogsReducer, {addMessageAC, updateNewMessageTextAC} from "../../Redux/
 import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
 
 import {
-    follow,
-    setCurrentPage,
-    setUsers,
-    setUsersTotalCount, toggleIsFetching,
-    unFollow
+    followAC,
+    setCurrentPageAC,
+    setUsersAC,
+    setUsersTotalCountAC, toggleIsFetchingAC,
+    unFollowAC
 } from "../../Redux/UsersReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>|
-    ReturnType<typeof follow>|
-    ReturnType<typeof unFollow>|
-    ReturnType<typeof setUsers>|
-    ReturnType<typeof setCurrentPage>|
-    ReturnType<typeof setUsersTotalCount>|
-    ReturnType<typeof toggleIsFetching>|
+    ReturnType<typeof followAC>|
+    ReturnType<typeof unFollowAC>|
+    ReturnType<typeof setUsersAC>|
+    ReturnType<typeof setCurrentPageAC>|
+    ReturnType<typeof setUsersTotalCountAC>|
+    ReturnType<typeof toggleIsFetchingAC>|
     ReturnType<typeof setUserProfileAC>
 
 

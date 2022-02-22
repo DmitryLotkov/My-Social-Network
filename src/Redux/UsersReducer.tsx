@@ -6,12 +6,12 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC>|
-    ReturnType<typeof follow>|
-    ReturnType<typeof unFollow>|
-    ReturnType<typeof setUsers>|
-    ReturnType<typeof setCurrentPage>|
-    ReturnType<typeof setUsersTotalCount>|
-    ReturnType<typeof toggleIsFetching>|
+    ReturnType<typeof followAC>|
+    ReturnType<typeof unFollowAC>|
+    ReturnType<typeof setUsersAC>|
+    ReturnType<typeof setCurrentPageAC>|
+    ReturnType<typeof setUsersTotalCountAC>|
+    ReturnType<typeof toggleIsFetchingAC>|
     ReturnType<typeof setUserProfileAC>|
     ReturnType<typeof setUserAC>
 
@@ -39,37 +39,37 @@ export type UsersType = {
     isFetching: boolean
 }
 
-export const follow = (userID: string) => {
+export const followAC = (userID: string) => {
     return {
         type: "FOLLOW",
         userID: userID,
     } as const
 }
-export const unFollow = (userID: string) => {
+export const unFollowAC = (userID: string) => {
     return {
         type: "UNFOLLOW",
         userID: userID,
     } as const
 }
-export const setUsers = (users: UserType[]) =>{
+export const setUsersAC = (users: UserType[]) =>{
     return {
         type: "SET-USERS",
         users: users,
     } as const
 }
-export const setCurrentPage = (currentPage:number) =>{
+export const setCurrentPageAC = (currentPage:number) =>{
     return {
         type: "SET-CURRENT-PAGE",
         currentPage: currentPage,
     } as const
 }
-export const setUsersTotalCount = (serverTotalUsersCount:number) =>{
+export const setUsersTotalCountAC = (serverTotalUsersCount:number) =>{
     return{
         type:"SET-TOTAL-USERS-COUNT",
         totalUserCount: serverTotalUsersCount
     } as const
 }
-export const toggleIsFetching = (isFetching: boolean) =>{
+export const toggleIsFetchingAC = (isFetching: boolean) =>{
     return{
         type: "IS-FETCHING",
         isFetching: isFetching,
@@ -86,9 +86,11 @@ let initialState: UsersType = {
 export const userReducer = (state = initialState, action: ActionsTypes):UsersType => {
     switch (action.type) {
         case "FOLLOW": {
+
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true}:u)}
         }
         case "UNFOLLOW": {
+
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false}:u)}
         }
         case "SET-USERS":{

@@ -2,16 +2,17 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
 
 import {
-    follow,
-    setCurrentPage,
-    setUsers, setUsersTotalCount, toggleIsFetching,
-    unFollow,
+    followAC,
+    setCurrentPageAC,
+    setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
+    unFollowAC,
     UserType
 } from "../../Redux/UsersReducer";
 import React, {FC, useEffect} from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader";
+import {userAPI} from "../api";
+
 
 const UserContainerFC: FC = () => {
 
@@ -23,24 +24,33 @@ const UserContainerFC: FC = () => {
     const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalUserCount);
 
     useEffect(() => {
-        toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then(response => {
-                dispatch(toggleIsFetching(false));
-                dispatch(setUsers(response.data.items));
-                dispatch(setUsersTotalCount(response.data.totalCount));
-            }
-        )
-    }, [currentPage, pageSize, dispatch])
+        toggleIsFetchingAC(true);
+
+        userAPI.getUsers(currentPage, pageSize)
+            .then(response => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(response.data.items));
+                dispatch(setUsersTotalCountAC(response.data.totalCount));
+            });
+    },[currentPage, pageSize, dispatch])
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(toggleIsFetching(true));
-        dispatch(setCurrentPage(pageNumber));
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`).then(response => {
-                dispatch(setUsers(response.data.items));
-                dispatch(setUsersTotalCount(response.data.totalCount));
-                dispatch(toggleIsFetching(false));
+
+        dispatch(toggleIsFetchingAC(true));
+        dispatch(setCurrentPageAC(pageNumber));
+        userAPI.getUsers(pageNumber, pageSize)
+            .then(response => {
+                dispatch(setUsersAC(response.data.items));
+                dispatch(setUsersTotalCountAC(response.data.totalCount));
+                dispatch(toggleIsFetchingAC(false));
             }
         )
+    }
+    const followHandler = (userID:string) =>{
+        dispatch(followAC(userID))
+    }
+    const unfollowHandler = (userID:string) =>{
+        dispatch(unFollowAC(userID))
     }
     return (
         <div>
@@ -53,8 +63,8 @@ const UserContainerFC: FC = () => {
                     totalUserCount={totalUserCount}
                     pageSize={pageSize}
                     users={users}
-                    follow={follow}
-                    unfollow={unFollow}/>
+                    follow={followHandler}
+                    unfollow={unfollowHandler}/>
             }
         </div>
     )

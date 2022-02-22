@@ -33,15 +33,25 @@
     border: 1px white solid;
     justify-content: space-between;
 }
-.logo{
+.logo {
     display: flex;
     align-items: center;
 }
-.loginBlock{
+.login {
     text-decoration: none;
     color: white;
 }
-.loginBlock a{
-    text-decoration: none;
+.smallUserHeaderPhoto{
+    width: 30px;
+    height: 30px;
+}
+.loginBlock{
+    display: flex;
+    width: 10rem;
+    justify-content: flex-end;
+    align-items: center;
     color: white;
+}
+.loginBlock img{
+    padding-right: 0.7rem;
 }
