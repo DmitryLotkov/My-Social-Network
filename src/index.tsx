@@ -4,16 +4,16 @@ import React from "react";
 import App from "./App";
 import {store} from "./Redux/reduxStore";
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 
 // @ts-ignore
 window.store = store
 
     ReactDOM.render(
             <Provider store={store}>
-                <BrowserRouter>
+                <HashRouter>
                     <App/>
-                </BrowserRouter>
+                </HashRouter>
             </Provider>,
         document.getElementById('root')
     );

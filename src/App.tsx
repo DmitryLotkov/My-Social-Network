@@ -23,13 +23,14 @@ const App = () => {
             <div className={"mainContent"}>
                 <NavBar SideBar={state.SideBar}/>
                 <Routes>
-                    <Route path={"/*"} element={<div>404</div>}/>
+                    <Route path={"/"} element={<Navigate to={'/profile/21748'}/>}/>
                     <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
                     <Route path={"/profile"} element={<Navigate to={'/profile/21748'}/>}/>
                     <Route path={"/dialogs"} element={<DialogContainer/>}/>
                     <Route path={"/events"} element={<Events/>}/>
                     <Route path={"/photos"} element={<Photos/>}/>
                     <Route path={"/users"} element={<UsersContainerFC/>}/>
+                    <Route path={"/*"} element={<div>404</div>}/>
                 </Routes>
             </div>
         </div>
