@@ -1,19 +1,20 @@
 import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "./ProfileReducer";
 import {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
-import { setUserAC} from "./authReducer";
+import {setUserAC} from "./authReducer";
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC>|
-    ReturnType<typeof followAC>|
-    ReturnType<typeof unFollowAC>|
-    ReturnType<typeof setUsersAC>|
-    ReturnType<typeof setCurrentPageAC>|
-    ReturnType<typeof setUsersTotalCountAC>|
-    ReturnType<typeof toggleIsFetchingAC>|
-    ReturnType<typeof setUserProfileAC>|
-    ReturnType<typeof setUserAC>
+    ReturnType<typeof updateNewMessageTextAC> |
+    ReturnType<typeof followAC> |
+    ReturnType<typeof unFollowAC> |
+    ReturnType<typeof setUsersAC> |
+    ReturnType<typeof setCurrentPageAC> |
+    ReturnType<typeof setUsersTotalCountAC> |
+    ReturnType<typeof toggleIsFetchingAC> |
+    ReturnType<typeof setUserProfileAC> |
+    ReturnType<typeof setUserAC>|
+    ReturnType<typeof isFollowingProgressAC>
 
 export type LocationType = {
     city: string
@@ -27,7 +28,7 @@ export type UserType = {
     id: string,
     name: string
     status: string
-    location:LocationType
+    location: LocationType
     followed: boolean
     photos: PhotosType
 }
@@ -37,6 +38,7 @@ export type UsersType = {
     totalUserCount: number
     currentPage: number
     isFetching: boolean
+    following: Array<string>
 }
 
 export const followAC = (userID: string) => {
@@ -51,28 +53,37 @@ export const unFollowAC = (userID: string) => {
         userID: userID,
     } as const
 }
-export const setUsersAC = (users: UserType[]) =>{
+export const setUsersAC = (users: UserType[]) => {
     return {
         type: "SET-USERS",
         users: users,
     } as const
 }
-export const setCurrentPageAC = (currentPage:number) =>{
+export const setCurrentPageAC = (currentPage: number) => {
     return {
         type: "SET-CURRENT-PAGE",
         currentPage: currentPage,
     } as const
 }
-export const setUsersTotalCountAC = (serverTotalUsersCount:number) =>{
-    return{
-        type:"SET-TOTAL-USERS-COUNT",
+export const setUsersTotalCountAC = (serverTotalUsersCount: number) => {
+    return {
+        type: "SET-TOTAL-USERS-COUNT",
         totalUserCount: serverTotalUsersCount
     } as const
 }
-export const toggleIsFetchingAC = (isFetching: boolean) =>{
-    return{
+export const toggleIsFetchingAC = (isFetching: boolean) => {
+    return {
         type: "IS-FETCHING",
         isFetching: isFetching,
+    } as const
+}
+
+export const isFollowingProgressAC = (followingIsProgress: boolean, userID:string) => {
+
+    return {
+        type: "IS-FOLLOWING-PROGRESS",
+        followingIsProgress: followingIsProgress,
+        userID: userID,
     } as const
 }
 
@@ -82,29 +93,43 @@ let initialState: UsersType = {
     totalUserCount: 1,
     currentPage: 1,
     isFetching: true,
+    following: [],
 }
-export const userReducer = (state = initialState, action: ActionsTypes):UsersType => {
+export const userReducer = (state = initialState, action: ActionsTypes): UsersType => {
     switch (action.type) {
         case "FOLLOW": {
-
-            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true}:u)}
+            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true} : u)}
         }
+
         case "UNFOLLOW": {
 
-            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false}:u)}
+            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)}
         }
-        case "SET-USERS":{
+
+        case "SET-USERS": {
             return {...state, users: action.users}
         }
-        case "SET-CURRENT-PAGE":{
-            return {...state,currentPage:action.currentPage}
+
+        case "SET-CURRENT-PAGE": {
+            return {...state, currentPage: action.currentPage}
         }
-        case "SET-TOTAL-USERS-COUNT":{
+
+        case "SET-TOTAL-USERS-COUNT": {
             return {...state, totalUserCount: action.totalUserCount}
         }
-        case "IS-FETCHING":{
+
+        case "IS-FETCHING": {
             return {...state, isFetching: action.isFetching}
         }
+
+        case "IS-FOLLOWING-PROGRESS":{
+            return {...state,
+                following: action.followingIsProgress
+                    ? [...state.following, action.userID]
+                    : state.following.filter(id => id !== action.userID)
+            }
+        }
+
         default:
             return state;
     }

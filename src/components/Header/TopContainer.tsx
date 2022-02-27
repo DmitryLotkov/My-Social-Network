@@ -26,7 +26,11 @@ export function TopContainer() {
                 }
             })
             .then((value: DataType) => userAPI.getUserID(value))
-            .then(response => dispatch(setUserProfileAC(response.data)))
+            .then(response => {
+                return (
+                    dispatch(setUserProfileAC(response.data))
+                )
+            })
 
     }, [dispatch])
 

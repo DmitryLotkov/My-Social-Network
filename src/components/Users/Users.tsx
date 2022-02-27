@@ -15,6 +15,8 @@ type UsersPresentationComponentType = {
     users: UserType[]
     follow: (userID: string) => void
     unfollow: (userID: string) => void
+    followingIsProgressHandler: (isFetching: boolean, id: string) => void
+    followingArr: Array<string>
 }
 
 export function Users(props: UsersPresentationComponentType) {
@@ -45,23 +47,29 @@ export function Users(props: UsersPresentationComponentType) {
                              alt={"user"}/>
                         <span className={style.button}>
                             {u.followed ?
-                                <button onClick={() => {
-                                    userAPI.deleteUnFollowUser(u.id)
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                props.unfollow(u.id)
-                                            }
-                                        })
-                                }}>Unfollow</button>
-                                : <button onClick={() => {
-                                    userAPI.postFollowUser(u.id)
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                props.follow(u.id)
+                                <button disabled={props.followingArr.some(id => id === u.id)}
+                                        onClick={() => {
+                                            props.followingIsProgressHandler(true, u.id);
+                                            userAPI.deleteUnFollowUser(u.id)
+                                                .then(response => {
+                                                    if (response.data.resultCode === 0) {
+                                                        props.unfollow(u.id)
+                                                    }
+                                                    props.followingIsProgressHandler(false, u.id);
+                                                })
+                                        }}>Unfollow</button>
 
-                                            }
-                                        })
-                                }}>Follow</button>
+                                : <button disabled={props.followingArr.some(id => id === u.id)}
+                                          onClick={() => {
+                                              props.followingIsProgressHandler(true, u.id)
+                                              userAPI.postFollowUser(u.id)
+                                                  .then(response => {
+                                                      if (response.data.resultCode === 0) {
+                                                          props.follow(u.id)
+                                                      }
+                                                      props.followingIsProgressHandler(false, u.id);
+                                                  })
+                                          }}>Follow</button>
                             }
                             </span>
                     </div>

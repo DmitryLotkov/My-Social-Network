@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
 
 import {
-    followAC,
+    followAC, isFollowingProgressAC,
     setCurrentPageAC,
     setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
     unFollowAC,
@@ -22,6 +22,7 @@ const UserContainerFC: FC = () => {
     const pageSize = useSelector<AppRootState, number>(state => state.UsersPage.pageSize);
     const currentPage = useSelector<AppRootState, number>(state => state.UsersPage.currentPage);
     const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalUserCount);
+    const followingArr = useSelector<AppRootState, Array<string>>(state => state.UsersPage.following);
 
     useEffect(() => {
         toggleIsFetchingAC(true);
@@ -46,12 +47,18 @@ const UserContainerFC: FC = () => {
             }
         )
     }
-    const followHandler = (userID:string) =>{
-        dispatch(followAC(userID))
+    const followHandler = (userID:string) => {
+        dispatch(followAC(userID));
     }
-    const unfollowHandler = (userID:string) =>{
-        dispatch(unFollowAC(userID))
+
+    const unfollowHandler = (userID:string) => {
+        dispatch(unFollowAC(userID));
     }
+
+    const followingIsProgressHandler = (followingIsProgress: boolean, id:string) => {
+        dispatch(isFollowingProgressAC(followingIsProgress, id));
+    }
+
     return (
         <div>
             {
@@ -64,7 +71,10 @@ const UserContainerFC: FC = () => {
                     pageSize={pageSize}
                     users={users}
                     follow={followHandler}
-                    unfollow={unfollowHandler}/>
+                    unfollow={unfollowHandler}
+                    followingIsProgressHandler={followingIsProgressHandler}
+                    followingArr={followingArr}
+                />
             }
         </div>
     )

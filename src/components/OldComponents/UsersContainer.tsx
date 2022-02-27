@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
 import {Dispatch} from "redux";
 import {
-    followAC,
+    followAC, isFollowingProgressAC,
     setCurrentPageAC,
     setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
     unFollowAC,
@@ -25,6 +25,8 @@ export type UserPropsType = {
     setTotalUsersCount: (serverUserTotalCount: number) => void
     isFetching: boolean
     toggleIsFetching: (isFetching: boolean) => void
+    followingIsProgressHandler:(followingIsProgress: boolean, id:string) =>void
+    followingArr: Array<string>
 }
 
 export class UsersContainer extends React.Component<UserPropsType> {
@@ -62,7 +64,10 @@ export class UsersContainer extends React.Component<UserPropsType> {
                         pageSize={this.props.pageSize}
                         users={this.props.users}
                         follow={this.props.follow}
-                        unfollow={this.props.unfollow}/>
+                        unfollow={this.props.unfollow}
+                        followingIsProgressHandler={this.props.followingIsProgressHandler}
+                        followingArr={this.props.followingArr}
+                    />
                    }
             </div>
         )
@@ -76,7 +81,8 @@ let mapStateToProps = (state: AppRootState) => {
         totalUserCount: state.UsersPage.totalUserCount,
         currentPage: state.UsersPage.currentPage,
         isFetching: state.UsersPage.isFetching,
-        userId: state.ProfilePage.profile.userId
+        userId: state.ProfilePage.profile.userId,
+        followingIsProgress: state.UsersPage.following
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch) => {
@@ -99,6 +105,10 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
+        followingIsProgressHandler: (followingIsProgress:boolean, id: string) =>{
+            dispatch(isFollowingProgressAC(followingIsProgress, id))
+        }
+
     }
 }
 
