@@ -1,5 +1,7 @@
 import {v1} from "uuid";
 import {ActionsTypes} from "../components/OldComponents/OldStore";
+import {Dispatch} from "redux";
+import {userAPI} from "../components/api";
 
 type ProfilePageType = {
     postsData: Array<PostType>
@@ -34,7 +36,14 @@ export type userProfileType = {
     userId: number | null
     photos: userProfilePhotosType
 }
-
+export const getProfileThunkCreator = (userId: string|undefined) => {
+    return (dispatch: Dispatch) => {
+        userAPI.getProfile(userId)
+            .then(response =>
+                dispatch(setUserProfileAC(response.data))
+            )
+    }
+}
 export const addPostActionAC = () => {
     return {
         type: "ADD-POST",

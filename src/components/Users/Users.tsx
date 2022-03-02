@@ -4,7 +4,6 @@ import userPhoto from "../../Images/defaultUserImage.jpg";
 import {UserType} from "../../Redux/UsersReducer";
 import Pagination from '@material-ui/lab/Pagination';
 import {useNavigate} from "react-router-dom";
-import {userAPI} from "../api";
 
 
 type UsersPresentationComponentType = {
@@ -13,10 +12,9 @@ type UsersPresentationComponentType = {
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     users: UserType[]
-    follow: (userID: string) => void
-    unfollow: (userID: string) => void
-    followingIsProgressHandler: (isFetching: boolean, id: string) => void
-    followingArr: Array<string>
+    followingInProgress: Array<string>
+    followTC: (userID: string) => void
+    unfollowTC: (userID: string) => void
 }
 
 export function Users(props: UsersPresentationComponentType) {
@@ -26,7 +24,7 @@ export function Users(props: UsersPresentationComponentType) {
     const onPageHandler = (event: ChangeEvent<unknown>, page: number) => {
         props.onPageChanged(page);
     }
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     return <div className={style.wrapper}>
         <Pagination color={"primary"}
@@ -47,29 +45,22 @@ export function Users(props: UsersPresentationComponentType) {
                              alt={"user"}/>
                         <span className={style.button}>
                             {u.followed ?
-                                <button disabled={props.followingArr.some(id => id === u.id)}
+                                <button disabled={props.followingInProgress
+                                    .some(id => id === u.id)}
                                         onClick={() => {
-                                            props.followingIsProgressHandler(true, u.id);
-                                            userAPI.deleteUnFollowUser(u.id)
-                                                .then(response => {
-                                                    if (response.data.resultCode === 0) {
-                                                        props.unfollow(u.id)
-                                                    }
-                                                    props.followingIsProgressHandler(false, u.id);
-                                                })
-                                        }}>Unfollow</button>
+                                            //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
+                                            props.unfollowTC(u.id)
+                                        }
+                                        }>Unfollow</button>
 
-                                : <button disabled={props.followingArr.some(id => id === u.id)}
-                                          onClick={() => {
-                                              props.followingIsProgressHandler(true, u.id)
-                                              userAPI.postFollowUser(u.id)
-                                                  .then(response => {
-                                                      if (response.data.resultCode === 0) {
-                                                          props.follow(u.id)
-                                                      }
-                                                      props.followingIsProgressHandler(false, u.id);
-                                                  })
-                                          }}>Follow</button>
+                                : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                          onClick={
+                                              () => {
+                                                  //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
+                                                  //thunk creator нужен для связи DAL и BLL минуя UI
+                                                  props.followTC(u.id)
+                                              }
+                                          }>Follow</button>
                             }
                             </span>
                     </div>

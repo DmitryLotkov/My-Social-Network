@@ -1,12 +1,13 @@
 import {connect} from "react-redux";
+
 import {AppRootState} from "../../Redux/reduxStore";
 import {Dispatch} from "redux";
 import {
-    followAC, isFollowingProgressAC,
+    followSuccess, toggleFollowingProgressAC,
     setCurrentPageAC,
     setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
-    unFollowAC,
-    UserType
+    unFollowSuccess, follow,
+    UserType, unfollow
 } from "../../Redux/UsersReducer";
 import React from "react";
 import axios from "axios";
@@ -15,8 +16,7 @@ import {Preloader} from "../Common/Preloader";
 
 export type UserPropsType = {
     users: UserType[]
-    follow: (userID: string) => void
-    unfollow: (userID: string) => void
+
     setUsers: (users: UserType[]) => void
     totalUserCount: number
     pageSize: number
@@ -25,7 +25,6 @@ export type UserPropsType = {
     setTotalUsersCount: (serverUserTotalCount: number) => void
     isFetching: boolean
     toggleIsFetching: (isFetching: boolean) => void
-    followingIsProgressHandler:(followingIsProgress: boolean, id:string) =>void
     followingArr: Array<string>
 }
 
@@ -51,6 +50,7 @@ export class UsersContainer extends React.Component<UserPropsType> {
             }
         )
     }
+
     render() {
 
         return (
@@ -63,12 +63,11 @@ export class UsersContainer extends React.Component<UserPropsType> {
                         totalUserCount={this.props.totalUserCount}
                         pageSize={this.props.pageSize}
                         users={this.props.users}
-                        follow={this.props.follow}
-                        unfollow={this.props.unfollow}
-                        followingIsProgressHandler={this.props.followingIsProgressHandler}
-                        followingArr={this.props.followingArr}
+                        followingInProgress={this.props.followingArr}
+                        followTC={unfollow}
+                        unfollowTC={follow}
                     />
-                   }
+                }
             </div>
         )
     }
@@ -88,10 +87,10 @@ let mapStateToProps = (state: AppRootState) => {
 let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         follow: (userID: string) => {
-            dispatch(followAC(userID))
+            dispatch(followSuccess(userID))
         },
         unfollow: (userID: string) => {
-            dispatch(unFollowAC(userID))
+            dispatch(unFollowSuccess(userID))
         },
         setUsers: (users: UserType[]) => {
             dispatch(setUsersAC(users))
@@ -105,8 +104,8 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
-        followingIsProgressHandler: (followingIsProgress:boolean, id: string) =>{
-            dispatch(isFollowingProgressAC(followingIsProgress, id))
+        followingIsProgressHandler: (followingIsProgress: boolean, id: string) => {
+            dispatch(toggleFollowingProgressAC(followingIsProgress, id))
         }
 
     }

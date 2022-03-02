@@ -24,10 +24,11 @@ export const userAPI = {
     getUserID(value:DataType){
         return instance.get(`profile/${value}`)
     },
-    postFollowUser(userID:string | undefined){
+    follow(userID:string | undefined){
         return instance.post(`follow/${userID}`)
     },
-    deleteUnFollowUser(userID:string | undefined){
+    unfollow(userID:string | undefined){
         return instance.delete(`follow/${userID}`)
     }
+
 }

@@ -1,17 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
-
 import {
-    followAC, isFollowingProgressAC,
-    setCurrentPageAC,
-    setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
-    unFollowAC,
-    UserType
+    follow, getUsersTC, onPageChangedCTC,
+    UserType, unfollow
 } from "../../Redux/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader";
-import {userAPI} from "../api";
 
 
 const UserContainerFC: FC = () => {
@@ -25,56 +20,38 @@ const UserContainerFC: FC = () => {
     const followingArr = useSelector<AppRootState, Array<string>>(state => state.UsersPage.following);
 
     useEffect(() => {
-        toggleIsFetchingAC(true);
-
-        userAPI.getUsers(currentPage, pageSize)
-            .then(response => {
-                dispatch(toggleIsFetchingAC(false));
-                dispatch(setUsersAC(response.data.items));
-                dispatch(setUsersTotalCountAC(response.data.totalCount));
-            });
-    },[currentPage, pageSize, dispatch])
+        dispatch(getUsersTC(currentPage, pageSize));
+    }, [currentPage, pageSize, dispatch])
 
     const onPageChanged = (pageNumber: number) => {
-
-        dispatch(toggleIsFetchingAC(true));
-        dispatch(setCurrentPageAC(pageNumber));
-        userAPI.getUsers(pageNumber, pageSize)
-            .then(response => {
-                dispatch(setUsersAC(response.data.items));
-                dispatch(setUsersTotalCountAC(response.data.totalCount));
-                dispatch(toggleIsFetchingAC(false));
-            }
-        )
+        dispatch(onPageChangedCTC(pageSize, pageNumber));
     }
-    const followHandler = (userID:string) => {
-        dispatch(followAC(userID));
-    }
+    const unfollowTC = (userID: string) => {
 
-    const unfollowHandler = (userID:string) => {
-        dispatch(unFollowAC(userID));
+        dispatch(unfollow(userID))
     }
+    const followTC = (userID: string) => {
 
-    const followingIsProgressHandler = (followingIsProgress: boolean, id:string) => {
-        dispatch(isFollowingProgressAC(followingIsProgress, id));
+        dispatch(follow(userID))
     }
-
     return (
         <div>
             {
                 isFetching ?
-                <Preloader/> :
-                <Users
-                    onPageChanged={onPageChanged}
-                    currentPage={currentPage}
-                    totalUserCount={totalUserCount}
-                    pageSize={pageSize}
-                    users={users}
-                    follow={followHandler}
-                    unfollow={unfollowHandler}
-                    followingIsProgressHandler={followingIsProgressHandler}
-                    followingArr={followingArr}
-                />
+                    <Preloader/> :
+                    <Users
+                        onPageChanged={onPageChanged}
+                        currentPage={currentPage}
+                        totalUserCount={totalUserCount}
+                        pageSize={pageSize}
+                        users={users}
+                        followTC={followTC}
+                        unfollowTC={unfollowTC}
+                        // follow={followHandler}
+                        // unfollow={unfollowHandler}
+                        // toggleFollowingProgress={toggleFollowingProgress}
+                        followingInProgress={followingArr}
+                    />
             }
         </div>
     )

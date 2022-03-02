@@ -1,21 +1,79 @@
 import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "./ProfileReducer";
 import {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
 import {setUserAC} from "./authReducer";
+import {userAPI} from "../components/api";
+import {Dispatch} from "redux";
+
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof updateNewMessageTextAC> |
-    ReturnType<typeof followAC> |
-    ReturnType<typeof unFollowAC> |
+    ReturnType<typeof followSuccess> |
+    ReturnType<typeof unFollowSuccess> |
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> |
     ReturnType<typeof setUsersTotalCountAC> |
     ReturnType<typeof toggleIsFetchingAC> |
     ReturnType<typeof setUserProfileAC> |
-    ReturnType<typeof setUserAC>|
-    ReturnType<typeof isFollowingProgressAC>
+    ReturnType<typeof setUserAC> |
+    ReturnType<typeof toggleFollowingProgressAC>
 
+
+export const getUsersTC = (currentPage: number, pageSize: number) => {
+
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        userAPI.getUsers(currentPage, pageSize)
+            .then(response => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(response.data.items));
+                dispatch(setUsersTotalCountAC(response.data.totalCount));
+            });
+    }
+}
+export const onPageChangedCTC = (pageSize: number, pageNumber: number) => {
+
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
+        dispatch(setCurrentPageAC(pageNumber));
+        userAPI.getUsers(pageNumber, pageSize)
+            .then(response => {
+                    dispatch(setUsersAC(response.data.items));
+                    dispatch(setUsersTotalCountAC(response.data.totalCount));
+                    dispatch(toggleIsFetchingAC(false));
+                }
+            )
+    }
+
+}
+
+export const follow = (userID: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowingProgressAC(true, userID));
+        userAPI.follow(userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followSuccess(userID));
+                }
+                dispatch(toggleFollowingProgressAC(false, userID));
+            })
+    }
+}
+
+export const unfollow = (userID: string) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleFollowingProgressAC(true, userID));
+        userAPI.unfollow(userID)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+
+                    dispatch(unFollowSuccess(userID));
+                }
+                dispatch(toggleFollowingProgressAC(false, userID));
+            })
+    }
+}
 export type LocationType = {
     city: string
     country: string
@@ -41,13 +99,13 @@ export type UsersType = {
     following: Array<string>
 }
 
-export const followAC = (userID: string) => {
+export const followSuccess = (userID: string) => {
     return {
         type: "FOLLOW",
         userID: userID,
     } as const
 }
-export const unFollowAC = (userID: string) => {
+export const unFollowSuccess = (userID: string) => {
     return {
         type: "UNFOLLOW",
         userID: userID,
@@ -78,8 +136,7 @@ export const toggleIsFetchingAC = (isFetching: boolean) => {
     } as const
 }
 
-export const isFollowingProgressAC = (followingIsProgress: boolean, userID:string) => {
-
+export const toggleFollowingProgressAC = (followingIsProgress: boolean, userID: string) => {
     return {
         type: "IS-FOLLOWING-PROGRESS",
         followingIsProgress: followingIsProgress,
@@ -102,7 +159,6 @@ export const userReducer = (state = initialState, action: ActionsTypes): UsersTy
         }
 
         case "UNFOLLOW": {
-
             return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)}
         }
 
@@ -122,8 +178,9 @@ export const userReducer = (state = initialState, action: ActionsTypes): UsersTy
             return {...state, isFetching: action.isFetching}
         }
 
-        case "IS-FOLLOWING-PROGRESS":{
-            return {...state,
+        case "IS-FOLLOWING-PROGRESS": {
+            return {
+                ...state,
                 following: action.followingIsProgress
                     ? [...state.following, action.userID]
                     : state.following.filter(id => id !== action.userID)
