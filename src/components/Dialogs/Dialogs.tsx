@@ -5,7 +5,6 @@ import {Message} from "./Message/Message";
 
 import {DialogsStateType} from "../../Redux/DialogsReducer";
 
-
 type DialogsPropsType = {
     DialogPage: DialogsStateType
     newMessageText: string
@@ -14,7 +13,6 @@ type DialogsPropsType = {
 }
 
 export function Dialogs(props: DialogsPropsType) {
-
     let newMessageText = React.createRef<HTMLTextAreaElement>();
 
     let DialogsPostOnchange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -26,7 +24,7 @@ export function Dialogs(props: DialogsPropsType) {
 
     }
 
-    let messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}
+    const messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}
                                                                          message={m.message}
                                                                          id={m.id}/>)
 

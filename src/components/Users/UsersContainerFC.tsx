@@ -7,6 +7,7 @@ import {
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader";
+import {WithAuthRedirect} from "../HOC/withAuthRedirect";
 
 
 const UserContainerFC: FC = () => {
@@ -18,6 +19,7 @@ const UserContainerFC: FC = () => {
     const currentPage = useSelector<AppRootState, number>(state => state.UsersPage.currentPage);
     const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalUserCount);
     const followingArr = useSelector<AppRootState, Array<string>>(state => state.UsersPage.following);
+    let Redirect= WithAuthRedirect(Users);
 
     useEffect(() => {
         dispatch(getUsersTC(currentPage, pageSize));
@@ -34,24 +36,20 @@ const UserContainerFC: FC = () => {
 
         dispatch(follow(userID))
     }
+
     return (
         <div>
             {
                 isFetching ?
                     <Preloader/> :
-                    <Users
-                        onPageChanged={onPageChanged}
-                        currentPage={currentPage}
-                        totalUserCount={totalUserCount}
-                        pageSize={pageSize}
-                        users={users}
-                        followTC={followTC}
-                        unfollowTC={unfollowTC}
-                        // follow={followHandler}
-                        // unfollow={unfollowHandler}
-                        // toggleFollowingProgress={toggleFollowingProgress}
-                        followingInProgress={followingArr}
-                    />
+                    <Redirect onPageChanged={onPageChanged}
+                                            currentPage={currentPage}
+                                            totalUserCount={totalUserCount}
+                                            pageSize={pageSize}
+                                            users={users}
+                                            followTC={followTC}
+                                            unfollowTC={unfollowTC}
+                                            followingInProgress={followingArr}/>
             }
         </div>
     )

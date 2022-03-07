@@ -11,7 +11,7 @@ type MyPostsPropsType = {
     newPostText: string
 }
 
-export function MyPosts(props: MyPostsPropsType) {
+export const MyPosts = React.memo((props: MyPostsPropsType)=> {
 
     let postsElements = props.postsData.map(p => <Post key={p.id}
                                                        message={p.message}
@@ -50,4 +50,4 @@ export function MyPosts(props: MyPostsPropsType) {
         </div>
 
     );
-}
+})

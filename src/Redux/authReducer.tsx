@@ -14,41 +14,42 @@ export type DataType = {
     email: null | string
     login: null | string
 }
-export type AuthType = {
+
+type InitialStateType =  {
     data: DataType
-    resultCode: number
-    messages: Array<any>
     isAuth: boolean
+    isFetching: boolean
 }
-const initialState: AuthType = {
-    data: {
-        id: 0,
-        email: "",
-        login: "",
-    },
-    resultCode: 0,
-    messages: [],
-    isAuth: false
+
+const initialState: InitialStateType = {
+    data: {} as DataType,
+    isAuth: false,
+    isFetching: true
 }
 export const authThunkCreator = () => {
-    return (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch) => {
+
         userAPI.getAuth()
-            .then(response => {
+            .then((response) => {
                 if (response.data.resultCode === 0) {
+
                     dispatch(setUserAC(response.data.data));
                     return response.data.data.id;
                 }
             })
-            .then((value: DataType) => userAPI.getUserID(value))
+            .then((value) => {
+                if(value) return userAPI.getUserID(value);
+            })
             .then(response => {
-                return (
+                if(response) return (
                     dispatch(setUserProfileAC(response.data))
                 )
             })
+
     }
 }
 
-export const authReducer = (state = initialState, action: AuthReducerType): AuthType => {
+export const authReducer = (state = initialState, action: AuthReducerType): InitialStateType => {
 
     switch (action.type) {
         case ACTIONS_TYPE.SET_USER_DATA: {
@@ -56,14 +57,17 @@ export const authReducer = (state = initialState, action: AuthReducerType): Auth
             return {
                 ...state,
                 data: action.data,
-                isAuth: true
+                isAuth: true,
+                isFetching: false,
             }
         }
         default:
             return state;
     }
 }
+
 export const setUserAC = (data: DataType) => {
+
     return {
         type: ACTIONS_TYPE.SET_USER_DATA,
         data: data,

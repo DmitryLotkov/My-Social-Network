@@ -1,4 +1,5 @@
 import React from "react";
+
 import {Profile} from "../Profile/Profile";
 import axios from "axios";
 import {connect} from "react-redux";
@@ -26,7 +27,7 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType>{
 
    render(){
        return (
-           <Profile profile={this.props.profile}/>
+           <Profile/>
        )
    }
 }
@@ -44,5 +45,6 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+
 
 

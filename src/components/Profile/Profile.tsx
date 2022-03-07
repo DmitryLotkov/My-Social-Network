@@ -4,17 +4,18 @@ import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPostsContainer";
 import {userProfileType} from "../../Redux/ProfileReducer";
 import commonStyle from "./../Common/boxStyle.module.css"
+import {useSelector} from "react-redux";
+import {AppRootState} from "../../Redux/reduxStore";
 
 
-export type ProfilePropsType = {
-   profile: userProfileType
-}
-export function Profile(props: ProfilePropsType){
+export const Profile = React.memo(() => {
 
-    return(
-            <div className={`${styles.content} ${commonStyle.mainBox}`}>
-                <ProfileInfo profile={props.profile}/>
-                <MyPostsContainer/>
-            </div>
+    const profile = useSelector<AppRootState, userProfileType>(state => state.ProfilePage.profile);
+
+    return (
+        <div className={`${styles.content} ${commonStyle.mainBox}`}>
+            <ProfileInfo profile={profile}/>
+            <MyPostsContainer/>
+        </div>
     );
-}
+})

@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from "./Header.module.css"
 import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {authThunkCreator} from "../../Redux/authReducer";
+import {useSelector} from "react-redux";
+
 import {AppRootState} from "../../Redux/reduxStore";
 
 import defaultUserPhoto from "../../Images/defaultUserImage.jpg";
@@ -11,14 +11,10 @@ import defaultUserPhoto from "../../Images/defaultUserImage.jpg";
 
 export function TopContainer() {
 
-    const dispatch = useDispatch();
+
     const login = useSelector<AppRootState, string | null>(state => state.auth.data.login);
     const isAuth = useSelector<AppRootState, boolean>(state => state.auth.isAuth);
     const photo = useSelector<AppRootState, string | undefined>(state => state.ProfilePage.profile.photos.small);
-
-    useEffect(() => {
-        dispatch(authThunkCreator());
-    }, [dispatch]);
 
     return (
         <div className={styles.container}>
