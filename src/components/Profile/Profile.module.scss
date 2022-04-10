@@ -1,0 +1,37 @@
+@import "src/components/Common/variables";
+.wrapper{
+    flex: 1;
+    border: 1px solid ;
+    padding: 15px 15px 6px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    img {
+        height: 200px;
+        border-radius: 4px;
+    }
+    .editableDiv{
+        width: 100%;
+        margin-bottom: 0.5rem;
+        font-size: inherit;
+
+    }
+    .editableDiv:hover{
+        background-color: $userWrapperColor;
+    }
+    .input{
+        width: 100%;
+        margin-bottom: 0.5rem;
+        outline: none;
+        border: 1px solid $userWrapperColor;
+        font-size: inherit;
+
+    }
+    .input:focus{
+        margin-bottom: 0.5rem;
+        border: 2px solid $userWrapperColor;
+        border-radius: 6px;
+    }
+}
+
+

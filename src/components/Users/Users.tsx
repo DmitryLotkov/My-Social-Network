@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from "react";
-import style from "./users.module.css";
+import style from "./users.module.scss";
 import userPhoto from "../../Images/defaultUserImage.jpg";
 import {UserType} from "../../Redux/UsersReducer";
 import Pagination from '@material-ui/lab/Pagination';
@@ -26,7 +26,7 @@ export function Users(props: UsersPresentationComponentType) {
     }
     const navigate = useNavigate();
 
-    return <div className={style.wrapper}>
+    return <div className={style.usersWrapper}>
         <Pagination color={"primary"}
                     onChange={onPageHandler}
                     size={"small"}
@@ -38,12 +38,12 @@ export function Users(props: UsersPresentationComponentType) {
         {props.users.map(u =>
 
             <div key={u.id}>
-                <div className={style.friendBlock}>
-                    <div className={style.avatarButton}>
+                <div className={style.usersBlock}>
+                    <div className={style.avatarAndFollowButton}>
                         <img onClick={() => navigate(`/profile/${u.id}`)}
                              className={style.avatar} src={u.photos.small ? u.photos.small : defaultUserPhoto}
                              alt={"user"}/>
-                        <span className={style.button}>
+                        <span>
                             {u.followed ?
                                 <button disabled={props.followingInProgress
                                     .some(id => id === u.id)}
@@ -64,15 +64,16 @@ export function Users(props: UsersPresentationComponentType) {
                             }
                             </span>
                     </div>
-                    <div className={style.inner}>
-                        <div className={style.nameStatus}>
-                            <div className={style.name}>{u.name}</div>
-                            <div className={style.status}>{`Status:  ${u.status ?? "no status"}`}</div>
-                        </div>
-                        <div className={style.location}>
+                    <div className={style.nameAndStatus}>
+                        <h3 className={style.name}>
+                            <div>{u.name}</div>
+                        </h3>
+                        <div className={style.status}>{`Status:  ${u.status ?? "no status"}`}</div>
+
+                        {/*<div className={style.location}>
                             <div className={style.country}>{"u.location.country"}</div>
                             <div>{"u.location.city"}</div>
-                        </div>
+                        </div>*/}
                     </div>
 
 

@@ -29,7 +29,7 @@ export function Dialogs(props: DialogsPropsType) {
                                                                          id={m.id}/>)
 
     return (
-        <div className={styles.AllMessages}>
+        <div className={styles.dialogsWrapper}>
             <div className={styles.dialogs}>
                 <DialogItem DialogPage={props.DialogPage}/>
             </div>

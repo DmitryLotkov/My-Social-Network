@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./Header.module.css"
+import styles from "./Header.module.scss"
 import {NavLink} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -8,24 +8,22 @@ import {AppRootState} from "../../Redux/reduxStore";
 import defaultUserPhoto from "../../Images/defaultUserImage.jpg";
 
 
-
 export function TopContainer() {
 
 
     const login = useSelector<AppRootState, string | null>(state => state.auth.data.login);
     const isAuth = useSelector<AppRootState, boolean>(state => state.auth.isAuth);
-    const photo = useSelector<AppRootState, string | undefined>(state => state.ProfilePage.profile.photos.small);
-
+    const myPhoto = useSelector<AppRootState, string | undefined>(state => state.ProfilePage.photo);
     return (
-        <div className={styles.container}>
+        <div className={styles.headerWrapper}>
 
-            <a className="navbar-brand" href={"index-register.html"}>
-                <img src={"https://themified.com/friend-finder/images/logo.png"} alt="logo"/>
-            </a>
+
+            <img src={"https://themified.com/friend-finder/images/logo.png"} alt="logo"/>
+
 
             {isAuth ?
                 <div className={styles.loginBlock}>
-                    <img className={styles.smallUserHeaderPhoto} src={photo ?? defaultUserPhoto} alt={"userPhoto"}/>
+                    <img className={styles.smallUserHeaderPhoto} src={myPhoto ?? defaultUserPhoto} alt={"userPhoto"}/>
                     {login}
                 </div> :
 

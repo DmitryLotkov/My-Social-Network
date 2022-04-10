@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import './App.scss';
 import {Header} from "./components/Header/Header";
 import {NavBar} from "./components/Navbar/Navbar";
 import {Route, Routes, Navigate} from "react-router-dom";
@@ -28,7 +28,7 @@ const App = React.memo(() => {
         fetching ?
             <Preloader/>
         :
-            <div>
+            <>
             <Header/>
             <div className={"mainContent"}>
                 <NavBar SideBar={state.SideBar}/>
@@ -44,7 +44,7 @@ const App = React.memo(() => {
                     <Route path={"/*"} element={<div>404</div>}/>
                 </Routes>
             </div>
-        </div>
+        </>
     );
 })
 

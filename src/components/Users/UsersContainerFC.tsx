@@ -13,11 +13,11 @@ import {WithAuthRedirect} from "../HOC/withAuthRedirect";
 const UserContainerFC: FC = () => {
 
     const dispatch = useDispatch();
-    const users = useSelector<AppRootState, UserType[]>((state) => state.UsersPage.users);
+    const users = useSelector<AppRootState, UserType[]>((state) => state.UsersPage.items);
     const isFetching = useSelector<AppRootState, boolean>(state => state.UsersPage.isFetching);
     const pageSize = useSelector<AppRootState, number>(state => state.UsersPage.pageSize);
     const currentPage = useSelector<AppRootState, number>(state => state.UsersPage.currentPage);
-    const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalUserCount);
+    const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalCount);
     const followingArr = useSelector<AppRootState, Array<string>>(state => state.UsersPage.following);
     let Redirect= WithAuthRedirect(Users);
 
@@ -38,7 +38,7 @@ const UserContainerFC: FC = () => {
     }
 
     return (
-        <div>
+        <>
             {
                 isFetching ?
                     <Preloader/> :
@@ -51,7 +51,7 @@ const UserContainerFC: FC = () => {
                                             unfollowTC={unfollowTC}
                                             followingInProgress={followingArr}/>
             }
-        </div>
+        </>
     )
 }
 export default UserContainerFC

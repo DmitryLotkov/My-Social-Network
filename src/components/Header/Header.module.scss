@@ -1,0 +1,61 @@
+.headerTopLevel {
+    background-color: #231F20;
+    margin-bottom: 1.5rem;
+    height: 4rem;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    .headerWrapper{
+        width: 65%;
+        /* padding-right: 10px;
+         padding-left: 10px;*/
+        margin-right: auto;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        border: 1px white solid;
+        justify-content: space-between;
+        .loginBlock{
+            display: flex;
+            width: 10rem;
+            justify-content: flex-end;
+            align-items: center;
+            color: white;
+            .smallUserHeaderPhoto{
+                width: 30px;
+                height: 30px;
+                border-radius: 15px;
+            }
+
+        }
+        img{
+            margin-right: 0.5rem;
+        }
+        .login {
+            text-decoration: none;
+            color: white;
+        }
+    }
+}
+/*.menu{
+    display: flex;
+    align-items: center;
+    background-color: #231F20;
+    height: 4rem;
+    position: fixed;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}*/
+
+/*
+.logo {
+    display: flex;
+    align-items: center;
+}
+*/
+

@@ -1,6 +1,6 @@
 import React from "react";
 import {UserType} from "../../Redux/UsersReducer";
-import style from "../Users/users.module.css"
+import style from "../Users/users.module.scss"
 import axios from "axios";
 import userPhoto from "../../Images/defaultUserImage.jpg";
 
@@ -61,8 +61,8 @@ export const UsersOld = (props: UserPropsType) => {
         <div className={style.wrapper}>
             {props.users.map(u =>
                 <div key={u.id}>
-                    <div className={style.friendBlock}>
-                        <div className={style.avatarButton}>
+                    <div className={style.usersWrapper}>
+                        <div className={style.avatarAndFollowButton}>
                             <img className={style.avatar} src={u.photos.small ? u.photos.small : defaultUserPhoto} alt={"user"}/>
                             <span className={style.button}>
                             {u.followed
@@ -75,7 +75,7 @@ export const UsersOld = (props: UserPropsType) => {
                             }
                             </span>
                         </div>
-                        <div className={style.inner}>
+                        <div className={style.nameAndStatus}>
                             <div className={style.nameStatus}>
                                 <div className={style.name}>{u.name}</div>
                                 <div className={style.status}>{`Status: ${u.status}`}</div>

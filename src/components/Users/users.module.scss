@@ -1,0 +1,77 @@
+@import "./../Common/variables";
+.usersWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: $userWrapperColor;
+  /*border: 1px solid red;*/
+  margin-left: 1rem;
+  padding: 15px 15px 6px;
+  flex-wrap: wrap;
+  flex: 1;
+
+  /*border: 1px solid black;*/
+
+  .usersBlock {
+    border: 1px solid $mainBackGroundColor;
+    display: flex;
+    width: 100%;
+    margin-top: 1rem;
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    flex-wrap: wrap;
+    flex: 1;
+    border-radius: 20px;
+    background-color: $userContainerColor;
+
+    .avatarAndFollowButton {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 1rem;
+      margin-left:0.5rem;
+      /*border: 1px solid black;*/
+
+      .avatar {
+        width: 80px;
+        border-radius: 40px;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .nameAndStatus {
+      /*border: 1px solid #6d6e71;*/
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      border-radius: 20px;
+
+      flex: 1;
+
+      .status {
+        font-size: 14px;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+        /* border: 1px solid black;*/
+      }
+
+      .name {
+        /*border: 1px solid black;*/
+        margin-left: 1rem;
+        margin-top: 1rem;
+      }
+    }
+
+  }
+
+}
+
+
+
+
+
+
+
+
+

@@ -1,17 +1,20 @@
 import React from "react";
-import styles from "./ProfileInfo.module.css"
-import {userProfileType} from "../../../../Redux/ProfileReducer";
-import defaultUserPhoto from "./../../../../Images/defaultUserImage.jpg"
+import styles from "./ProfileInfo.module.scss"
+import {
+    ProfileDataType,
+} from "../../../../Redux/ProfileReducer";
+import defaultUserPhoto from "./../../../../Images/defaultUserImage.jpg";
 import {ProfileStatus} from "../../ProfileStatus";
 
 type profileInfoPropsType = {
-    profile: userProfileType
+    profile: ProfileDataType
+
 }
 
 export const ProfileInfo = React.memo((props: profileInfoPropsType)=> {
 
     return (
-        <div className={styles.content}>
+        <div className={styles.wrapper}>
             <div className={styles.descriptionBlock}>
                 <img src={props.profile?.photos.large ?? defaultUserPhoto} alt={"userPhoto"}/>
             </div>
@@ -21,14 +24,14 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType)=> {
                     <ProfileStatus/>
                 </div>
                 <div className={styles.lookingForAJobDescription}>
-                    {props.profile.lookingForAJobDescription}
+                    Looking for a job status: { props.profile.lookingForAJobDescription}
                 </div>
                 <div className={styles.contacts}>
                     <span>contacts: </span>
-                    <a href={props.profile.contacts.facebook}>facebook</a>
-                    <a href={props.profile.contacts.instagram}>instagram</a>
-                    <a href={props.profile.contacts.youtube}>YouTube</a>
-                    <a href={props.profile.contacts.vk}>Vk</a>
+                    <div>facebook: {props.profile.contacts.facebook}</div>
+                    <div>instagram: {props.profile.contacts.instagram}</div>
+                    <div>YouTube: {props.profile.contacts.youtube}</div>
+                    <div>Vk: {props.profile.contacts.vk}</div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "./Navbar.module.css"
+import style from "./Navbar.module.scss"
 import chatStyles from "./ChatBlock.module.css"
 import {NavLink} from "react-router-dom";
 import {SideBarType} from "../OldComponents/OldStore";
@@ -18,23 +18,23 @@ export function NavBar(props: NavBarPropsType) {
                        avatar={f.avatar}/>
         </NavLink>)
     return (
-        <nav className={s.nav}>
-            <div className={s.NavItem}>
+        <nav className={style.navWrapper}>
+            <div className={style.NavItem}>
                 <NavLink  to={"/profile"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })} >Profile</NavLink>
             </div>
-            <div className={s.NavItem}>
+            <div className={style.NavItem}>
                 <NavLink to={"/dialogs"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Messages</NavLink>
             </div>
-            <div className={s.NavItem}>
+            <div className={style.NavItem}>
                 <NavLink to={"/events"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Events</NavLink>
             </div>
-            <div className={s.NavItem}>
+            <div className={style.NavItem}>
                 <NavLink to={"/photos"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Photos</NavLink>
             </div>
-            <div className={s.NavItem}>
+            <div className={style.NavItem}>
                 <NavLink to={"/users"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Find Friends</NavLink>
             </div>
-            <div className={s.NavItem}>
+            <div className={style.NavItem}>
                 <NavLink to={"/settings"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Settings</NavLink>
             </div>
 

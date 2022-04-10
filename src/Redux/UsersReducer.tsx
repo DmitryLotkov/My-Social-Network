@@ -1,23 +1,6 @@
-import {addPostActionAC, setUserProfileAC, updateNewPostTextAC} from "./ProfileReducer";
-import {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
-import {setUserAC} from "./authReducer";
-import {userAPI} from "../components/api";
+import {authAPI, userAPI} from "../components/api";
 import {Dispatch} from "redux";
-
-
-export type ActionsTypes = ReturnType<typeof addPostActionAC> |
-    ReturnType<typeof updateNewPostTextAC> |
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC> |
-    ReturnType<typeof followSuccess> |
-    ReturnType<typeof unFollowSuccess> |
-    ReturnType<typeof setUsersAC> |
-    ReturnType<typeof setCurrentPageAC> |
-    ReturnType<typeof setUsersTotalCountAC> |
-    ReturnType<typeof toggleIsFetchingAC> |
-    ReturnType<typeof setUserProfileAC> |
-    ReturnType<typeof setUserAC> |
-    ReturnType<typeof toggleFollowingProgressAC>
+import {ActionsTypes} from "./ActionsTypes";
 
 
 export const getUsersTC = (currentPage: number, pageSize: number) => {
@@ -51,7 +34,7 @@ export const onPageChangedCTC = (pageSize: number, pageNumber: number) => {
 export const follow = (userID: string) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgressAC(true, userID));
-        userAPI.follow(userID)
+        authAPI.follow(userID)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(followSuccess(userID));
@@ -64,7 +47,7 @@ export const follow = (userID: string) => {
 export const unfollow = (userID: string) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleFollowingProgressAC(true, userID));
-        userAPI.unfollow(userID)
+        authAPI.unfollow(userID)
             .then(response => {
                 if (response.data.resultCode === 0) {
 
@@ -89,11 +72,12 @@ export type UserType = {
     location: LocationType
     followed: boolean
     photos: PhotosType
+
 }
 export type UsersType = {
-    users: UserType[]
+    items: UserType[]
     pageSize: number
-    totalUserCount: number
+    totalCount: number
     currentPage: number
     isFetching: boolean
     following: Array<string>
@@ -126,7 +110,7 @@ export const setCurrentPageAC = (currentPage: number) => {
 export const setUsersTotalCountAC = (serverTotalUsersCount: number) => {
     return {
         type: "SET-TOTAL-USERS-COUNT",
-        totalUserCount: serverTotalUsersCount
+        totalCount: serverTotalUsersCount
     } as const
 }
 export const toggleIsFetchingAC = (isFetching: boolean) => {
@@ -145,9 +129,9 @@ export const toggleFollowingProgressAC = (followingIsProgress: boolean, userID: 
 }
 
 let initialState: UsersType = {
-    users: [],
+    items: [],
     pageSize: 7,
-    totalUserCount: 1,
+    totalCount: 1,
     currentPage: 1,
     isFetching: true,
     following: [],
@@ -155,15 +139,15 @@ let initialState: UsersType = {
 export const userReducer = (state = initialState, action: ActionsTypes): UsersType => {
     switch (action.type) {
         case "FOLLOW": {
-            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: true} : u)}
+            return {...state, items: state.items.map(u => u.id === action.userID ? {...u, followed: true} : u)}
         }
 
         case "UNFOLLOW": {
-            return {...state, users: state.users.map(u => u.id === action.userID ? {...u, followed: false} : u)}
+            return {...state, items: state.items.map(u => u.id === action.userID ? {...u, followed: false} : u)}
         }
 
         case "SET-USERS": {
-            return {...state, users: action.users}
+            return {...state, items: action.users}
         }
 
         case "SET-CURRENT-PAGE": {
@@ -171,7 +155,7 @@ export const userReducer = (state = initialState, action: ActionsTypes): UsersTy
         }
 
         case "SET-TOTAL-USERS-COUNT": {
-            return {...state, totalUserCount: action.totalUserCount}
+            return {...state, totalCount: action.totalCount}
         }
 
         case "IS-FETCHING": {

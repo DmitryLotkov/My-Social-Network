@@ -1,5 +1,5 @@
-import {ActionsTypes} from "../components/OldComponents/OldStore";
 import {v1} from "uuid";
+import {ActionsTypes} from "./ActionsTypes";
 
 export const addMessageAC = () => {
     return {
