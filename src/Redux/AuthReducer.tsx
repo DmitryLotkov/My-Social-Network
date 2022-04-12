@@ -1,13 +1,14 @@
 import {Dispatch} from "redux";
-import {authAPI, profileAPI} from "../components/api";
-import {setMyProfilePhotoAC, setUserProfileAC} from "./ProfileReducer";
+import {authAPI} from "../components/api";
 
+
+//types
 export enum ACTIONS_TYPE {
-    SET_USER_DATA = "SET_USER_DATA",
+    SET_USER_DATA = "SET-USER_DATA",
+    SET_AUTH = "SET-AUTH",
 }
 
-type AuthReducerType =
-    ReturnType<typeof setUserAC>
+type AuthReducerType = ReturnType<typeof setUserAC>| ReturnType<typeof setIsAuthInAC>
 
 export type AuthDataType = {
     id: null | number
@@ -19,42 +20,43 @@ type InitialStateType = {
     data: AuthDataType
     isAuth: boolean
     isFetching: boolean
-    resultCode: number
 }
 
 const initialState: InitialStateType = {
     data: {} as AuthDataType,
     isAuth: false,
     isFetching: true,
-    resultCode: 0,
 
 }
-export const authThunkCreator = () => {
-    return async (dispatch: Dispatch) => {
-
+//thunks
+export const authTC = () => {
+    return (dispatch: Dispatch) => {
         authAPI.getAuth()
             .then((response) => {
-
                 if (response.data.resultCode === 0) {
                     dispatch(setUserAC(response.data.data));
+                    dispatch(setIsAuthInAC(true))
                     return response.data.data.id; //тут мы достаем свой ID из объекта при аутенфикации в соц. сети
                 }
             })
-            .then(value => {
-
-                if (value) return profileAPI.getProfile(value); //тут мы отправляем этот ID в профайл, чтобы создать новый промис с типом userType
-            })                                                        //далее мы отправляем мой айди в setUserProfileAC, чтобы создать страницу своего профайла
-            .then(response => {                                       //а потом сохраняем данные с сервера с моим фотом из профайла в стейте
-                if (response) {
-
-                    dispatch(setUserProfileAC(response.data));
-                    dispatch(setMyProfilePhotoAC(response.data.photos.small));
-                }
+            .catch((err) =>{
+                dispatch(setIsAuthInAC(false))
+                console.log(err)
             })
 
     }
 }
 
+export const logOutTC = () =>{
+    return (dispatch: Dispatch) =>{
+        authAPI.logout().then( res =>{
+            if(res.data.resultCode === 0){
+                dispatch( dispatch(setIsAuthInAC(false)))
+            }
+        })
+
+    }
+}
 export const authReducer = (state = initialState, action: AuthReducerType): InitialStateType => {
 
     switch (action.type) {
@@ -67,15 +69,28 @@ export const authReducer = (state = initialState, action: AuthReducerType): Init
                 isFetching: false,
             }
         }
+        case ACTIONS_TYPE.SET_AUTH:{
+            return {
+                ...state, isAuth:action.isAuth
+            }
+        }
+
         default:
             return state;
     }
 }
-
 export const setUserAC = (data: AuthDataType) => {
 
     return {
         type: ACTIONS_TYPE.SET_USER_DATA,
         data: data,
-    }
+    } as const
 }
+export const setIsAuthInAC = (isAuth: boolean) =>{
+    return {
+        type: ACTIONS_TYPE.SET_AUTH,
+        isAuth
+    } as const
+}
+
+

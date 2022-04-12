@@ -6,7 +6,7 @@ import {
 } from "../../Redux/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
-import {Preloader} from "../Common/Preloader";
+import {Preloader} from "../Common/Preloader/Preloader";
 import {WithAuthRedirect} from "../HOC/withAuthRedirect";
 
 

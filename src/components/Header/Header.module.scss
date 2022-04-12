@@ -1,61 +1,52 @@
+@import "src/components/Common/variables";
 .headerTopLevel {
-    background-color: #231F20;
+    background-color: $headerColor;
     margin-bottom: 1.5rem;
-    height: 4rem;
-    min-height: 50px;
+    height: 70px;
     display: flex;
     align-items: center;
     .headerWrapper{
+        min-width: 1000px;
         width: 65%;
-        /* padding-right: 10px;
-         padding-left: 10px;*/
         margin-right: auto;
         margin-left: auto;
         display: flex;
         align-items: center;
-        border: 1px white solid;
+        /*border: 1px white solid;*/
         justify-content: space-between;
+        .userName{
+            /*border: 1px solid red;*/
+        }
         .loginBlock{
             display: flex;
-            width: 10rem;
+
             justify-content: flex-end;
             align-items: center;
             color: white;
+            /*border: 1px solid black;*/
+            flex-wrap: wrap;
+
+
             .smallUserHeaderPhoto{
                 width: 30px;
                 height: 30px;
                 border-radius: 15px;
+                flex-grow: 1;
             }
 
         }
         img{
             margin-right: 0.5rem;
+            /*border: 1px solid black;*/
         }
         .login {
+            margin-left: 1rem;
             text-decoration: none;
             color: white;
+            /*width: 3.5rem;*/
+            /*border: 1px solid white;*/
         }
     }
 }
-/*.menu{
-    display: flex;
-    align-items: center;
-    background-color: #231F20;
-    height: 4rem;
-    position: fixed;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 0;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
-}*/
 
-/*
-.logo {
-    display: flex;
-    align-items: center;
-}
-*/
 

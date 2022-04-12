@@ -12,7 +12,7 @@ import {
 import React from "react";
 import axios from "axios";
 import {Users} from "../Users/Users";
-import {Preloader} from "../Common/Preloader";
+import {Preloader} from "../Common/Preloader/Preloader";
 
 export type UserPropsType = {
     users: UserType[]

@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
-import {updateUserStatusThunkCreator} from "../../Redux/ProfileReducer";
+import {updateUserStatusTC} from "../../Redux/ProfileReducer";
 
 
 export const ProfileStatus = React.memo(() => {
@@ -17,7 +17,7 @@ export const ProfileStatus = React.memo(() => {
         setEditMode(false);
     }
     const deactivateEditMode = () => {
-        dispatch(updateUserStatusThunkCreator(localStatus));
+        dispatch(updateUserStatusTC(localStatus));
         setEditMode(true);
     }
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {

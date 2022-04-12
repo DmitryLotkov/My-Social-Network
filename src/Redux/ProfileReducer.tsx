@@ -4,12 +4,13 @@ import {profileAPI} from "../components/api";
 import {ActionsTypes} from "./ActionsTypes";
 
 
-
 export enum ACTIONS_TYPE {
     SET_PROFILE = "SET-PROFILE",
     ADD_POST = "ADD-POST",
     SET_MY_PROFILE_PHOTO = "SET-MY-PROFILE_PHOTO",
     UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT",
+    SET_SOME_USER_PROFILE = "SET-SOME-USER-PROFILE",
+    SET_STATUS = "SET-STATUS"
 }
 
 type ProfilePageType = {
@@ -57,7 +58,7 @@ export const getProfileThunkCreator = (userId: number | undefined) => {
             })
     }
 }
-export const getUserStatusThunkCreator = (userId: number | undefined) => {
+export const getUserStatusTC = (userId: number | undefined) => {
     return  (dispatch: Dispatch) => {
 
         profileAPI.getStatus(userId)
@@ -73,7 +74,7 @@ export const getUserStatusThunkCreator = (userId: number | undefined) => {
     }
 }
 
-export const updateUserStatusThunkCreator = (status: string) => {
+export const updateUserStatusTC = (status: string) => {
     return (dispatch: Dispatch) => {
 
         profileAPI.updateStatus(status)
@@ -90,30 +91,30 @@ export const updateUserStatusThunkCreator = (status: string) => {
 export const addPostActionAC = () => {
     return {
         type: ACTIONS_TYPE.ADD_POST,
-    }
+    } as const
 }
 export const updateNewPostTextAC = (text: string) => {
 
     return {
-        type: "UPDATE-NEW-POST-TEXT",
+        type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT,
         text
     } as const
 }
 export const setUserProfileAC = (profile: ProfileDataType) => {
     return {
-        type: "SET-SOME-USER-PROFILE",
+        type: ACTIONS_TYPE.SET_SOME_USER_PROFILE,
         profile
     } as const
 }
 export const setMyProfilePhotoAC = (photo: string | undefined) => {
     return {
-        type: "SET-MY-PROFILE_PHOTO",
+        type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO,
         photo
     } as const
 }
 export const setStatusAC = (status: string) => {
     return {
-        type: "SET-STATUS",
+        type: ACTIONS_TYPE.SET_STATUS,
         status
     } as const
 

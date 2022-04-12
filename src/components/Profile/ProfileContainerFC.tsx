@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {getProfileThunkCreator, getUserStatusThunkCreator} from "../../Redux/ProfileReducer";
+import {getProfileThunkCreator, getUserStatusTC} from "../../Redux/ProfileReducer";
 import {useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../HOC/withAuthRedirect";
 import {Profile} from "./Profile";
@@ -14,10 +14,11 @@ export const ProfileContainerFC: FC = React.memo(() => {
 
     useEffect(() => {
         dispatch(getProfileThunkCreator(userId));
-        dispatch(getUserStatusThunkCreator(userId));
+        dispatch(getUserStatusTC(userId));
     }, [userId, dispatch]);
 
     return <Redirect/>
+    // return <Profile/>
 
 })
 
