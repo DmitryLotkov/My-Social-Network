@@ -14,31 +14,20 @@
         align-items: center;
         /*border: 1px white solid;*/
         justify-content: space-between;
+
         .userName{
             /*border: 1px solid red;*/
         }
         .loginBlock{
             display: flex;
-
             justify-content: flex-end;
             align-items: center;
             color: white;
             /*border: 1px solid black;*/
             flex-wrap: wrap;
-
-
-            .smallUserHeaderPhoto{
-                width: 30px;
-                height: 30px;
-                border-radius: 15px;
-                flex-grow: 1;
-            }
-
+            cursor: pointer;
         }
-        img{
-            margin-right: 0.5rem;
-            /*border: 1px solid black;*/
-        }
+
         .login {
             margin-left: 1rem;
             text-decoration: none;

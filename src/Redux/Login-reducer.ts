@@ -48,7 +48,7 @@ export const loginTC = (data: LoginParamsType) => {
         authAPI.login(data).then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(loginAC(data));
-                dispatch(setIsAuthInAC(true))
+                dispatch(setIsAuthInAC("logged"))
             }
         })
     }

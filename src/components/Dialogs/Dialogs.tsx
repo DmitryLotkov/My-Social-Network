@@ -1,56 +1,33 @@
-import React, {ChangeEvent} from "react";
-import styles from "./Dialogs.module.css"
+import React, {useCallback} from "react";
+import styles from "./Dialogs.module.scss"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-
-import {DialogsStateType} from "../../Redux/DialogsReducer";
+import {addMessageAC, DialogsStateType} from "../../Redux/DialogsReducer";
+import {TextAreaForm} from "../Common/TextAreaForm/TextAreaForm";
+import {placeholderText} from "../Common/TextAreaForm/textAreaData";
+import {useDispatch} from "react-redux";
 
 type DialogsPropsType = {
     DialogPage: DialogsStateType
-    newMessageText: string
-    updateNewMessageText: (text: string) => void
-    addMessageText: () => void
 }
 
-export function Dialogs(props: DialogsPropsType) {
-    let newMessageText = React.createRef<HTMLTextAreaElement>();
-
-    let DialogsPostOnchange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewMessageText(e.currentTarget.value)
-    }
-    let addNewMessageText = () => {
-        props.addMessageText();
-        props.updateNewMessageText("");
-
-    }
-
+export const Dialogs = React.memo((props: DialogsPropsType)=> {
+    const dispatch = useDispatch();
     const messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}
-                                                                         message={m.message}
-                                                                         id={m.id}/>)
+                                                                           message={m.message}
+                                                                           id={m.id}/>)
+    const addMessage = useCallback((text: string) => {
+        dispatch(addMessageAC(text));
+    }, [dispatch]);
 
     return (
         <div className={styles.dialogsWrapper}>
-            <div className={styles.dialogs}>
                 <DialogItem DialogPage={props.DialogPage}/>
-            </div>
-            <div className={styles.sendMessage}>
-                <div className={styles.inputGroup}>
-                    <textarea className={styles.textArea}
-                              onChange={DialogsPostOnchange}
-                              value={props.newMessageText}
-                              autoFocus={true}
-                              ref={newMessageText}/>
-                </div>
-                <span>
-                    <button onClick={addNewMessageText}>Send</button>
-                </span>
-            </div>
-            <div className={styles.messages}>
-                <div>{messagesElements}</div>
-
-            </div>
+                {messagesElements}
+            <TextAreaForm callBack={addMessage}
+                          placeholderText={placeholderText.dialogsAreaText}/>
         </div>
 
 
     )
-}
+})

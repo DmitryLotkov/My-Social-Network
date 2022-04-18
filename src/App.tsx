@@ -10,40 +10,42 @@ import DialogContainerFC from "./components/Dialogs/DialogContainerFC";
 import {EventsContainer} from "./components/Events/EventsContainer";
 import PhotosContainer from "./components/Photos/PhotosContainer";
 import {useDispatch, useSelector} from "react-redux";
-import {authTC} from "./Redux/AuthReducer";
+import {authTC, checkAuthType} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
 
 
-const App:FC = () => {
-        const state = store.getState();
-        const dispatch = useDispatch<any>();
-        const isAuth = useSelector<AppRootState, boolean>(state => state.Auth.isAuth);
+const App: FC = () => {
+    const state = store.getState();
+    const dispatch = useDispatch();
+    const isAuth = useSelector<AppRootState, checkAuthType>(state => state.Auth.isAuth);
 
-        useEffect(() => {
-            dispatch(authTC());
-        }, [dispatch]);
-        /*if(!isAuth){
-            return <Navigate to={"/login"}/>
-        }*/
-        return (
-            <>
-                <Header/>
-                <div className={"mainContent"}>
-                    {isAuth && <NavBar SideBar={state.SideBar}/>}
-                    <Routes>
-                        <Route path={"/"} element={<Navigate to={'/profile/21748'}/>}/>
-                        <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
-                        <Route path={"/profile"} element={<Navigate to={'/profile/21748'}/>}/>
-                        <Route path={"/dialogs"} element={<DialogContainerFC/>}/>
-                        <Route path={"/events"} element={<EventsContainer/>}/>
-                        <Route path={"/photos"} element={<PhotosContainer/>}/>
-                        <Route path={"/users"} element={<UsersContainerFC/>}/>
-                        <Route path={"/*"} element={<div>404</div>}/>
-                    </Routes>
-                </div>
-            </>
-        );
+    useEffect(() => {
+        dispatch(authTC());
+    }, [dispatch]);
+
+    if (isAuth === "idle") {
+        return null;
     }
+
+    return (
+        <>
+            <Header/>
+            <div className={"mainContent"}>
+                {isAuth=== "logged" && <NavBar SideBar={state.SideBar}/>}
+                <Routes>
+                    <Route path={"/"} element={<Navigate to={'/profile/21748'}/>}/>
+                    <Route path={"/login"} element={<Login/>}/>
+                    <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
+                    <Route path={"/profile"} element={<Navigate to={'/profile/21748'}/>}/>
+                    <Route path={"/dialogs"} element={<DialogContainerFC/>}/>
+                    <Route path={"/events"} element={<EventsContainer/>}/>
+                    <Route path={"/photos"} element={<PhotosContainer/>}/>
+                    <Route path={"/users"} element={<UsersContainerFC/>}/>
+                    <Route path={"/*"} element={<div>404</div>}/>
+                </Routes>
+            </div>
+        </>
+    );
+}
 
 export default App;

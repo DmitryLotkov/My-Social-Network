@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./Photos.module.css";
+import styles from "./Photos.module.scss";
 import {WithAuthRedirect} from "../HOC/withAuthRedirect";
 import Photos from "./Photos";
 

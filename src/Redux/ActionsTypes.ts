@@ -4,7 +4,7 @@ import {
     setUserProfileAC,
     updateNewPostTextAC
 } from "./ProfileReducer";
-import {addMessageAC, updateNewMessageTextAC} from "./DialogsReducer";
+import {addMessageAC} from "./DialogsReducer";
 import {
     followSuccess,
     setCurrentPageAC,
@@ -18,7 +18,6 @@ import {loginAC} from "./Login-reducer";
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC>|
     ReturnType<typeof followSuccess>|
     ReturnType<typeof unFollowSuccess>|
     ReturnType<typeof setUsersAC>|

@@ -1,15 +1,14 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../components/api";
 
-
+export const myUserID = 21748;
 //types
 export enum ACTIONS_TYPE {
     SET_USER_DATA = "SET-USER_DATA",
     SET_AUTH = "SET-AUTH",
 }
-
+export type checkAuthType = "idle" | "logged" | "unLogged"
 type AuthReducerType = ReturnType<typeof setUserAC>| ReturnType<typeof setIsAuthInAC>
-
 export type AuthDataType = {
     id: null | number
     email: null | string
@@ -18,13 +17,13 @@ export type AuthDataType = {
 
 type InitialStateType = {
     data: AuthDataType
-    isAuth: boolean
+    isAuth: checkAuthType
     isFetching: boolean
 }
 
 const initialState: InitialStateType = {
     data: {} as AuthDataType,
-    isAuth: false,
+    isAuth: "idle",
     isFetching: true,
 
 }
@@ -35,12 +34,12 @@ export const authTC = () => {
             .then((response) => {
                 if (response.data.resultCode === 0) {
                     dispatch(setUserAC(response.data.data));
-                    dispatch(setIsAuthInAC(true))
+                    dispatch(setIsAuthInAC("logged"))
                     return response.data.data.id; //тут мы достаем свой ID из объекта при аутенфикации в соц. сети
                 }
             })
             .catch((err) =>{
-                dispatch(setIsAuthInAC(false))
+                dispatch(setIsAuthInAC("unLogged"))
                 console.log(err)
             })
 
@@ -51,7 +50,7 @@ export const logOutTC = () =>{
     return (dispatch: Dispatch) =>{
         authAPI.logout().then( res =>{
             if(res.data.resultCode === 0){
-                dispatch( dispatch(setIsAuthInAC(false)))
+                dispatch( dispatch(setIsAuthInAC("unLogged")))
             }
         })
 
@@ -65,7 +64,7 @@ export const authReducer = (state = initialState, action: AuthReducerType): Init
             return {
                 ...state,
                 data: action.data,
-                isAuth: true,
+                isAuth: "logged",
                 isFetching: false,
             }
         }
@@ -86,7 +85,7 @@ export const setUserAC = (data: AuthDataType) => {
         data: data,
     } as const
 }
-export const setIsAuthInAC = (isAuth: boolean) =>{
+export const setIsAuthInAC = (isAuth: checkAuthType) =>{
     return {
         type: ACTIONS_TYPE.SET_AUTH,
         isAuth

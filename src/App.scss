@@ -2,7 +2,7 @@
 
 
 body {
-  background-color: #edeef0;
+  background-color: $mainBackGroundColor;
   overflow-y: scroll;
 
   .mainContent {
@@ -17,6 +17,7 @@ body {
     flex-wrap: wrap;
     color: $textColor;
     min-width: 1000px;
+    max-height: 100vh;
   }
 }
 

@@ -1,0 +1,21 @@
+@import "src/components/Common/variables";
+.postBlock{
+    /*padding: 1rem;*/
+   /* border: 1px solid red;*/
+    background-color: $mainBackGroundColor;
+    border-radius: $messageBorderRadius;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .posts {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+}
+

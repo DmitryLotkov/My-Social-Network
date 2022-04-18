@@ -1,0 +1,68 @@
+@import "src/components/Common/variables";
+
+.dialogsWrapper {
+  flex-grow: 1;
+  width: 65%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: $containerColor;
+  box-sizing: border-box;
+
+  .dialogItemWrapper {
+    /*border: 1px solid black;*/
+    display: flex;
+    background-color: $dialogFirstMessageColor;
+    padding: 0.5rem;
+    border-radius: $messageBorderRadius;
+    align-items: center;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+
+    .userAvatarAndName {
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: $textColor;
+        margin-right: 1rem;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
+
+.messagesWrapper {
+  /*border: 1px solid black;*/
+  display: flex;
+  border-radius: $messageBorderRadius;
+  justify-content: flex-end;
+  background-color: $dialogSecondMessageColor;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.7rem;
+  box-sizing: border-box;
+
+  .dialogItem {
+    margin-right: 1rem;
+  }
+
+  div {
+    flex-direction: column !important;
+  }
+
+  img {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 30px !important;
+    margin-bottom: 0.5rem;
+  }
+}

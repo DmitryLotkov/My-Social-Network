@@ -1,5 +1,6 @@
 import React from "react";
-import styles from "./../Dialogs.module.css"
+import styles from "../Dialogs.module.scss"
+import {MyProfilePhoto} from "../../Common/MyProfilePhoto/MyProfilePhoto";
 
 
 export type MessageType = {
@@ -10,9 +11,9 @@ export type MessageType = {
 export function Message (props: MessageType) {
 
     return (
-        <div className={styles.messages}>
-           {props.message}
-
+        <div className={styles.messagesWrapper}>
+            <div className={styles.dialogItem}>{props.message}</div>
+            <MyProfilePhoto/>
         </div>
     );
 }

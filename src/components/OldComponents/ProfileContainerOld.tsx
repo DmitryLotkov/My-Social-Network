@@ -1,6 +1,4 @@
 import React from "react";
-
-import {Profile} from "../Profile/Profile";
 import axios from "axios";
 import {connect} from "react-redux";
 import {AppRootState} from "../../Redux/reduxStore";
@@ -8,13 +6,12 @@ import {setUserProfileAC, ProfileDataType} from "../../Redux/ProfileReducer";
 import {Dispatch} from "redux";
 
 
-
 export type ProfileContainerPropsType = {
     setUserProfile: (data: ProfileDataType) => void
     profile: ProfileDataType
 
 }
-class ProfileContainer extends React.Component<ProfileContainerPropsType>{
+class ProfileContainerOld extends React.Component<ProfileContainerPropsType>{
 
     componentDidMount(){
 
@@ -25,11 +22,11 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType>{
         )
     }
 
-   render(){
+   /*render(){
        return (
-           <Profile/>
+           <ProfileFC userID={myUserID}/>
        )
-   }
+   }*/
 }
 let mapStateToProps = (state: AppRootState) => ({
     profile: state.ProfilePage.profile
@@ -44,7 +41,7 @@ let mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainerOld)
 
 
 

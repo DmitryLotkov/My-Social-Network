@@ -2,7 +2,7 @@
 .usersWrapper {
   display: flex;
   flex-direction: column;
-  background-color: $userWrapperColor;
+  background-color: $mainBackGroundColor;
   /*border: 1px solid red;*/
   margin-left: 1rem;
   padding: 15px 15px 6px;
@@ -21,7 +21,7 @@
     flex-wrap: wrap;
     flex: 1;
     border-radius: 20px;
-    background-color: $userContainerColor;
+    background-color: $containerColor;
 
     .avatarAndFollowButton {
       display: flex;

@@ -1,8 +1,7 @@
 @import "./src/components/Common/variables";
 .navWrapper{
     padding: 20px;
-    grid-area: n;
-    background-color: $userWrapperColor;
+    background-color: $containerColor;
     text-align: left;
    /* border: 1px solid black;*/
     width: 15%;

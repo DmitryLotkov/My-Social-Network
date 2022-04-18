@@ -1,0 +1,25 @@
+@import "./src/components/Common/variables";
+.formWrapper{
+  display: flex;
+  align-items: center;
+  .textArea {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /*height: 100px;*/
+    font: inherit;
+    border-radius: 10px;
+    /*padding-left: 0.5rem;*/
+    resize: none;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid $mainBackGroundColor;
+    color: $textColor;
+    line-height: inherit;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    background-color: $containerColor;
+    margin-right: 1rem;
+  }
+}
+

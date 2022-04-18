@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../Redux/Login-reducer";
 import {Navigate, useNavigate} from "react-router-dom";
 import {AppRootState} from "../../Redux/reduxStore";
+import {checkAuthType} from "../../Redux/AuthReducer";
 
 
 export const Login = () => {
     const dispatch = useDispatch();
-
     const navigate = useNavigate()
     const formik = useFormik({
         validate: (values) => {
@@ -30,20 +30,19 @@ export const Login = () => {
             rememberMe: false,
         },
         onSubmit: values => {
-            alert("login in success");
             dispatch(loginTC(values));
             navigate('/profile/21748')
         }
     })
-    const isAuth = useSelector<AppRootState, boolean>(state => state.Auth.isAuth);
-    if (isAuth){
+    const isAuth = useSelector<AppRootState,checkAuthType>(state => state.Auth.isAuth);
+    if (isAuth === "logged"){
         return <Navigate to={"/profile"}/>
     }
 
     return (
 
         <div>
-            <h1> Login</h1>
+            <h1>Login</h1>
             <div>
                 <p>
                     To log in get registered <a href={"https://social-network.samuraijs.com/signUp"}>here</a>
@@ -63,13 +62,13 @@ export const Login = () => {
                     <input placeholder={"email"}
                            {...formik.getFieldProps("email")}/>
                 </div>
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                {formik.errors.email ? <div style={ {color:"red"}}>{formik.errors.email}</div> : null}
                 <div>
                     <input type={"password"}
                            placeholder={"Password"}
                            {...formik.getFieldProps("password")}/>
                 </div>
-                {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                {formik.errors.password ? <div style={ {color:"red"}}>{formik.errors.password}</div> : null}
                 <div>
                     <label>
                         <input type={"checkbox"}

@@ -12,10 +12,11 @@ export enum ACTIONS_TYPE {
     SET_SOME_USER_PROFILE = "SET-SOME-USER-PROFILE",
     SET_STATUS = "SET-STATUS"
 }
-
+export type PostTextType = {
+    text: string
+}
 type ProfilePageType = {
     postsData: Array<PostType>
-    NewPostText: string
     profile: ProfileDataType
     photo: string | undefined
     status: string
@@ -88,12 +89,13 @@ export const updateUserStatusTC = (status: string) => {
     }
 }
 
-export const addPostActionAC = () => {
+export const addPostActionAC = (data: string) => {
     return {
         type: ACTIONS_TYPE.ADD_POST,
+        data
     } as const
 }
-export const updateNewPostTextAC = (text: string) => {
+export const updateNewPostTextAC = (text: PostTextType) => {
 
     return {
         type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT,
@@ -120,11 +122,11 @@ export const setStatusAC = (status: string) => {
 
 }
 const initialState: ProfilePageType = {
-    NewPostText: "",
+
     postsData: [
-        {id: v1(), message: "How are you?", likesCount: 11},
-        {id: v1(), message: "What is your name?", likesCount: 16},
-        {id: v1(), message: "What are you waiting for?", likesCount: 11},
+        {id: v1(), message: "Do you have a job for me? What if I find it?", likesCount: 0},
+        {id: v1(), message: "I want to be a serious frontend developer.", likesCount: 0},
+        {id: v1(), message: "What is the good weather today,isn't it?", likesCount: 0},
     ],
     status: "",
     photo: "",
@@ -156,15 +158,15 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
         case ACTIONS_TYPE.ADD_POST: {
             return {
                 ...state,
-                postsData: [...state.postsData, {id: v1(), message: state.NewPostText, likesCount: 0}]
+                postsData: [...state.postsData, {id: v1(), message: action.data, likesCount: 0}]
             };
         }
-        case "UPDATE-NEW-POST-TEXT": {
-            return {
-                ...state,
-                NewPostText: action.text
-            };
-        }
+        // case "UPDATE-NEW-POST-TEXT": {
+        //     return {
+        //         ...state,
+        //         postText: action.text
+        //     };
+        // }
         case "SET-SOME-USER-PROFILE": {
             return {
                 ...state, profile: action.profile

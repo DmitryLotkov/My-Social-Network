@@ -1,27 +1,31 @@
-import styles from "../Dialogs.module.css";
+import styles from "../Dialogs.module.scss";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {DialogPageType} from "../../OldComponents/OldStore";
+import {DialogsStateType} from "../../../Redux/DialogsReducer";
+
 
 type DialogItemPropsType = {
-    DialogPage: DialogPageType
+    DialogPage: DialogsStateType
 }
 
 export function DialogItem(props: DialogItemPropsType) {
 
-    let dialogItem = props.DialogPage.dialogs.map(m => <div key={m.id}>
-            <img src={m.avatar}
-                 alt={"friendAvatar"}/>
-        <NavLink
-                 to={"/friendDialog/" + m.id}>{m.name}
-        </NavLink>
-
-    </div>
+    let dialogItem = props.DialogPage.dialogs.map(m =>
+        <div className={styles.dialogItemWrapper} key={m.id}>
+            <div className={styles.userAvatarAndName}>
+                <NavLink
+                    to={"/friendDialog/" + m.id}>
+                    <img src={m.avatar}
+                         alt={"friendAvatar"}/>
+                    {m.name}
+                </NavLink>
+            </div>
+            <div>{m.message}</div>
+        </div>
     )
     return (
-        <div className={styles.dialog + " " + styles.active}>
-
+        <>
             {dialogItem}
-        </div>
+        </>
     );
 }

@@ -1,5 +1,6 @@
+@import "./variables";
 .mainBox{
- background-color: #edeef0;
+ background-color: $mainBackGroundColor;
  width: 100%;
  border: 1px solid ;
  /*margin-left: 1rem;*/

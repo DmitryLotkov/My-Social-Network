@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import dialogsReducer from "../../Redux/DialogsReducer";
+import dialogsReducer, {DialogsStateType} from "../../Redux/DialogsReducer";
 
 import {ActionsTypes} from "../../Redux/ActionsTypes";
 
@@ -40,37 +40,38 @@ export type ProfilePageTypeOld = {
     postsData: Array<PostType>
     NewPostText: string
 }
-export type DialogPageType = {
+/*export type DialogPageType = {
     dialogs: Array<DialogsType>,
     messages: Array<MessagesType>
-    newMessageText: string
-}
+
+}*/
 export type RootStateType = {
-    DialogPage: DialogPageType,
+    DialogPage: DialogsStateType,
     ProfilePage: ProfilePageTypeOld,
     SideBar: SideBarType,
 }
 export let oldStore: StoreType = {
     _state: {
         DialogPage: {
-            newMessageText: "",
+
             dialogs: [
                 {
                     id: v1(),
                     name: "Dmitry Lomonosov",
-                    avatar: "https://themified.com/friend-finder/images/users/user-4.jpg"
+                    avatar: "https://themified.com/friend-finder/images/users/user-4.jpg",
+                    message: "la-la",
                 },
-                {id: v1(), name: "Sarah Konor", avatar: "https://themified.com/friend-finder/images/users/user-3.jpg"},
-                {
-                    id: v1(),
-                    name: "Anton Dovgalo",
-                    avatar: "https://themified.com/friend-finder/images/users/user-6.jpg"
-                },
-                {
-                    id: v1(),
-                    name: "Maya Vishnevskaya",
-                    avatar: "https://themified.com/friend-finder/images/users/user-2.jpg"
-                },
+                /* {id: v1(), name: "Sarah Konor", avatar: "https://themified.com/friend-finder/images/users/user-3.jpg"},
+                 {
+                     id: v1(),
+                     name: "Anton Dovgalo",
+                     avatar: "https://themified.com/friend-finder/images/users/user-6.jpg"
+                 },
+                 {
+                     id: v1(),
+                     name: "Maya Vishnevskaya",
+                     avatar: "https://themified.com/friend-finder/images/users/user-2.jpg"
+                 },*/
             ]
             ,
             messages: [

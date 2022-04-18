@@ -1,37 +1,32 @@
 import React from 'react';
 import styles from "./Header.module.scss"
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-
 import {AppRootState} from "../../Redux/reduxStore";
-
-import defaultUserPhoto from "../../Images/defaultUserImage.jpg";
-import {logOutTC} from "../../Redux/AuthReducer";
+import {checkAuthType, logOutTC} from "../../Redux/AuthReducer";
+import {MyProfilePhoto} from "../Common/MyProfilePhoto/MyProfilePhoto";
 
 
 export function TopContainer() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const login = useSelector<AppRootState, string | null>(state => state.Auth.data.login);
-    const isAuth = useSelector<AppRootState, boolean>(state => state.Auth.isAuth);
-    const myPhoto = useSelector<AppRootState, string | undefined>(state => state.ProfilePage.photo);
+    const isAuth = useSelector<AppRootState, checkAuthType>(state => state.Auth.isAuth);
 
     const logOutHandler = () =>{
         dispatch(logOutTC());
     }
+    const redirectToMyProfile = () => {
+        navigate("/profile/21748");
+    }
     return (
         <div className={styles.headerWrapper}>
-
 
             <img src={"https://templates.envytheme.com/zust/default/assets/images/logo.png"} alt="logo"/>
 
 
-            {isAuth ?
-                <div className={styles.loginBlock}>
-                    <img className={styles.smallUserHeaderPhoto} src={myPhoto || defaultUserPhoto} alt={"userPhoto"}/>
-                    <div className={styles.userName}>
-                        {login}
-                    </div>
+            {isAuth ==="logged" ?
+                <div className={styles.loginBlock} onClick={redirectToMyProfile}>
+                    <MyProfilePhoto/>
                     <div className={styles.login} onClick={logOutHandler}>
                         Log out
                     </div>
@@ -49,3 +44,4 @@ export function TopContainer() {
 
     )
 }
+

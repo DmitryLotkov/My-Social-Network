@@ -1,5 +1,5 @@
 import {addPostActionAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
-import {MyPosts} from "./MyPosts";
+import {MyPosts} from "../Profile/MyPosts";
 import {AppRootState} from "../../Redux/reduxStore";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
@@ -10,7 +10,7 @@ import {Dispatch} from "redux";
     oldStore: AppStoreType
 }*/
 
-/*export function MyPostsContainer(props: MyPostsPropsType) {
+/*export function MyPostsContainerOld(props: MyPostsPropsType) {
 
     let state = props.oldStore.getState();
 
@@ -34,20 +34,17 @@ import {Dispatch} from "redux";
 
 let mapStateToProps = (state:AppRootState) => {
     return {
-        newPostText: state.ProfilePage.NewPostText,
         postsData: state.ProfilePage.postsData,
     }
 }
 let mapDispatchToProps = (dispatch:Dispatch) =>{
     return {
-        updateNewPostText: (text: string) =>{
-            dispatch(updateNewPostTextAC(text));
-        },
+
         addPost: () => {
-            dispatch(addPostActionAC());
-            dispatch(updateNewPostTextAC(""));
+            dispatch(addPostActionAC(""));
+            dispatch(updateNewPostTextAC({text: ""}));
 
         }
     }
 }
-export const MyPostsContainer = connect (mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainerOld = connect (mapStateToProps, mapDispatchToProps)(MyPosts)

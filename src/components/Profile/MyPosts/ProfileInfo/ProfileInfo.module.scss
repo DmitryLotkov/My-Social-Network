@@ -1,11 +1,9 @@
-
-
-
+@import "./src/components/Common/variables";
 
 .wrapper {
   display: flex;
   align-items: flex-start;
-  background-color: #edeef0;
+  background-color: $mainBackGroundColor;
 
   .statusBlock {
     margin-left: 1rem;
@@ -13,7 +11,7 @@
     border: 1px solid;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: $containerColor;
     padding-left: 1rem;
     padding-right: 1rem;
     height: 200px;
@@ -26,7 +24,7 @@
       -moz-osx-font-smoothing: auto;
       overflow: hidden;
       text-overflow: ellipsis;
-      border-bottom: 1px solid #dce1e6;
+
     }
 
     .profileStatus {
@@ -38,12 +36,12 @@
       flex-direction: column;
       width: 300px;
       border: 1px solid;
-      background-color: #ffffff;
+      background-color: $containerColor;
 
     }
   }
   .descriptionBlock {
-    background-color: #ffffff;
+    background-color: $containerColor;
     margin-bottom: 1rem;
     height: 200px;
     border-radius: 5px;
