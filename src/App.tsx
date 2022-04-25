@@ -3,48 +3,54 @@ import './App.scss';
 import {Header} from "./components/Header/Header";
 import {NavBar} from "./components/Navbar/Navbar";
 import {Route, Routes, Navigate} from "react-router-dom";
-import {AppRootState, store} from "./Redux/reduxStore";
+import {AppRootStateType, store} from "./Redux/reduxStore";
 import UsersContainerFC from './components/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
 import DialogContainerFC from "./components/Dialogs/DialogContainerFC";
 import {EventsContainer} from "./components/Events/EventsContainer";
 import PhotosContainer from "./components/Photos/PhotosContainer";
 import {useDispatch, useSelector} from "react-redux";
-import {authTC, checkAuthType} from "./Redux/AuthReducer";
+import {initializeAppTC} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
+import {CircularProgress} from "@material-ui/core";
 
 
 const App: FC = () => {
+
     const state = store.getState();
     const dispatch = useDispatch();
-    const isAuth = useSelector<AppRootState, checkAuthType>(state => state.Auth.isAuth);
+    const userID = useSelector<AppRootStateType, number>(state => state.ProfilePage.profile.userId)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLoggedIn);
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.Auth.isInitialized);
 
     useEffect(() => {
-        dispatch(authTC());
+        dispatch(initializeAppTC());
     }, [dispatch]);
 
-    if (isAuth === "idle") {
-        return null;
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
     }
-
     return (
-        <>
+        <div className={"App"}>
             <Header/>
-            <div className={"mainContent"}>
-                {isAuth=== "logged" && <NavBar SideBar={state.SideBar}/>}
-                <Routes>
-                    <Route path={"/"} element={<Navigate to={'/profile/21748'}/>}/>
+            {isLoggedIn ? <div className={"mainContent"}>
+                <NavBar SideBar={state.SideBar}/>
+                 <Routes>
+                    <Route path={"/"} element={<Navigate to={`/profile/${userID}`}/>}/>
                     <Route path={"/login"} element={<Login/>}/>
                     <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
-                    <Route path={"/profile"} element={<Navigate to={'/profile/21748'}/>}/>
+                    <Route path={"/profile"} element={<Navigate to={`/profile/${userID}`}/>}/>
                     <Route path={"/dialogs"} element={<DialogContainerFC/>}/>
                     <Route path={"/events"} element={<EventsContainer/>}/>
                     <Route path={"/photos"} element={<PhotosContainer/>}/>
                     <Route path={"/users"} element={<UsersContainerFC/>}/>
                     <Route path={"/*"} element={<div>404</div>}/>
                 </Routes>
-            </div>
-        </>
+            </div> :<Login/>}
+        </div>
     );
 }
 

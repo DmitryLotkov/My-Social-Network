@@ -1,11 +1,17 @@
 @import "src/components/Common/variables";
-.headerTopLevel {
+.headerWrapper {
     background-color: $headerColor;
     margin-bottom: 1.5rem;
     height: 70px;
     display: flex;
     align-items: center;
-    .headerWrapper{
+    width: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    flex-grow: 1;
+
+
+    .headerContent{
         min-width: 1000px;
         width: 65%;
         margin-right: auto;

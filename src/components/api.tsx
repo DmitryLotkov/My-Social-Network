@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from "axios";
-
 import {UsersType} from "../Redux/UsersReducer";
 import {ProfileDataType} from "../Redux/ProfileReducer";
-import {AuthDataType} from "../Redux/AuthReducer";
+import {LoginParamsType} from "../Redux/AuthReducer";
+
 
 export const instance = axios.create({
     withCredentials: true,
@@ -11,11 +11,10 @@ export const instance = axios.create({
         "API-KEY": "3ca3376c-f1c7-42b6-b439-a7f59c674e78",
     }
 })
-export type LoginParamsType = {
-    email: string | undefined
-    password: string | undefined
-    rememberMe: boolean | undefined
-    captcha?: string | undefined
+export type AuthDataType = {
+    id:number,
+    email: string
+    login:string
 }
 type RespType<T = {}> = {
     resultCode: 0
@@ -31,10 +30,10 @@ export const userAPI = {
 }
 
 export const profileAPI = {
-    getProfile(userID: number | undefined) {
-        return instance.get<ProfileDataType>(`profile/ ${userID}`);
+    getProfile(userID: number | null) {
+        return instance.get<ProfileDataType>(`profile/${userID}`);
     },
-    getStatus(userID: number | undefined) {
+    getStatus(userID: number | null) {
 
         return instance.get<AxiosResponse<string>, any>(`profile/status/${userID}`);
     },
@@ -44,7 +43,7 @@ export const profileAPI = {
 }
 
 export const authAPI = {
-    getAuth() {
+    me() {
         return instance.get<RespType<AuthDataType>>(`auth/me`);
     },
     follow(userID: string | undefined) {
@@ -54,11 +53,10 @@ export const authAPI = {
         return instance.delete<RespType<AuthDataType>>(`follow/${userID}`);
     },
     login(data: LoginParamsType){
-        return instance.post<RespType<{userId?:number}>>(`auth/login`, data)
+        return instance.post<RespType<AuthDataType>>(`auth/login`, data);
     },
     logout(){
-
-        return instance.delete<RespType<{userId: number}>>('/auth/login')
+        return instance.delete<RespType>('/auth/login');
     }
 
 }

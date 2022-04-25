@@ -1,6 +1,6 @@
 import {addPostActionAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
 import {MyPosts} from "../Profile/MyPosts";
-import {AppRootState} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 
@@ -32,7 +32,7 @@ import {Dispatch} from "redux";
     );
 }*/
 
-let mapStateToProps = (state:AppRootState) => {
+let mapStateToProps = (state:AppRootStateType) => {
     return {
         postsData: state.ProfilePage.postsData,
     }

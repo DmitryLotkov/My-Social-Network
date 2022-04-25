@@ -1,19 +1,21 @@
 import React, {FC} from 'react';
 import {useSelector} from "react-redux";
-import {AppRootState} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 import {Dialogs} from "./Dialogs";
-import {WithAuthRedirect} from "../HOC/withAuthRedirect";
+
 import {DialogsStateType} from "../../Redux/DialogsReducer";
 
 
 
 const DialogContainerFC: FC = () => {
 
-    const dialogPage = useSelector<AppRootState, DialogsStateType>(state => state.DialogPage);
+    const dialogPage = useSelector<AppRootStateType, DialogsStateType>(state => state.DialogPage);
 
-    const Redirect = WithAuthRedirect(Dialogs)
+    // const Redirect = WithAuthRedirect(Dialogs);
     return (
-            <Redirect DialogPage={dialogPage}/>
+            /*<Redirect DialogPage={dialogPage}/>*/
+        <Dialogs DialogPage={dialogPage}/>
+
     );
 };
 /*compose<React.ComponentType>(

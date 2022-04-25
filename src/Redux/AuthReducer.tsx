@@ -1,95 +1,120 @@
 import {Dispatch} from "redux";
-import {authAPI} from "../components/api";
+import {authAPI, AuthDataType} from "../components/api";
+
+
 
 export const myUserID = 21748;
+
 //types
 export enum ACTIONS_TYPE {
-    SET_USER_DATA = "SET-USER_DATA",
-    SET_AUTH = "SET-AUTH",
+    AUTH_SET_IS_LOGGED_IN = "SET-IS-LOGGED-IN",
+    AUTH_SET_IS_INITIALIZED = "SET-IS-INITIALIZED",
+    AUTH_SET_PROFILE_DATA = "SET-PROFILE-DATA",
 }
-export type checkAuthType = "idle" | "logged" | "unLogged"
-type AuthReducerType = ReturnType<typeof setUserAC>| ReturnType<typeof setIsAuthInAC>
-export type AuthDataType = {
-    id: null | number
-    email: null | string
-    login: null | string
+
+
+/*type ThunkType = ThunkAction<void, AppRootStateType, unknown, AuthActionsType>*/
+
+export type AuthActionsType =
+    ReturnType<typeof setIsLoggedInAC>
+    | ReturnType<typeof setInitializedAC>
+    | ReturnType<typeof setAuthProfileAC>
+
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
 }
 
 type InitialStateType = {
-    data: AuthDataType
-    isAuth: checkAuthType
-    isFetching: boolean
+    data: AuthDataType,
+    isInitialized: boolean
+    isLoggedIn: boolean
 }
 
 const initialState: InitialStateType = {
-    data: {} as AuthDataType,
-    isAuth: "idle",
-    isFetching: true,
+    data: {
+        id: 0,
+        email: "",
+        login: ""
+    },
+    isInitialized: false,
+    isLoggedIn: false
 
 }
 //thunks
-export const authTC = () => {
+export const initializeAppTC = () => {
+
     return (dispatch: Dispatch) => {
-        authAPI.getAuth()
+        authAPI.me()
             .then((response) => {
                 if (response.data.resultCode === 0) {
-                    dispatch(setUserAC(response.data.data));
-                    dispatch(setIsAuthInAC("logged"))
-                    return response.data.data.id; //тут мы достаем свой ID из объекта при аутенфикации в соц. сети
+                    dispatch(setIsLoggedInAC(true));
+                    dispatch(setAuthProfileAC(response.data.data));
                 }
             })
-            .catch((err) =>{
-                dispatch(setIsAuthInAC("unLogged"))
-                console.log(err)
+            .catch((error: Error) => {
+                console.log(error.message)
+            })
+            .finally(() =>{
+                dispatch(setInitializedAC(true));
+            })
+    }
+}
+
+export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
+
+    authAPI.login(data)
+        .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(true));
+                }
+            }
+        )
+        .catch((error: Error) => {
+            console.log(error.message)
+        })
+}
+export const logOutTC = () => {
+    return (dispatch: Dispatch) => {
+        authAPI.logout()
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(false));
+                }
+            })
+            .catch((error: Error) => {
+                console.log(error.message);
             })
 
     }
 }
-
-export const logOutTC = () =>{
-    return (dispatch: Dispatch) =>{
-        authAPI.logout().then( res =>{
-            if(res.data.resultCode === 0){
-                dispatch( dispatch(setIsAuthInAC("unLogged")))
-            }
-        })
-
-    }
-}
-export const authReducer = (state = initialState, action: AuthReducerType): InitialStateType => {
-
+//reducer
+export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
-        case ACTIONS_TYPE.SET_USER_DATA: {
 
-            return {
-                ...state,
-                data: action.data,
-                isAuth: "logged",
-                isFetching: false,
-            }
-        }
-        case ACTIONS_TYPE.SET_AUTH:{
-            return {
-                ...state, isAuth:action.isAuth
-            }
-        }
+        case ACTIONS_TYPE.AUTH_SET_IS_LOGGED_IN:
+            return {...state, isLoggedIn: action.isLoggedIn}
+        case ACTIONS_TYPE.AUTH_SET_IS_INITIALIZED:
+            return {...state, isInitialized: action.isInitialized}
+        case ACTIONS_TYPE.AUTH_SET_PROFILE_DATA:
+            return {...state, data: action.data}
 
         default:
-            return state;
+            return state
     }
 }
-export const setUserAC = (data: AuthDataType) => {
+//action creators
+export const setIsLoggedInAC = (isLoggedIn: boolean) =>
+    ({type: ACTIONS_TYPE.AUTH_SET_IS_LOGGED_IN, isLoggedIn} as const);
 
-    return {
-        type: ACTIONS_TYPE.SET_USER_DATA,
-        data: data,
-    } as const
-}
-export const setIsAuthInAC = (isAuth: checkAuthType) =>{
-    return {
-        type: ACTIONS_TYPE.SET_AUTH,
-        isAuth
-    } as const
-}
+export const setInitializedAC = (isInitialized: boolean) =>
+    ({type: ACTIONS_TYPE.AUTH_SET_IS_INITIALIZED, isInitialized} as const);
+
+export const setAuthProfileAC = (profileData: AuthDataType) =>
+    ({type: ACTIONS_TYPE.AUTH_SET_PROFILE_DATA, data: profileData} as const);
+
 
 

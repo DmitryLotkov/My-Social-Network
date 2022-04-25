@@ -4,7 +4,11 @@
 body {
   background-color: $mainBackGroundColor;
   overflow-y: scroll;
-
+.App{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
   .mainContent {
     display: flex;
     overflow: auto;
@@ -18,6 +22,7 @@ body {
     color: $textColor;
     min-width: 1000px;
     max-height: 100vh;
+    box-sizing: border-box;
   }
 }
 

@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import {AppRootState} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 import {Dispatch} from "redux";
 import {
     followSuccess, toggleFollowingProgressAC,
@@ -73,7 +73,7 @@ export class UsersContainer extends React.Component<UserPropsType> {
     }
 }
 
-let mapStateToProps = (state: AppRootState) => {
+let mapStateToProps = (state: AppRootStateType) => {
     return {
         users: state.UsersPage.items,
         pageSize: state.UsersPage.pageSize,

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {AppRootState} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 import {setUserProfileAC, ProfileDataType} from "../../Redux/ProfileReducer";
 import {Dispatch} from "redux";
 
@@ -28,7 +28,7 @@ class ProfileContainerOld extends React.Component<ProfileContainerPropsType>{
        )
    }*/
 }
-let mapStateToProps = (state: AppRootState) => ({
+let mapStateToProps = (state: AppRootStateType) => ({
     profile: state.ProfilePage.profile
 })
 let mapDispatchToProps = (dispatch: Dispatch) => {

@@ -1,44 +1,47 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../../Redux/Login-reducer";
-import {Navigate, useNavigate} from "react-router-dom";
-import {AppRootState} from "../../Redux/reduxStore";
-import {checkAuthType} from "../../Redux/AuthReducer";
+import {loginTC} from "../../Redux/AuthReducer";
+import {AppRootStateType} from "../../Redux/reduxStore";
+import {Navigate} from "react-router-dom";
 
-
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
 export const Login = () => {
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLoggedIn);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
     const formik = useFormik({
         validate: (values) => {
+            const errors: FormikErrorType = {};
             if (!values.email) {
-                return {
-                    email: "Email is required"
-
-                }
+                errors.email = 'Required';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address';
+            }
+            if (values.password.length < 3) {
+                errors.password = "Invalid password length"
             }
             if (!values.password) {
-                return {
-                    password: "Password is required"
-                }
+                errors.password = "Password required"
             }
+            return errors;
         },
         initialValues: {
             email: "",
             password: "",
-            rememberMe: false,
+            rememberMe: true,
         },
         onSubmit: values => {
             dispatch(loginTC(values));
-            navigate('/profile/21748')
+            formik.resetForm();
         }
     })
-    const isAuth = useSelector<AppRootState,checkAuthType>(state => state.Auth.isAuth);
-    if (isAuth === "logged"){
-        return <Navigate to={"/profile"}/>
+    if(isLoggedIn){
+        return <Navigate to={"/"}/>
     }
-
     return (
 
         <div>
@@ -62,18 +65,20 @@ export const Login = () => {
                     <input placeholder={"email"}
                            {...formik.getFieldProps("email")}/>
                 </div>
-                {formik.errors.email ? <div style={ {color:"red"}}>{formik.errors.email}</div> : null}
+                {formik.touched.password &&formik.errors.email ? <div style={ {color:"red"}}>{formik.errors.email}</div> : null}
                 <div>
                     <input type={"password"}
                            placeholder={"Password"}
                            {...formik.getFieldProps("password")}/>
                 </div>
-                {formik.errors.password ? <div style={ {color:"red"}}>{formik.errors.password}</div> : null}
+                {formik.touched.password &&formik.errors.password ? <div style={ {color:"red"}}>{formik.errors.password}</div> : null}
                 <div>
                     <label>
                         <input type={"checkbox"}
                                {...formik.getFieldProps("rememberMe")}
-                               checked={formik.values.rememberMe}/> Remember me</label>
+                               checked={formik.values.rememberMe}/>
+                               Remember me
+                    </label>
                 </div>
                 <div>
                     <button type={"submit"}>Login</button>

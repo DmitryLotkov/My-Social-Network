@@ -2,16 +2,17 @@
 
 .dialogsWrapper {
   flex-grow: 1;
-  width: 65%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   background-color: $containerColor;
   box-sizing: border-box;
+  border: 1px solid red;
+  width: 65%;
 
-  .dialogItemWrapper {
-    /*border: 1px solid black;*/
+  .dialogItem {
+
     display: flex;
     background-color: $dialogFirstMessageColor;
     padding: 0.5rem;
@@ -53,10 +54,12 @@
 
   .dialogItem {
     margin-right: 1rem;
+    box-sizing: border-box;
   }
 
   div {
     flex-direction: column !important;
+    box-sizing: border-box !important;
   }
 
   img {

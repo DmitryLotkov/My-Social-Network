@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootState} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 import {
     follow, getUsersTC, onPageChangedCTC,
     UserType, unfollow
@@ -7,19 +7,19 @@ import {
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
-import {WithAuthRedirect} from "../HOC/withAuthRedirect";
+
 
 
 const UserContainerFC: FC = () => {
 
     const dispatch = useDispatch();
-    const users = useSelector<AppRootState, UserType[]>((state) => state.UsersPage.items);
-    const isFetching = useSelector<AppRootState, boolean>(state => state.UsersPage.isFetching);
-    const pageSize = useSelector<AppRootState, number>(state => state.UsersPage.pageSize);
-    const currentPage = useSelector<AppRootState, number>(state => state.UsersPage.currentPage);
-    const totalUserCount = useSelector<AppRootState, number>(state => state.UsersPage.totalCount);
-    const followingArr = useSelector<AppRootState, Array<string>>(state => state.UsersPage.following);
-    let Redirect= WithAuthRedirect(Users);
+    const users = useSelector<AppRootStateType, UserType[]>((state) => state.UsersPage.items);
+    const isFetching = useSelector<AppRootStateType, boolean>(state => state.UsersPage.isFetching);
+    const pageSize = useSelector<AppRootStateType, number>(state => state.UsersPage.pageSize);
+    const currentPage = useSelector<AppRootStateType, number>(state => state.UsersPage.currentPage);
+    const totalUserCount = useSelector<AppRootStateType, number>(state => state.UsersPage.totalCount);
+    const followingArr = useSelector<AppRootStateType, Array<string>>(state => state.UsersPage.following);
+    // let Redirect= WithAuthRedirect(Users);
 
     useEffect(() => {
         dispatch(getUsersTC(currentPage, pageSize));
@@ -42,7 +42,7 @@ const UserContainerFC: FC = () => {
             {
                 isFetching ?
                     <Preloader/> :
-                    <Redirect onPageChanged={onPageChanged}
+                    <Users onPageChanged={onPageChanged}
                                             currentPage={currentPage}
                                             totalUserCount={totalUserCount}
                                             pageSize={pageSize}

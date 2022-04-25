@@ -1,6 +1,6 @@
 import React from 'react';
 import style from "./Navbar.module.scss"
-import chatStyles from "./ChatBlock.module.css"
+import chatStyles from "./ChatBlock.module.scss"
 import {NavLink} from "react-router-dom";
 import {SideBarType} from "../OldComponents/OldStore";
 import {ChatBlock} from "./ChatBlock";

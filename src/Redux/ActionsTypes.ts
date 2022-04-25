@@ -13,7 +13,8 @@ import {
     toggleIsFetchingAC,
     unFollowSuccess
 } from "./UsersReducer";
-import {loginAC} from "./Login-reducer";
+
+
 
 export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof updateNewPostTextAC> |
@@ -27,8 +28,8 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof setUserProfileAC>|
     ReturnType<typeof toggleFollowingProgressAC>|
     ReturnType<typeof setMyProfilePhotoAC>|
-    ReturnType<typeof setStatusAC>|
-    ReturnType<typeof loginAC>
+    ReturnType<typeof setStatusAC>
+
 
 
 

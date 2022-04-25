@@ -2,6 +2,7 @@ import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../components/api";
 import {ActionsTypes} from "./ActionsTypes";
+import {myUserID} from "./AuthReducer";
 
 
 export enum ACTIONS_TYPE {
@@ -46,20 +47,22 @@ export type ProfileDataType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
     fullName: string | null
-    userId: number | undefined
+    userId: number
     photos: userProfilePhotosType
 
 }
-export const getProfileThunkCreator = (userId: number | undefined) => {
+export const getProfileThunkCreator = (userId: number | null) => {
     return (dispatch: Dispatch) => {
 
         profileAPI.getProfile(userId)
             .then(response => {
                 dispatch(setUserProfileAC(response.data));
-            })
+            }).catch(() =>{
+            console.log("Error in getProfile")
+        })
     }
 }
-export const getUserStatusTC = (userId: number | undefined) => {
+export const getUserStatusTC = (userId: number | null) => {
     return  (dispatch: Dispatch) => {
 
         profileAPI.getStatus(userId)
@@ -134,7 +137,7 @@ const initialState: ProfilePageType = {
         fullName: "",
         lookingForAJob: false,
         lookingForAJobDescription: "",
-        userId: undefined,
+        userId: myUserID,
         aboutMe: "",
         contacts: {
             facebook: "",
@@ -161,12 +164,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                 postsData: [...state.postsData, {id: v1(), message: action.data, likesCount: 0}]
             };
         }
-        // case "UPDATE-NEW-POST-TEXT": {
-        //     return {
-        //         ...state,
-        //         postText: action.text
-        //     };
-        // }
         case "SET-SOME-USER-PROFILE": {
             return {
                 ...state, profile: action.profile

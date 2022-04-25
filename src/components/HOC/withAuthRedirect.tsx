@@ -1,16 +1,15 @@
 import React from 'react';
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {AppRootState} from "../../Redux/reduxStore";
-import {checkAuthType} from "../../Redux/AuthReducer";
+import {AppRootStateType} from "../../Redux/reduxStore";
 
 
-export const WithAuthRedirect = (Component: React.ComponentType<any>) => {
+const WithAuthRedirect = (Component: React.ComponentType<any>) => {
 
-    const isAuth = useSelector<AppRootState, checkAuthType>(state => state.Auth.isAuth);
+    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.Auth.isInitialized);
 
     return (props:any) => {
-        if (isAuth === "unLogged") {
+        if (!isInitialized) {
             return <Navigate to={"/login"}/>
         }
         return <Component {...props}/>
