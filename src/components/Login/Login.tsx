@@ -4,18 +4,22 @@ import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../Redux/AuthReducer";
 import {AppRootStateType} from "../../Redux/reduxStore";
 import {Navigate} from "react-router-dom";
+import {setAppErrorAC} from "../../Redux/AppReducer";
 
 type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
 }
-export const Login = () => {
+export const Login = React.memo(() => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLoggedIn);
+    const serverError = useSelector<AppRootStateType, string>(state => state.App.error);
     const dispatch = useDispatch();
+
     const formik = useFormik({
         validate: (values) => {
-            const errors: FormikErrorType = {};
+            const errors: Partial<FormikErrorType> = {};
             if (!values.email) {
                 errors.email = 'Required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -27,21 +31,27 @@ export const Login = () => {
             if (!values.password) {
                 errors.password = "Password required"
             }
+
             return errors;
         },
         initialValues: {
             email: "",
             password: "",
-            rememberMe: true,
+            rememberMe: false,
         },
+
         onSubmit: values => {
             dispatch(loginTC(values));
-            formik.resetForm();
         }
     })
-    if(isLoggedIn){
+    if (isLoggedIn) {
         return <Navigate to={"/"}/>
     }
+
+    const removeError = () =>{
+        serverError && dispatch(setAppErrorAC(""));
+    }
+
     return (
 
         <div>
@@ -63,22 +73,27 @@ export const Login = () => {
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <input placeholder={"email"}
-                           {...formik.getFieldProps("email")}/>
+                           {...formik.getFieldProps("email")} onFocus={removeError}/>
                 </div>
-                {formik.touched.password &&formik.errors.email ? <div style={ {color:"red"}}>{formik.errors.email}</div> : null}
+                {formik.touched.password && formik.errors.email ?
+                    <div style={{color: "red"}}>{formik.errors.email}</div> : null}
                 <div>
                     <input type={"password"}
                            placeholder={"Password"}
-                           {...formik.getFieldProps("password")}/>
+                           {...formik.getFieldProps("password")}
+                           onFocus={removeError}/>
                 </div>
-                {formik.touched.password &&formik.errors.password ? <div style={ {color:"red"}}>{formik.errors.password}</div> : null}
+                {formik.touched.password && formik.errors.password ?
+                    <div style={{color: "red"}}>{formik.errors.password}</div> : null}
                 <div>
                     <label>
                         <input type={"checkbox"}
                                {...formik.getFieldProps("rememberMe")}
-                               checked={formik.values.rememberMe}/>
-                               Remember me
+                               checked={formik.getFieldProps("rememberMe").value}
+                        />
+                        Remember me
                     </label>
+                    {serverError && <div style={{color:"red"}}>{serverError}</div>}
                 </div>
                 <div>
                     <button type={"submit"}>Login</button>
@@ -86,5 +101,5 @@ export const Login = () => {
             </form>
         </div>
     );
-};
+});
 

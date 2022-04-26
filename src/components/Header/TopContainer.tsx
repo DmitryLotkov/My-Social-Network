@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../Redux/reduxStore";
 import {logOutTC} from "../../Redux/AuthReducer";
 import {MyProfilePhoto} from "../Common/MyProfilePhoto/MyProfilePhoto";
+import Button from "@mui/material/Button";
 
 
 export function TopContainer() {
@@ -22,9 +23,9 @@ export function TopContainer() {
             <img src={"https://templates.envytheme.com/zust/default/assets/images/logo.png"} alt="logo"/>
                 <div className={styles.loginBlock}>
                     {isLoggedIn &&<MyProfilePhoto/>}
-                    {isLoggedIn && <div className={styles.login} onClick={logOutHandler}>
+                    {isLoggedIn && <Button className={styles.login} onClick={logOutHandler}>
                         Log out
-                    </div>}
+                    </Button>}
                 </div>
         </div>
 

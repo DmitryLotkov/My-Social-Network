@@ -2,11 +2,12 @@ import React, {ChangeEvent} from "react";
 import style from "./users.module.scss";
 import userPhoto from "../../Images/defaultUserImage.jpg";
 import {UserType} from "../../Redux/UsersReducer";
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@mui/material/Pagination';
 import {useNavigate} from "react-router-dom";
+import Button from "@mui/material/Button";
 
 
-type UsersPresentationComponentType = {
+type usersPropsType = {
     totalUserCount: number
     pageSize: number
     currentPage: number
@@ -17,7 +18,7 @@ type UsersPresentationComponentType = {
     unfollowTC: (userID: string) => void
 }
 
-export function Users(props: UsersPresentationComponentType) {
+export function Users(props: usersPropsType) {
 
     const pagesCount = Math.ceil(props.totalUserCount / props.pageSize);
     const defaultUserPhoto: string = userPhoto;
@@ -45,22 +46,22 @@ export function Users(props: UsersPresentationComponentType) {
                              alt={"user"}/>
                         <span>
                             {u.followed ?
-                                <button disabled={props.followingInProgress
+                                <Button disabled={props.followingInProgress
                                     .some(id => id === u.id)}
                                         onClick={() => {
                                             //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
                                             props.unfollowTC(u.id)
                                         }
-                                        }>Unfollow</button>
+                                        }>Unfollow</Button>
 
-                                : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                                : <Button disabled={props.followingInProgress.some(id => id === u.id)}
                                           onClick={
                                               () => {
                                                   //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
                                                   //thunk creator нужен для связи DAL и BLL минуя UI
                                                   props.followTC(u.id)
                                               }
-                                          }>Follow</button>
+                                          }>Follow</Button>
                             }
                             </span>
                     </div>

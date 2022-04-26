@@ -12,7 +12,9 @@ import PhotosContainer from "./components/Photos/PhotosContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {initializeAppTC} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
-import {CircularProgress} from "@material-ui/core";
+
+import {Preloader} from "./components/Common/Preloader/Preloader";
+
 
 
 const App: FC = () => {
@@ -28,10 +30,7 @@ const App: FC = () => {
     }, [dispatch]);
 
     if (!isInitialized) {
-        return <div
-            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
-            <CircularProgress/>
-        </div>
+        return <Preloader/>
     }
     return (
         <div className={"App"}>

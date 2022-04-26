@@ -51,7 +51,7 @@ export type ProfileDataType = {
     photos: userProfilePhotosType
 
 }
-export const getProfileThunkCreator = (userId: number | null) => {
+export const getProfileTC = (userId: number | null) => {
     return (dispatch: Dispatch) => {
 
         profileAPI.getProfile(userId)

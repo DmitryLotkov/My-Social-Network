@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI, AuthDataType} from "../components/api";
-
+import {setAppErrorAC} from "./AppReducer";
 
 
 export const myUserID = 21748;
@@ -49,16 +49,17 @@ export const initializeAppTC = () => {
 
     return (dispatch: Dispatch) => {
         authAPI.me()
-            .then((response) => {
-                if (response.data.resultCode === 0) {
+            .then((res) => {
+                if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(true));
-                    dispatch(setAuthProfileAC(response.data.data));
+                    dispatch(setAuthProfileAC(res.data.data));
+
                 }
             })
             .catch((error: Error) => {
                 console.log(error.message)
             })
-            .finally(() =>{
+            .finally(() => {
                 dispatch(setInitializedAC(true));
             })
     }
@@ -70,6 +71,8 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
         .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(true));
+                } else {
+                    dispatch(setAppErrorAC(res.data.messages[0]))
                 }
             }
         )

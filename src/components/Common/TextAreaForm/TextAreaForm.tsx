@@ -3,6 +3,7 @@ import {useFormik} from "formik";
 import styles from "./TextAreaForm.module.scss";
 import {MyPostsPropsType} from "../../Profile/MyPosts";
 import {maxMessageLength} from "./textAreaData";
+import Button from "@mui/material/Button";
 
 
 
@@ -42,7 +43,7 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
                          autoFocus={true} onBlur={() => formik.errors.text = undefined}
             />
                 <div>
-                    <button type={"submit"}>Publish</button>
+                    <Button type={"submit"}>Publish</Button>
                 </div>
             </div>
             {formik.errors.text &&  <div style={{color: "red"}}> {formik.errors.text}</div>}
