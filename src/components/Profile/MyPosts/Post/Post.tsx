@@ -22,9 +22,9 @@ export function Post(props: MyPostsPropsType) {
             <div className={styles.userAndLoginBlock}>
                 <MyProfilePhoto/>
             </div>
-            <div>
+            <p>
                 {props.message}
-            </div>
+            </p>
             <div>
                 <span>Like: </span>{props.likeCount !== 0 ? props.likeCount : likesCount}
             </div>

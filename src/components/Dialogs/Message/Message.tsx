@@ -8,14 +8,14 @@ export type MessageType = {
     message: string
 }
 
-export function Message (props: MessageType) {
+export  const Message = React.memo((props: MessageType) =>{
 
     return (
         <div className={styles.messagesWrapper}>
-            <div className={styles.dialogItem}>{props.message}</div>
+            <p className={styles.dialogItem}>{props.message}</p>
             <MyProfilePhoto/>
         </div>
     );
-}
+})
 
 

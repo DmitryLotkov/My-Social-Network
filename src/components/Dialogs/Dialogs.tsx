@@ -11,7 +11,7 @@ type DialogsPropsType = {
     DialogPage: DialogsStateType
 }
 
-export const Dialogs = React.memo((props: DialogsPropsType)=> {
+export const Dialogs = React.memo((props: DialogsPropsType) => {
     const dispatch = useDispatch();
     const messagesElements = props.DialogPage.messages.map((m) => <Message key={m.id}
                                                                            message={m.message}
@@ -22,8 +22,8 @@ export const Dialogs = React.memo((props: DialogsPropsType)=> {
 
     return (
         <div className={styles.dialogsWrapper}>
-                <DialogItem DialogPage={props.DialogPage}/>
-                {messagesElements}
+            <DialogItem DialogPage={props.DialogPage}/>
+            {messagesElements}
             <TextAreaForm callBack={addMessage}
                           placeholderText={placeholderText.dialogsAreaText}/>
         </div>

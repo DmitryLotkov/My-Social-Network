@@ -14,7 +14,7 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     let postsElements = props.postsData?.map(p => <Post key={p.id}
                                                         message={p.message}
-                                                        likeCount={p.likesCount}/>)
+                                                        likeCount={p.likesCount}/>).reverse()
     return <div className={styles.postBlock}>
         <h3>My posts</h3>
         <TextAreaForm placeholderText={props.placeholderText} callBack={props.callBack}/>

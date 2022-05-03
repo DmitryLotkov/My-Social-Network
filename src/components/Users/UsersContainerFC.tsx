@@ -1,24 +1,29 @@
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../Redux/reduxStore";
 import {
-    follow, getUsersTC, onPageChangedCTC,
-    UserType, unfollow
+    follow, getUsersTC, onPageChangedCTC, unfollow
 } from "../../Redux/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
+import {
+    currentPageSelector, followingArrSelector,
+    isFetchingSelector,
+    pageSizeSelector,
+    totalUserCountSelector,
+    usersSelector
+} from "../Common/Selectors/Selectors";
 
 
 
-const UserContainerFC: FC = () => {
+const UserContainerFC: FC = React.memo(() => {
 
     const dispatch = useDispatch();
-    const users = useSelector<AppRootStateType, UserType[]>((state) => state.UsersPage.items);
-    const isFetching = useSelector<AppRootStateType, boolean>(state => state.UsersPage.isFetching);
-    const pageSize = useSelector<AppRootStateType, number>(state => state.UsersPage.pageSize);
-    const currentPage = useSelector<AppRootStateType, number>(state => state.UsersPage.currentPage);
-    const totalUserCount = useSelector<AppRootStateType, number>(state => state.UsersPage.totalCount);
-    const followingArr = useSelector<AppRootStateType, Array<string>>(state => state.UsersPage.following);
+    const users = useSelector(usersSelector);
+    const isFetching = useSelector(isFetchingSelector);
+    const pageSize = useSelector(pageSizeSelector);
+    const currentPage = useSelector(currentPageSelector);
+    const totalUserCount = useSelector(totalUserCountSelector);
+    const followingArr = useSelector(followingArrSelector);
     // let Redirect= WithAuthRedirect(Users);
 
     useEffect(() => {
@@ -53,5 +58,5 @@ const UserContainerFC: FC = () => {
             }
         </>
     )
-}
+})
 export default UserContainerFC

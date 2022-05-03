@@ -10,7 +10,7 @@ type NavBarPropsType = {
     SideBar: SideBarType,
 }
 
-export function NavBar(props: NavBarPropsType) {
+export function SideBar(props: NavBarPropsType) {
 
     let onlineFriends = props.SideBar.onlineFriends.map((f) =>
         <NavLink key={f.id} to={"/friends" + f.id}>
@@ -19,7 +19,7 @@ export function NavBar(props: NavBarPropsType) {
                        avatar={f.avatar}/>
         </NavLink>)
     return (
-        <nav className={style.navWrapper}>
+        <aside className={style.sideWrapper}>
             <div className={style.NavItem}>
                 <NavLink  to={`/profile/${myUserID}`} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Profile</NavLink>
             </div>
@@ -43,7 +43,7 @@ export function NavBar(props: NavBarPropsType) {
                 <span className={chatStyles.Title}>Chat online</span>
                 {onlineFriends}
             </div>
-        </nav>
+        </aside>
     )
 }
 

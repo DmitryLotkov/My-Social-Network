@@ -37,10 +37,11 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
 
     return (
         <form  onSubmit={formik.handleSubmit}>
-            <div className={styles.formWrapper}><textarea className={styles.textArea} maxLength={1000}
+            <div className={styles.formWrapper}>
+                <textarea className={styles.textArea} maxLength={1000}
                          placeholder={props.placeholderText}
                          {...formik.getFieldProps("text")}
-                         autoFocus={true} onBlur={() => formik.errors.text = undefined}
+                         autoFocus={true} onBlur={() => formik.errors.text = ""}
             />
                 <div>
                     <Button type={"submit"}>Publish</Button>

@@ -1,15 +1,17 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../Redux/reduxStore";
 import {updateUserStatusTC} from "../../Redux/ProfileReducer";
+import {statusSelector, userIDSelector} from "../Common/Selectors/Selectors";
 
 
 export const ProfileStatus = React.memo(() => {
+
+
     const dispatch = useDispatch();
     const [editMode, setEditMode] = useState<boolean>(true);
-    const status = useSelector<AppRootStateType, string>(state => state.ProfilePage.status);
-    const userId = useSelector<AppRootStateType, number | null>(state => state.ProfilePage.profile.userId); //21748
+    const status = useSelector(statusSelector);
+    const userId = useSelector(userIDSelector); //21748
     const [localStatus, setLocalStatus] = useState(status);
 
     const activateEditMode = () => {

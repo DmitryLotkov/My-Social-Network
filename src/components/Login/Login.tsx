@@ -5,6 +5,14 @@ import {loginTC} from "../../Redux/AuthReducer";
 import {AppRootStateType} from "../../Redux/reduxStore";
 import {Navigate} from "react-router-dom";
 import {setAppErrorAC} from "../../Redux/AppReducer";
+import Grid from "@mui/material/Grid";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import FormGroup from "@mui/material/FormGroup";
 
 type FormikErrorType = {
     email: string
@@ -48,58 +56,68 @@ export const Login = React.memo(() => {
         return <Navigate to={"/"}/>
     }
 
-    const removeError = () =>{
+    const removeError = () => {
         serverError && dispatch(setAppErrorAC(""));
     }
 
     return (
 
-        <div>
-            <h1>Login</h1>
-            <div>
-                <p>
-                    To log in get registered <a href={"https://social-network.samuraijs.com/signUp"}>here</a>
-                </p>
-                <p>
-                    or use common test accounts credentials:
-                </p>
-                <p>
-                    Email: free@samuraijs.com
-                </p>
-                <p>
-                    Password: free
-                </p>
-            </div>
-            <form onSubmit={formik.handleSubmit}>
-                <div>
-                    <input placeholder={"email"}
-                           {...formik.getFieldProps("email")} onFocus={removeError}/>
-                </div>
-                {formik.touched.password && formik.errors.email ?
-                    <div style={{color: "red"}}>{formik.errors.email}</div> : null}
-                <div>
-                    <input type={"password"}
-                           placeholder={"Password"}
-                           {...formik.getFieldProps("password")}
-                           onFocus={removeError}/>
-                </div>
-                {formik.touched.password && formik.errors.password ?
-                    <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                <div>
-                    <label>
-                        <input type={"checkbox"}
-                               {...formik.getFieldProps("rememberMe")}
-                               checked={formik.getFieldProps("rememberMe").value}
-                        />
-                        Remember me
-                    </label>
-                    {serverError && <div style={{color:"red"}}>{serverError}</div>}
-                </div>
-                <div>
-                    <button type={"submit"}>Login</button>
-                </div>
-            </form>
-        </div>
+        <Grid container justifyContent={"center"}>
+            <Grid item justifyContent={'center'}>
+                <h1>Login</h1>
+                <FormControl>
+                    <FormLabel>
+                        <p>To log in get registered
+                            <a href={'https://social-network.samuraijs.com/'}
+                               rel="noreferrer" target={'_blank'}> here
+                            </a>
+                        </p>
+                        <p>or use common test account credentials:</p>
+                        <p>Email: free@samuraijs.com</p>
+                        <p>Password: free</p>
+                    </FormLabel>
+                    <form onSubmit={formik.handleSubmit}>
+                        <FormGroup>
+                            <TextField label="Email"
+                                       placeholder={"email"}
+                                       type="email"
+                                       margin="normal"
+                                       {...formik.getFieldProps("email")} onFocus={removeError}/>
+
+                            {formik.touched.password && formik.errors.email ?
+                                <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+
+                            <TextField type={"password"}
+                                       label="Password"
+                                       margin="normal"
+                                       placeholder={"Password"}
+                                       {...formik.getFieldProps("password")}
+                                       onFocus={removeError}/>
+
+                            {formik.touched.password && formik.errors.password ?
+                                <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+
+
+                            <FormControlLabel
+                                label={'Remember me'}
+                                control={<Checkbox/>}
+                                {...formik.getFieldProps("rememberMe")}
+                                checked={formik.getFieldProps("rememberMe").value}
+                            />
+
+
+                            {serverError && <div style={{color: "red"}}>{serverError}</div>}
+
+
+                            <Button variant={'contained'}
+                                    type={"submit"}>
+                                Login
+                            </Button>
+                        </FormGroup>
+                    </form>
+                </FormControl>
+            </Grid>
+        </Grid>
     );
 });
 
