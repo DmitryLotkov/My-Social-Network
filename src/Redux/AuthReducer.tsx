@@ -20,7 +20,6 @@ export type AuthActionsType =
     | ReturnType<typeof setInitializedAC>
     | ReturnType<typeof setAuthProfileAC>
 
-
 export type LoginParamsType = {
     email: string
     password: string
@@ -31,38 +30,40 @@ export type LoginParamsType = {
 type InitialStateType = {
     data: AuthDataType,
     isInitialized: boolean
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
+
 }
 
 const initialState: InitialStateType = {
     data: {
-        id: 0,
+        id: myUserID,
         email: "",
         login: ""
     },
     isInitialized: false,
-    isLoggedIn: false
+    isLoggedIn: false,
 
 }
 //thunks
 export const initializeAppTC = () => {
 
     return (dispatch: Dispatch) => {
-        authAPI.me()
-            .then((res) => {
-                if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true));
-                    dispatch(setAuthProfileAC(res.data.data));
 
-                }
-            })
-            .catch((error: Error) => {
-                console.log(error.message)
-            })
-            .finally(() => {
-                dispatch(setInitializedAC(true));
-            })
-    }
+            authAPI.me()
+                .then((res) => {
+                    if (res.data.resultCode === 0) {
+                        dispatch(setIsLoggedInAC(true));
+                        dispatch(setAuthProfileAC(res.data.data));
+                    }
+                })
+                .catch((error: Error) => {
+                    console.log(error.message)
+                })
+                .finally(() => {
+                    dispatch(setInitializedAC(true));
+                })
+        }
+
 }
 
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
@@ -118,6 +119,8 @@ export const setInitializedAC = (isInitialized: boolean) =>
 
 export const setAuthProfileAC = (profileData: AuthDataType) =>
     ({type: ACTIONS_TYPE.AUTH_SET_PROFILE_DATA, data: profileData} as const);
+
+
 
 
 

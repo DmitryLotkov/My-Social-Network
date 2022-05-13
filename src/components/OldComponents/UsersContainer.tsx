@@ -80,7 +80,7 @@ let mapStateToProps = (state: AppRootStateType) => {
         totalUserCount: state.UsersPage.totalCount,
         currentPage: state.UsersPage.currentPage,
         isFetching: state.UsersPage.isFetching,
-        userId: state.ProfilePage.profile.userId,
+        userId: state.Auth.data.id,
         followingIsProgress: state.UsersPage.following
     }
 }

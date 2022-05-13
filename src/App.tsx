@@ -24,7 +24,7 @@ const App: FC = () => {
     const userID = useSelector(userIDSelector)
     const isLoggedIn = useSelector(isLoggedInSelector);
     const isInitialized = useSelector(isInitializedSelector);
-
+    console.log("userID", userID)
     useEffect(() => {
         dispatch(initializeAppTC());
     }, [dispatch]);
@@ -32,23 +32,26 @@ const App: FC = () => {
     if (!isInitialized) {
         return <Preloader/>
     }
+
     return (
         <div className={"App"}>
             <Header/>
-            {isLoggedIn ? <div className={"mainContent"}>
+            { isLoggedIn ? <main className={"mainContent"}>
                 <SideBar SideBar={state.SideBar}/>
                  <Routes>
                     <Route path={"/"} element={<Navigate to={`/profile/${userID}`}/>}/>
                     <Route path={"/login"} element={<Login/>}/>
                     <Route path={"/profile/:userId"} element={<ProfileContainerFC/>}/>
-                    <Route path={"/profile"} element={<Navigate to={`/profile/${userID}`}/>}/>
+                    {/*<Route path={"/profile"} element={<Navigate to={`/profile/${userID}`}/>}/>*/}
                     <Route path={"/dialogs"} element={<DialogContainerFC/>}/>
                     <Route path={"/events"} element={<EventsContainer/>}/>
                     <Route path={"/photos"} element={<PhotosContainer/>}/>
                     <Route path={"/users"} element={<UsersContainerFC/>}/>
                     <Route path={"/*"} element={<div>404</div>}/>
                 </Routes>
-            </div> :<Login/>}
+                
+            </main> :
+                <Login/>}
         </div>
     );
 }

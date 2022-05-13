@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {profileAPI} from "../components/api";
 import {ActionsTypes} from "./ActionsTypes";
-import {myUserID} from "./AuthReducer";
+
 
 
 export enum ACTIONS_TYPE {
@@ -13,6 +13,7 @@ export enum ACTIONS_TYPE {
     SET_SOME_USER_PROFILE = "SET-SOME-USER-PROFILE",
     SET_STATUS = "SET-STATUS"
 }
+
 export type PostTextType = {
     text: string
 }
@@ -47,32 +48,30 @@ export type ProfileDataType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
     fullName: string | null
-    userId: number
     photos: userProfilePhotosType
 
 }
 export const getProfileTC = (userId: number | null) => {
     return (dispatch: Dispatch) => {
-
+        debugger
         profileAPI.getProfile(userId)
-            .then(response => {
-                dispatch(setUserProfileAC(response.data));
-            }).catch(() =>{
-            console.log("Error in getProfile")
+            .then(res => {
+                dispatch(setUserProfileAC(res.data));
+            }).catch(() => {
+            console.log("Error in getProfileTC")
         })
     }
 }
 export const getUserStatusTC = (userId: number | null) => {
-    return  (dispatch: Dispatch) => {
+    return (dispatch: Dispatch) => {
 
         profileAPI.getStatus(userId)
-
-            .then(res =>{
-                if(res.status === 200){
+            .then(res => {
+                if (res.status === 200) {
                     dispatch(setStatusAC(res.data));
                 }
-            }).catch(()=>{
-            console.log("Error in getStatus")
+            }).catch(() => {
+            console.log("Error in getUserStatusTC")
         });
 
     }
@@ -83,7 +82,7 @@ export const updateUserStatusTC = (status: string) => {
 
         profileAPI.updateStatus(status)
             .then(res => {
-                if(res.data.resultCode === 0){
+                if (res.data.resultCode === 0) {
                     dispatch(setStatusAC(status))
                 }
 
@@ -92,38 +91,13 @@ export const updateUserStatusTC = (status: string) => {
     }
 }
 
-export const addPostActionAC = (data: string) => {
-    return {
-        type: ACTIONS_TYPE.ADD_POST,
-        data
-    } as const
-}
-export const updateNewPostTextAC = (text: PostTextType) => {
+export const addPostActionAC = (data: string) => ({type: ACTIONS_TYPE.ADD_POST, data} as const)
+export const updateNewPostTextAC = (text: PostTextType) => ({type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, text} as const)
+export const setUserProfileAC = (profile: ProfileDataType) => ({type: ACTIONS_TYPE.SET_SOME_USER_PROFILE, profile} as const);
+export const setMyProfilePhotoAC = (photo: string | undefined) => ({type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO, photo} as const);
+export const setStatusAC = (status: string) => ({type: ACTIONS_TYPE.SET_STATUS, status} as const);
 
-    return {
-        type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT,
-        text
-    } as const
-}
-export const setUserProfileAC = (profile: ProfileDataType) => {
-    return {
-        type: ACTIONS_TYPE.SET_SOME_USER_PROFILE,
-        profile
-    } as const
-}
-export const setMyProfilePhotoAC = (photo: string | undefined) => {
-    return {
-        type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO,
-        photo
-    } as const
-}
-export const setStatusAC = (status: string) => {
-    return {
-        type: ACTIONS_TYPE.SET_STATUS,
-        status
-    } as const
 
-}
 const initialState: ProfilePageType = {
 
     postsData: [
@@ -135,9 +109,8 @@ const initialState: ProfilePageType = {
     photo: "",
     profile: {
         fullName: "",
-        lookingForAJob: false,
+        lookingForAJob: true,
         lookingForAJobDescription: "",
-        userId: myUserID,
         aboutMe: "",
         contacts: {
             facebook: "",

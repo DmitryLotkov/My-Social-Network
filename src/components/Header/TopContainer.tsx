@@ -17,7 +17,7 @@ export function TopContainer() {
         dispatch(logOutTC());
         navigate("/login")
     }
-
+    console.log("isLoggedIn", isLoggedIn)
     return (
         <div className={styles.headerContent}>
             <img src={"https://templates.envytheme.com/zust/default/assets/images/logo.png"} alt="logo"/>

@@ -6,7 +6,7 @@ export const statusSelector = (state:AppRootStateType):string =>{
     return state.ProfilePage.status;
 }
 export const userIDSelector = (state:AppRootStateType):number =>{
-    return state.ProfilePage.profile.userId;
+    return state.Auth.data.id;
 }
 export const postsDataSelector = (state:AppRootStateType):Array<PostType> =>{
     return state.ProfilePage.postsData;

@@ -4,7 +4,6 @@ import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
 import {addPostActionAC} from "../../Redux/ProfileReducer";
 import commonStyle from "../Common/boxStyle.module.scss"
 import {useDispatch, useSelector} from "react-redux";
-
 import {MyPosts} from "./MyPosts";
 import {myUserID} from "../../Redux/AuthReducer";
 import {placeholderText} from "../Common/TextAreaForm/textAreaData";
