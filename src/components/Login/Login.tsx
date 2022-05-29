@@ -84,7 +84,7 @@ export const Login = React.memo(() => {
                                        margin="normal"
                                        {...formik.getFieldProps("email")} onFocus={removeError}/>
 
-                            {formik.touched.password && formik.errors.email ?
+                            {formik.touched.email && formik.errors.email ?
                                 <div style={{color: "red"}}>{formik.errors.email}</div> : null}
 
                             <TextField type={"password"}
