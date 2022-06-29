@@ -15,7 +15,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
             });
     }
 }
-export const onPageChangedCTC = (pageSize: number, pageNumber: number) => {
+export const onPageChangedTC = (pageSize: number, pageNumber: number) => {
 
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFetchingAC(true));
@@ -95,12 +95,8 @@ export const unFollowSuccess = (userID: string) => {
         userID: userID,
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
-    return {
-        type: "SET-USERS",
-        users: users,
-    } as const
-}
+export const setUsersAC = (users: UserType[]) => ({type: "SET-USERS", users: users,} as const)
+
 export const setCurrentPageAC = (currentPage: number) => {
     return {
         type: "SET-CURRENT-PAGE",

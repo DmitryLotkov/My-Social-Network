@@ -3,15 +3,18 @@ import styles from "./Profile.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUserStatusTC} from "../../Redux/ProfileReducer";
 import {statusSelector, userIDSelector} from "../Common/Selectors/Selectors";
+import {myUserID} from "../../Redux/AuthReducer";
+
+import {useParams} from "react-router-dom";
 
 
 export const ProfileStatus = React.memo(() => {
 
-
+    const userId = Number(useParams<'userId'>().userId)
     const dispatch = useDispatch();
     const [editMode, setEditMode] = useState<boolean>(true);
     const status = useSelector(statusSelector);
-    const userId = useSelector(userIDSelector); //21748
+    const myUserId = useSelector(userIDSelector); //21748
     const [localStatus, setLocalStatus] = useState(status);
 
     const activateEditMode = () => {
@@ -30,21 +33,23 @@ export const ProfileStatus = React.memo(() => {
             deactivateEditMode();
         }
     }
-    if (editMode && userId !== 21748 ) {
+
+    if ( userId !== myUserID ) {
+
         return (
             <div>
                 {status}
             </div>
         )
     }
-    if(editMode && userId === 21748 && !status){
+    if(editMode && myUserId === myUserID && !status){
 
         return <div className={styles.editableDiv}
             onClick={activateEditMode}>
             {"Set status"}
         </div>
     }
-    if(editMode && userId === 21748){
+    if(editMode && myUserId === myUserID){
         return <div className={styles.editableDiv}
                     onClick={activateEditMode}>
             {status}
@@ -56,7 +61,6 @@ export const ProfileStatus = React.memo(() => {
                        onKeyPress={onKeyPressHandler}
                        onBlur={deactivateEditMode}
                        type="text"
-                       autoFocus={true}
                        value={localStatus}/>
 
 

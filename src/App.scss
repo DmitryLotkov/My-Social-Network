@@ -1,4 +1,4 @@
-@import "./src/components/Common/variables.scss";
+@import "././components/Common/variables";
 
 
 body {
@@ -16,7 +16,7 @@ body {
     padding-left: 10px;*/
     margin-right: auto;
     margin-left: auto;
-    border: 1px solid;
+    /*border: 1px solid;*/
     width: 65%;
     flex-wrap: wrap;
     color: $textColor;

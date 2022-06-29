@@ -1,9 +1,32 @@
 .preloaderContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 9999;
   display: flex;
   justify-content: center;
-  margin-top: 5rem;
-  margin-left: auto;
-  margin-right: auto;
+  align-items: center;
+}
+.preloaderContainer .progress {
+  animation: 1.1s infinite scaling;
+}
+.preloaderContainer .progress span {
+  color: #3644d9;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgb(154, 146, 199);
+}
+@keyframes scaling {
+  from {
+    transform: scale(1);
+    color: #434ee7;
+  }
+  50% {
+    transform: scale(1.5);
+    color: white;
+  }
 }
 
 /*# sourceMappingURL=Preloader.module.css.map */

@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
-    follow, getUsersTC, onPageChangedCTC, unfollow
+    follow, getUsersTC, onPageChangedTC, unfollow
 } from "../../Redux/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
@@ -25,13 +25,13 @@ const UserContainerFC: FC = React.memo(() => {
     const totalUserCount = useSelector(totalUserCountSelector);
     const followingArr = useSelector(followingArrSelector);
     // let Redirect= WithAuthRedirect(Users);
-
+    console.log(users)
     useEffect(() => {
         dispatch(getUsersTC(currentPage, pageSize));
     }, [currentPage, pageSize, dispatch])
 
     const onPageChanged = (pageNumber: number) => {
-        dispatch(onPageChangedCTC(pageSize, pageNumber));
+        dispatch(onPageChangedTC(pageSize, pageNumber));
     }
     const unfollowTC = (userID: string) => {
 

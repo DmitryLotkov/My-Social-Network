@@ -53,7 +53,7 @@ export type ProfileDataType = {
 }
 export const getProfileTC = (userId: number | null) => {
     return (dispatch: Dispatch) => {
-        debugger
+
         profileAPI.getProfile(userId)
             .then(res => {
                 dispatch(setUserProfileAC(res.data));

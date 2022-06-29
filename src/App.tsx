@@ -24,7 +24,7 @@ const App: FC = () => {
     const userID = useSelector(userIDSelector)
     const isLoggedIn = useSelector(isLoggedInSelector);
     const isInitialized = useSelector(isInitializedSelector);
-    console.log("userID", userID)
+
     useEffect(() => {
         dispatch(initializeAppTC());
     }, [dispatch]);
@@ -33,11 +33,12 @@ const App: FC = () => {
         return <Preloader/>
     }
 
+
     return (
         <div className={"App"}>
             <Header/>
-            { isLoggedIn ? <main className={"mainContent"}>
-                <SideBar SideBar={state.SideBar}/>
+            {/*{ isLoggedIn ?*/} <main className={"mainContent"}>
+            {isLoggedIn && <SideBar SideBar={state.SideBar}/>}
                  <Routes>
                     <Route path={"/"} element={<Navigate to={`/profile/${userID}`}/>}/>
                     <Route path={"/login"} element={<Login/>}/>
@@ -50,8 +51,8 @@ const App: FC = () => {
                     <Route path={"/*"} element={<div>404</div>}/>
                 </Routes>
                 
-            </main> :
-                <Login/>}
+            </main> {/*:
+                <Login/>}*/}
         </div>
     );
 }
