@@ -1,13 +1,9 @@
 import {v1} from "uuid";
 import {ActionsTypes} from "./ActionsTypes";
 
-export const addMessageAC = (text: string) => {
-    return {
-        type: "ADD-DIALOG-MESSAGE",
-        text
-    } as const
-}
 
+
+//types
 export type MessagesType = {
     id: string
     message: string
@@ -22,7 +18,7 @@ export type DialogsStateType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
 }
-let initialState: DialogsStateType = {
+const initialState: DialogsStateType = {
 
     dialogs: [
         {
@@ -37,7 +33,7 @@ let initialState: DialogsStateType = {
         {id: v1(), message: "Looks like it will be sunny tomorrow=)"}
     ]
 }
-
+//reducer
 const dialogsReducer = (state: DialogsStateType = initialState, action: ActionsTypes): DialogsStateType => {
     switch (action.type) {
         case "ADD-DIALOG-MESSAGE": {
@@ -52,4 +48,8 @@ const dialogsReducer = (state: DialogsStateType = initialState, action: ActionsT
     }
 
 }
+
+//action creators
+export const addMessageAC = (text: string) => ({type: "ADD-DIALOG-MESSAGE", text} as const)
+
 export default dialogsReducer;

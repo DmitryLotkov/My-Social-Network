@@ -1,5 +1,5 @@
 import {
-    addPostActionAC,
+    addPostActionAC, deletePostAC,
     setMyProfilePhotoAC, setStatusAC,
     setUserProfileAC,
     updateNewPostTextAC
@@ -28,7 +28,8 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof setUserProfileAC>|
     ReturnType<typeof toggleFollowingProgressAC>|
     ReturnType<typeof setMyProfilePhotoAC>|
-    ReturnType<typeof setStatusAC>
+    ReturnType<typeof setStatusAC> |
+    ReturnType<typeof deletePostAC>
 
 
 

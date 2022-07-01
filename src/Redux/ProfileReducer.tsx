@@ -4,20 +4,21 @@ import {profileAPI} from "../components/api";
 import {ActionsTypes} from "./ActionsTypes";
 
 
-
+//types
 export enum ACTIONS_TYPE {
-    SET_PROFILE = "SET-PROFILE",
+    SET_PROFILE = "PROFILE/SET-PROFILE",
     ADD_POST = "ADD-POST",
-    SET_MY_PROFILE_PHOTO = "SET-MY-PROFILE_PHOTO",
-    UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT",
-    SET_SOME_USER_PROFILE = "SET-SOME-USER-PROFILE",
-    SET_STATUS = "SET-STATUS"
+    SET_MY_PROFILE_PHOTO = "PROFILE/SET-MY-PROFILE_PHOTO",
+    UPDATE_NEW_POST_TEXT = "PROFILE/UPDATE-NEW-POST-TEXT",
+    SET_SOME_USER_PROFILE = "PROFILE/SET-SOME-USER-PROFILE",
+    SET_STATUS = "PROFILE/SET-STATUS",
+    DELETE_POST = "PROFILE/DELETE-POST"
 }
 
 export type PostTextType = {
     text: string
 }
-type ProfilePageType = {
+export type ProfilePageType = {
     postsData: Array<PostType>
     profile: ProfileDataType
     photo: string | undefined
@@ -51,51 +52,20 @@ export type ProfileDataType = {
     photos: userProfilePhotosType
 
 }
-export const getProfileTC = (userId: number | null) => {
-    return (dispatch: Dispatch) => {
 
-        profileAPI.getProfile(userId)
-            .then(res => {
-                dispatch(setUserProfileAC(res.data));
-            }).catch(() => {
-            console.log("Error in getProfileTC")
-        })
-    }
-}
-export const getUserStatusTC = (userId: number | null) => {
-    return (dispatch: Dispatch) => {
-
-        profileAPI.getStatus(userId)
-            .then(res => {
-                if (res.status === 200) {
-                    dispatch(setStatusAC(res.data));
-                }
-            }).catch(() => {
-            console.log("Error in getUserStatusTC")
-        });
-
-    }
-}
-
-export const updateUserStatusTC = (status: string) => {
-    return (dispatch: Dispatch) => {
-
-        profileAPI.updateStatus(status)
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(setStatusAC(status))
-                }
-
-            })
-
-    }
-}
-
+//actions
 export const addPostActionAC = (data: string) => ({type: ACTIONS_TYPE.ADD_POST, data} as const)
 export const updateNewPostTextAC = (text: PostTextType) => ({type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, text} as const)
-export const setUserProfileAC = (profile: ProfileDataType) => ({type: ACTIONS_TYPE.SET_SOME_USER_PROFILE, profile} as const);
-export const setMyProfilePhotoAC = (photo: string | undefined) => ({type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO, photo} as const);
+export const setUserProfileAC = (profile: ProfileDataType) => ({
+    type: ACTIONS_TYPE.SET_SOME_USER_PROFILE,
+    profile
+} as const);
+export const setMyProfilePhotoAC = (photo: string | undefined) => ({
+    type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO,
+    photo
+} as const);
 export const setStatusAC = (status: string) => ({type: ACTIONS_TYPE.SET_STATUS, status} as const);
+export const deletePostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_POST, id} as const);
 
 
 const initialState: ProfilePageType = {
@@ -129,7 +99,7 @@ const initialState: ProfilePageType = {
             }
     }
 }
-const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case ACTIONS_TYPE.ADD_POST: {
             return {
@@ -137,23 +107,56 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionsTy
                 postsData: [...state.postsData, {id: v1(), message: action.data, likesCount: 0}]
             };
         }
-        case "SET-SOME-USER-PROFILE": {
-            return {
-                ...state, profile: action.profile
-            }
+        case ACTIONS_TYPE.SET_SOME_USER_PROFILE: {
+            return {...state, profile: action.profile}
         }
-        case "SET-MY-PROFILE_PHOTO": {
-            return {
-                ...state, photo: action.photo
-            }
+        case ACTIONS_TYPE.SET_MY_PROFILE_PHOTO: {
+            return {...state, photo: action.photo}
         }
-        case "SET-STATUS": {
-            return {
-                ...state, status: action.status
-            }
+        case ACTIONS_TYPE.SET_STATUS: {
+            return {...state, status: action.status}
         }
+        case ACTIONS_TYPE.DELETE_POST:
+            return {...state, postsData: state.postsData.filter(post => post.id !== action.id)}
         default:
             return state;
     }
 }
-export default profileReducer
+//thunks
+export const getProfileTC = (userId: number | null) => async (dispatch: Dispatch) => {
+
+    let res = await profileAPI.getProfile(userId);
+    try {
+        dispatch(setUserProfileAC(res.data));
+    } catch (error: any) {
+        console.log(error.message)
+    }
+
+}
+
+export const getUserStatusTC = (userId: number | null) => async (dispatch: Dispatch) => {
+
+    let res = await profileAPI.getStatus(userId);
+    try {
+        if (res.status === 200) {
+            dispatch(setStatusAC(res.data));
+        }
+    } catch (error: any) {
+        console.log(error.message)
+    }
+
+}
+
+
+export const updateUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
+
+    let res = await profileAPI.updateStatus(status)
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setStatusAC(status))
+        }
+    } catch (error: any) {
+        console.log(error.message)
+    }
+}
+

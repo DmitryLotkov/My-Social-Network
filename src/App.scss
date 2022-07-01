@@ -12,11 +12,8 @@ body {
   .mainContent {
     display: flex;
     overflow: auto;
-    /*padding-right: 10px;
-    padding-left: 10px;*/
     margin-right: auto;
     margin-left: auto;
-    /*border: 1px solid;*/
     width: 65%;
     flex-wrap: wrap;
     color: $textColor;

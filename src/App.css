@@ -1,0 +1,23 @@
+body {
+  background-color: #f4f7fc;
+  overflow-y: scroll;
+}
+body .App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+body .mainContent {
+  display: flex;
+  overflow: auto;
+  margin-right: auto;
+  margin-left: auto;
+  width: 65%;
+  flex-wrap: wrap;
+  color: #353535;
+  min-width: 1000px;
+  max-height: 100vh;
+  box-sizing: border-box;
+}
+
+/*# sourceMappingURL=App.css.map */

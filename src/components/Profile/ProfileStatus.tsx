@@ -1,21 +1,21 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {updateUserStatusTC} from "../../Redux/ProfileReducer";
 import {statusSelector, userIDSelector} from "../Common/Selectors/Selectors";
 import {myUserID} from "../../Redux/AuthReducer";
-
 import {useParams} from "react-router-dom";
+import {useAppSelector} from "../../Redux/reduxStore";
 
 
 export const ProfileStatus = React.memo(() => {
-
-    const userId = Number(useParams<'userId'>().userId)
     const dispatch = useDispatch();
-    const [editMode, setEditMode] = useState<boolean>(true);
-    const status = useSelector(statusSelector);
-    const myUserId = useSelector(userIDSelector); //21748
+    const status = useAppSelector(statusSelector);
+    const myUserId = useAppSelector(userIDSelector); //21748
+    const userId = Number(useParams<'userId'>().userId)
     const [localStatus, setLocalStatus] = useState(status);
+    const [editMode, setEditMode] = useState<boolean>(true);
+
 
     const activateEditMode = () => {
         setLocalStatus(status);
@@ -37,9 +37,9 @@ export const ProfileStatus = React.memo(() => {
     if ( userId !== myUserID ) {
 
         return (
-            <div>
+            <>
                 {status}
-            </div>
+            </>
         )
     }
     if(editMode && myUserId === myUserID && !status){

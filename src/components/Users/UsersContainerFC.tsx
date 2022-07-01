@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
     follow, getUsersTC, onPageChangedTC, unfollow
 } from "../../Redux/UsersReducer";
@@ -12,20 +12,21 @@ import {
     totalUserCountSelector,
     usersSelector
 } from "../Common/Selectors/Selectors";
+import {useAppSelector} from "../../Redux/reduxStore";
 
 
 
 const UserContainerFC: FC = React.memo(() => {
 
     const dispatch = useDispatch();
-    const users = useSelector(usersSelector);
-    const isFetching = useSelector(isFetchingSelector);
-    const pageSize = useSelector(pageSizeSelector);
-    const currentPage = useSelector(currentPageSelector);
-    const totalUserCount = useSelector(totalUserCountSelector);
-    const followingArr = useSelector(followingArrSelector);
+    const users = useAppSelector(usersSelector);
+    const isFetching = useAppSelector(isFetchingSelector);
+    const pageSize = useAppSelector(pageSizeSelector);
+    const currentPage = useAppSelector(currentPageSelector);
+    const totalUserCount = useAppSelector(totalUserCountSelector);
+    const followingArr = useAppSelector(followingArrSelector);
     // let Redirect= WithAuthRedirect(Users);
-    console.log(users)
+
     useEffect(() => {
         dispatch(getUsersTC(currentPage, pageSize));
     }, [currentPage, pageSize, dispatch])
@@ -33,12 +34,12 @@ const UserContainerFC: FC = React.memo(() => {
     const onPageChanged = (pageNumber: number) => {
         dispatch(onPageChangedTC(pageSize, pageNumber));
     }
-    const unfollowTC = (userID: string) => {
 
+    const unfollowTC = (userID: string) => {
         dispatch(unfollow(userID))
     }
-    const followTC = (userID: string) => {
 
+    const followTC = (userID: string) => {
         dispatch(follow(userID))
     }
 

@@ -18,12 +18,13 @@ type usersPropsType = {
     unfollowTC: (userID: string) => void
 }
 
-export function Users(props: usersPropsType) {
+export function Users({users, totalUserCount, currentPage, pageSize, onPageChanged, followingInProgress,
+                          unfollowTC, followTC}: usersPropsType) {
 
-    const pagesCount = Math.ceil(props.totalUserCount / props.pageSize);
+    const pagesCount = Math.ceil(totalUserCount / pageSize);
     const defaultUserPhoto: string = userPhoto;
     const onPageHandler = (event: ChangeEvent<unknown>, page: number) => {
-        props.onPageChanged(page);
+        onPageChanged(page);
     }
     const navigate = useNavigate();
 
@@ -34,32 +35,32 @@ export function Users(props: usersPropsType) {
                     variant={"outlined"}
                     shape="rounded"
                     count={pagesCount}
-                    page={props.currentPage}
+                    page={currentPage}
         />
-        {props.users.map(u =>
+        {users.map(user =>
 
-            <div key={u.id}>
+            <div key={user.id}>
                 <div className={style.usersBlock}>
                     <div className={style.avatarAndFollowButton}>
-                        <img onClick={() => navigate(`/profile/${u.id}`)}
-                             className={style.avatar} src={u.photos.small ? u.photos.small : defaultUserPhoto}
+                        <img onClick={() => navigate(`/profile/${user.id}`)}
+                             className={style.avatar} src={user.photos.small ? user.photos.small : defaultUserPhoto}
                              alt={"user"}/>
                         <span>
-                            {u.followed ?
-                                <Button disabled={props.followingInProgress
-                                    .some(id => id === u.id)}
+                            {user.followed ?
+                                <Button disabled={followingInProgress
+                                    .some(id => id === user.id)}
                                         onClick={() => {
                                             //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
-                                            props.unfollowTC(u.id)
+                                            unfollowTC(user.id)
                                         }
                                         }>Unfollow</Button>
 
-                                : <Button disabled={props.followingInProgress.some(id => id === u.id)}
+                                : <Button disabled={followingInProgress.some(id => id === user.id)}
                                           onClick={
                                               () => {
                                                   //ниже вызывается thunk creator из пропсов, в userContainerFC unfollowTC оборачивается dispatch
                                                   //thunk creator нужен для связи DAL и BLL минуя UI
-                                                  props.followTC(u.id)
+                                                  followTC(user.id)
                                               }
                                           }>Follow</Button>
                             }
@@ -67,17 +68,11 @@ export function Users(props: usersPropsType) {
                     </div>
                     <div className={style.nameAndStatus}>
                         <h3 className={style.name}>
-                            <div>{u.name}</div>
+                            <div>{user.name}</div>
                         </h3>
-                        <div className={style.status}>{`Status:  ${u.status ?? "no status"}`}</div>
+                        <div className={style.status}>{`Status:  ${user.status ?? "no status"}`}</div>
 
-                        {/*<div className={style.location}>
-                            <div className={style.country}>{"u.location.country"}</div>
-                            <div>{"u.location.city"}</div>
-                        </div>*/}
                     </div>
-
-
                 </div>
             </div>)}
     </div>

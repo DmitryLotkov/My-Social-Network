@@ -27,8 +27,7 @@ export const appReducer = (state: InitialStateType = initialState, action: AuthA
     }
 }
 //action creators
-export const setAppErrorAC = (error: string) =>
-    ({type: ACTIONS_TYPE.APP_SET_ERROR, error} as const);
+export const setAppErrorAC = (error: string) => ({type: ACTIONS_TYPE.APP_SET_ERROR, error} as const);
 
 
 

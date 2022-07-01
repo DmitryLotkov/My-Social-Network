@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../Redux/AuthReducer";
@@ -8,11 +8,16 @@ import {setAppErrorAC} from "../../Redux/AppReducer";
 import Grid from "@mui/material/Grid";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import FormGroup from "@mui/material/FormGroup";
+import {PATH} from "../../App";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {InputAdornment} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
 
 type FormikErrorType = {
     email: string
@@ -24,6 +29,7 @@ export const Login = React.memo(() => {
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLoggedIn);
     const serverError = useSelector<AppRootStateType, string>(state => state.App.error);
     const dispatch = useDispatch();
+    const [isPassType, setIsPassType] = useState<boolean>(true);
 
     const formik = useFormik({
         validate: (values) => {
@@ -45,7 +51,7 @@ export const Login = React.memo(() => {
         initialValues: {
             email: "",
             password: "",
-            rememberMe: false,
+            rememberMe: true,
         },
 
         onSubmit: values => {
@@ -53,13 +59,18 @@ export const Login = React.memo(() => {
         }
     })
     if (isLoggedIn) {
-        return <Navigate to={"/"}/>
+        return <Navigate to={PATH.HOME}/>
     }
 
     const removeError = () => {
         serverError && dispatch(setAppErrorAC(""));
     }
-
+    const handleClickShowPassword = () => {
+        setIsPassType(!isPassType);
+    };
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
     return (
 
         <Grid container justifyContent={"center"}>
@@ -78,16 +89,42 @@ export const Login = React.memo(() => {
                     </FormLabel>
                     <form onSubmit={formik.handleSubmit}>
                         <FormGroup>
-                            <TextField label="Email"
+                            <FormControl  sx={{mTop: 2, width: '35ch'}} variant="standard">
+                                <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
+                                <Input {...formik.getFieldProps("email")} onFocus={removeError}
+                                />
+                            </FormControl>
+                            {/*<TextField label="Email"
                                        placeholder={"email"}
                                        type="email"
                                        margin="normal"
-                                       {...formik.getFieldProps("email")} onFocus={removeError}/>
+                                       {...formik.getFieldProps("email")} onFocus={removeError}/>*/}
 
                             {formik.touched.email && formik.errors.email ?
                                 <div style={{color: "red"}}>{formik.errors.email}</div> : null}
 
-                            <TextField type={"password"}
+                            <FormControl sx={{mTop: 2, width: '35ch'}} variant="standard">
+                                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                                <Input {...formik.getFieldProps("password")}
+                                       id="standard-adornment-password"
+                                       type={isPassType ? 'password' : 'text'}
+                                       endAdornment={
+                                           <InputAdornment position="end">
+                                               <IconButton
+                                                   aria-label="toggle password visibility"
+                                                   onClick={handleClickShowPassword}
+                                                   onMouseDown={handleMouseDownPassword}
+                                               >
+                                                   {isPassType ? <VisibilityOff/> : <Visibility/>}
+                                               </IconButton>
+                                           </InputAdornment>
+                                       }
+
+                                />
+                                {formik.touched.password && formik.errors.password ?
+                                    <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                            </FormControl>
+                            {/*<TextField type={"password"}
                                        label="Password"
                                        margin="normal"
                                        placeholder={"Password"}
@@ -95,7 +132,7 @@ export const Login = React.memo(() => {
                                        onFocus={removeError}/>
 
                             {formik.touched.password && formik.errors.password ?
-                                <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                                <div style={{color: "red"}}>{formik.errors.password}</div> : null}*/}
 
 
                             <FormControlLabel

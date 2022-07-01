@@ -23,7 +23,6 @@ type RespType<T = {}> = {
     messages: Array<string>
 }
 export const userAPI = {
-
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<UsersType>(`users?page=${currentPage}&count=${pageSize}`);
     },

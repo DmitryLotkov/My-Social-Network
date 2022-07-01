@@ -13,8 +13,6 @@ export enum ACTIONS_TYPE {
 }
 
 
-/*type ThunkType = ThunkAction<void, AppRootStateType, unknown, AuthActionsType>*/
-
 export type AuthActionsType =
     ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setInitializedAC>
@@ -44,57 +42,7 @@ const initialState: InitialStateType = {
     isLoggedIn: false,
 
 }
-//thunks
-export const initializeAppTC = () => {
 
-    return (dispatch: Dispatch) => {
-
-            authAPI.me()
-                .then((res) => {
-                    if (res.data.resultCode === 0) {
-                        dispatch(setIsLoggedInAC(true));
-                        dispatch(setAuthProfileAC(res.data.data));
-                    }
-                })
-                .catch((error: Error) => {
-                    console.log(error.message)
-                })
-                .finally(() => {
-                    dispatch(setInitializedAC(true));
-                })
-        }
-
-}
-
-export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch) => {
-
-    authAPI.login(data)
-        .then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(true));
-                } else {
-                    dispatch(setAppErrorAC(res.data.messages[0]))
-                }
-            }
-        )
-        .catch((error: Error) => {
-            console.log(error.message)
-        })
-}
-export const logOutTC = () => {
-    return (dispatch: Dispatch) => {
-        authAPI.logout()
-            .then(res => {
-                if (res.data.resultCode === 0) {
-                    dispatch(setIsLoggedInAC(false));
-                }
-            })
-            .catch((error: Error) => {
-                console.log(error.message);
-            })
-
-    }
-}
 //reducer
 export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
@@ -120,6 +68,50 @@ export const setInitializedAC = (isInitialized: boolean) =>
 export const setAuthProfileAC = (profileData: AuthDataType) =>
     ({type: ACTIONS_TYPE.AUTH_SET_PROFILE_DATA, data: profileData} as const);
 
+//thunks
+export const initializeAppTC = () => async (dispatch: Dispatch) => {
+
+    let res = await authAPI.me();
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true));
+            dispatch(setAuthProfileAC(res.data.data));
+        }
+    } catch (error: any) {
+        console.log(error.message)
+    } finally {
+        dispatch(setInitializedAC(true));
+    }
+
+
+}
+
+
+export const loginTC = (data: LoginParamsType) => async (dispatch: Dispatch) => {
+
+    let res = await authAPI.login(data);
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true));
+        } else {
+            dispatch(setAppErrorAC(res.data.messages[0]))
+        }
+    } catch (error: any) {
+        console.log(error.message)
+    }
+
+
+}
+export const logOutTC = () => async (dispatch: Dispatch) => {
+    let res = await authAPI.logout();
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(false));
+        }
+    } catch (error: any) {
+        console.log(error.message);
+    }
+}
 
 
 
