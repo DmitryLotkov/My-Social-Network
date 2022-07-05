@@ -33,11 +33,11 @@ export const profileAPI = {
         return instance.get<ProfileDataType>(`profile/${userID}`);
     },
     getStatus(userID: number | null) {
-
         return instance.get<AxiosResponse<string>, any>(`profile/status/${userID}`);
     },
     updateStatus(status: string | null) {
-        return instance.put<AxiosResponse<RespType>,any>(`profile/status`, {status: status})
+
+        return instance.put<AxiosResponse<RespType>,any>(`profile/status`, {status})
     }
 }
 

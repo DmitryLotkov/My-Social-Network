@@ -20,13 +20,13 @@ type usersPropsType = {
 
 export function Users({users, totalUserCount, currentPage, pageSize, onPageChanged, followingInProgress,
                           unfollowTC, followTC}: usersPropsType) {
-
+    const navigate = useNavigate();
     const pagesCount = Math.ceil(totalUserCount / pageSize);
     const defaultUserPhoto: string = userPhoto;
     const onPageHandler = (event: ChangeEvent<unknown>, page: number) => {
         onPageChanged(page);
     }
-    const navigate = useNavigate();
+
 
     return <div className={style.usersWrapper}>
         <Pagination color={"primary"}
@@ -36,10 +36,11 @@ export function Users({users, totalUserCount, currentPage, pageSize, onPageChang
                     shape="rounded"
                     count={pagesCount}
                     page={currentPage}
+                    data-testid="pagination"
         />
         {users.map(user =>
 
-            <div key={user.id}>
+            <div key={user.id} data-testid="userArr">
                 <div className={style.usersBlock}>
                     <div className={style.avatarAndFollowButton}>
                         <img onClick={() => navigate(`/profile/${user.id}`)}

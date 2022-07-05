@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/reduxStore";
 
 
 const WithAuthRedirect = (Component: React.ComponentType<any>) => {

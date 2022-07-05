@@ -6,7 +6,6 @@ import {Route, Routes, Navigate} from "react-router-dom";
 import {store, useAppSelector} from "./Redux/reduxStore";
 import UsersContainerFC from './components/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
-import DialogContainerFC from "./components/Dialogs/DialogContainerFC";
 import {EventsContainer} from "./components/Events/EventsContainer";
 import PhotosContainer from "./components/Photos/PhotosContainer";
 import {useDispatch} from "react-redux";
@@ -14,7 +13,10 @@ import {initializeAppTC} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
 import {Preloader} from "./components/Common/Preloader/Preloader";
 import {isInitializedSelector, isLoggedInSelector, userIDSelector} from "./components/Common/Selectors/Selectors";
+import withSuspense from "./components/HOC/withSuspense";
 
+
+const DialogContainerFC = React.lazy(()=> import("./components/Dialogs/DialogContainerFC"));
 
 export const PATH = {
     HOME: "/",
@@ -27,6 +29,9 @@ export const PATH = {
     EVENTS:"/events",
     PHOTOS:"/photos"
 }
+
+
+
 const App: FC = () => {
 
     const state = store.getState();
@@ -44,6 +49,7 @@ const App: FC = () => {
     }
 
 
+
     return (
         <div className={"App"}>
             <Header/>
@@ -52,8 +58,8 @@ const App: FC = () => {
                  <Routes>
                     <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
-                    <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
-                    <Route path={PATH.DIALOGS} element={<DialogContainerFC/>}/>
+                    <Route path={`${PATH.PROFILE}/:userId`} element={withSuspense(ProfileContainerFC)({})}/>
+                    <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
                     <Route path={PATH.EVENTS} element={<EventsContainer/>}/>
                     <Route path={PATH.PHOTOS} element={<PhotosContainer/>}/>
                     <Route path={PATH.USERS} element={<UsersContainerFC/>}/>

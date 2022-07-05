@@ -3,10 +3,6 @@ import {Dispatch} from "redux";
 import {ActionsTypes} from "./ActionsTypes";
 
 //types
-export type LocationType = {
-    city: string
-    country: string
-}
 export type PhotosType = {
     small: string
     large: string
@@ -15,7 +11,6 @@ export type UserType = {
     id: string,
     name: string
     status: string
-    location: LocationType
     followed: boolean
     photos: PhotosType
 

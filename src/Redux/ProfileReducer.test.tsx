@@ -5,7 +5,7 @@ import {
     profileReducer,
     setStatusAC,
     setUserProfileAC
-} from "../Redux/ProfileReducer";
+} from "./ProfileReducer";
 
 let startState: ProfilePageType;
 beforeEach(() => {

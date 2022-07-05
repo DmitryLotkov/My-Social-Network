@@ -2,16 +2,15 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch} from "react-redux";
 import {updateUserStatusTC} from "../../Redux/ProfileReducer";
-import {statusSelector, userIDSelector} from "../Common/Selectors/Selectors";
+import {statusSelector} from "../Common/Selectors/Selectors";
 import {myUserID} from "../../Redux/AuthReducer";
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../Redux/reduxStore";
 
 
-export const ProfileStatus = React.memo(() => {
+export const ProfileStatus = () => {
     const dispatch = useDispatch();
     const status = useAppSelector(statusSelector);
-    const myUserId = useAppSelector(userIDSelector); //21748
     const userId = Number(useParams<'userId'>().userId)
     const [localStatus, setLocalStatus] = useState(status);
     const [editMode, setEditMode] = useState<boolean>(true);
@@ -37,23 +36,28 @@ export const ProfileStatus = React.memo(() => {
     if ( userId !== myUserID ) {
 
         return (
-            <>
+            <div data-testid="editableDiv">
                 {status}
-            </>
+            </div>
         )
     }
-    if(editMode && myUserId === myUserID && !status){
+    if(editMode && userId === myUserID && !status){
 
-        return <div className={styles.editableDiv}
-            onClick={activateEditMode}>
-            {"Set status"}
+        return (
+        <div
+                className={styles.editableDiv}
+                onClick={activateEditMode}>
+                Set status
         </div>
+        )
     }
-    if(editMode && myUserId === myUserID){
-        return <div className={styles.editableDiv}
-                    onClick={activateEditMode}>
+    if(editMode && userId === myUserID){
+        return (
+        <div className={styles.editableDiv}
+             data-testid="editableMyDiv"
+            onClick={activateEditMode}>
             {status}
-        </div>
+        </div>)
     }
 
     else return <input className={styles.input}
@@ -61,8 +65,7 @@ export const ProfileStatus = React.memo(() => {
                        onKeyPress={onKeyPressHandler}
                        onBlur={deactivateEditMode}
                        type="text"
+                       data-testid="input"
                        value={localStatus}/>
-
-
-});
+};
 
