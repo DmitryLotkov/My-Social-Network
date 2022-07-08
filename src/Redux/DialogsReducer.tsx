@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {ActionsTypes} from "./ActionsTypes";
+
 
 
 
@@ -8,6 +8,10 @@ export type MessagesType = {
     id: string
     message: string
 }
+export enum ACTIONS_TYPE {
+    ADD_DIALOG_MESSAGE = "DIALOGS/ADD-DIALOG-MESSAGE",
+}
+export type DialogActionsType = ReturnType<typeof addMessageAC>
 export type DialogsType = {
     id: string
     name: string
@@ -34,9 +38,9 @@ const initialState: DialogsStateType = {
     ]
 }
 //reducer
-const dialogsReducer = (state: DialogsStateType = initialState, action: ActionsTypes): DialogsStateType => {
+export const dialogsReducer = (state: DialogsStateType = initialState, action: DialogActionsType): DialogsStateType => {
     switch (action.type) {
-        case "ADD-DIALOG-MESSAGE": {
+        case ACTIONS_TYPE.ADD_DIALOG_MESSAGE: {
             return {
                 ...state,
                 messages: [...state.messages, {id: v1(), message: action.text}]
@@ -50,6 +54,5 @@ const dialogsReducer = (state: DialogsStateType = initialState, action: ActionsT
 }
 
 //action creators
-export const addMessageAC = (text: string) => ({type: "ADD-DIALOG-MESSAGE", text} as const)
+export const addMessageAC = (text: string) => ({type: ACTIONS_TYPE.ADD_DIALOG_MESSAGE, text} as const)
 
-export default dialogsReducer;

@@ -4,7 +4,7 @@ import {getProfileTC, getUserStatusTC} from "../../Redux/ProfileReducer";
 import {Navigate, useParams} from "react-router-dom";
 import {ProfileFC} from "./ProfileFC";
 import {isLoggedInSelector, userIDSelector} from "../Common/Selectors/Selectors";
-import {useAppSelector} from "../../Redux/reduxStore";
+import {useAppSelector} from "../../Redux/store";
 import {PATH} from "../../App";
 
 

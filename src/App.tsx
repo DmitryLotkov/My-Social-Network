@@ -3,7 +3,7 @@ import './App.scss';
 import {Header} from "./components/Header/Header";
 import {SideBar} from "./components/Navbar/SideBar";
 import {Route, Routes, Navigate} from "react-router-dom";
-import {store, useAppSelector} from "./Redux/reduxStore";
+import {store, useAppSelector} from "./Redux/store";
 import UsersContainerFC from './components/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
 import {EventsContainer} from "./components/Events/EventsContainer";
@@ -14,9 +14,11 @@ import {Login} from "./components/Login/Login";
 import {Preloader} from "./components/Common/Preloader/Preloader";
 import {isInitializedSelector, isLoggedInSelector, userIDSelector} from "./components/Common/Selectors/Selectors";
 import withSuspense from "./components/HOC/withSuspense";
+import {RequestStatusType} from "./Redux/AppReducer";
+import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 
 
-const DialogContainerFC = React.lazy(()=> import("./components/Dialogs/DialogContainerFC"));
+const DialogContainerFC = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
 
 export const PATH = {
     HOME: "/",
@@ -24,16 +26,16 @@ export const PATH = {
     PROFILE: "/profile",
     USERS: "/users",
     ERROR404: "/404",
-    ANY_ROUTE:"*",
+    ANY_ROUTE: "*",
     DIALOGS: "/dialogs",
-    EVENTS:"/events",
-    PHOTOS:"/photos"
+    EVENTS: "/events",
+    PHOTOS: "/photos"
 }
-
 
 
 const App: FC = () => {
 
+    const appStatus = useAppSelector<RequestStatusType>(state => state.App.status);
     const state = store.getState();
     const dispatch = useDispatch();
     const userID = useAppSelector(userIDSelector)
@@ -49,13 +51,13 @@ const App: FC = () => {
     }
 
 
-
     return (
         <div className={"App"}>
             <Header/>
             <main className={"mainContent"}>
-            {isLoggedIn && <SideBar SideBar={state.SideBar}/>}
-                 <Routes>
+                {isLoggedIn && <SideBar SideBar={state.SideBar}/>}
+                {appStatus === 'loading' && <Preloader/>}
+                <Routes>
                     <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
                     <Route path={`${PATH.PROFILE}/:userId`} element={withSuspense(ProfileContainerFC)({})}/>
@@ -63,10 +65,10 @@ const App: FC = () => {
                     <Route path={PATH.EVENTS} element={<EventsContainer/>}/>
                     <Route path={PATH.PHOTOS} element={<PhotosContainer/>}/>
                     <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
-                    <Route path={PATH.ANY_ROUTE} element={<Navigate to={PATH.ERROR404}/>} />
-                    <Route path={PATH.ERROR404} element={<div>Error 404</div>} />
+                    <Route path={PATH.ANY_ROUTE} element={<Navigate to={PATH.ERROR404}/>}/>
+                    <Route path={PATH.ERROR404} element={<div>Error 404</div>}/>
                 </Routes>
-                
+                <ErrorSnackBar/>
             </main>
         </div>
     );

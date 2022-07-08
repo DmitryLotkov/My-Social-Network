@@ -1,4 +1,4 @@
-import {AppRootStateType} from "../../../Redux/reduxStore";
+import {AppRootStateType} from "../../../Redux/store";
 import {UserType} from "../../../Redux/UsersReducer";
 import {PostType, ProfileDataType} from "../../../Redux/ProfileReducer";
 

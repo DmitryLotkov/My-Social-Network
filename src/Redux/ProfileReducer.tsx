@@ -1,19 +1,28 @@
 import {v1} from "uuid";
-import {Dispatch} from "redux";
 import {profileAPI} from "../components/api";
-import {ActionsTypes} from "./ActionsTypes";
+import {AppStoreType, AppThunkDispatch} from "./store";
+import {setAppStatusAC} from "./AppReducer";
+
+import {handleNetworkError} from "../utils/error.utils";
 
 
 //types
 export enum ACTIONS_TYPE {
     SET_PROFILE = "PROFILE/SET-PROFILE",
-    ADD_POST = "ADD-POST",
-    SET_MY_PROFILE_PHOTO = "PROFILE/SET-MY-PROFILE_PHOTO",
+    ADD_POST = "PROFILE/ADD-POST",
+    SAVE_MY_PROFILE_PHOTO = "PROFILE/SAVE-MY-PROFILE_PHOTO",
     UPDATE_NEW_POST_TEXT = "PROFILE/UPDATE-NEW-POST-TEXT",
     SET_SOME_USER_PROFILE = "PROFILE/SET-SOME-USER-PROFILE",
     SET_STATUS = "PROFILE/SET-STATUS",
     DELETE_POST = "PROFILE/DELETE-POST"
 }
+
+export type ProfileActionsType = ReturnType<typeof addPostActionAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof savePhotoAC>
+    | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof deletePostAC>
 
 export type PostTextType = {
     text: string
@@ -21,7 +30,6 @@ export type PostTextType = {
 export type ProfilePageType = {
     postsData: Array<PostType>
     profile: ProfileDataType
-    photo: string | undefined
     status: string
 }
 export type PostType = {
@@ -40,8 +48,8 @@ export type userProfileContactType = {
     mainLink: string | null
 }
 export type userProfilePhotosType = {
-    small: string | undefined
-    large: string | undefined
+    small: string
+    large: string
 }
 export type ProfileDataType = {
     aboutMe: string | null
@@ -56,14 +64,8 @@ export type ProfileDataType = {
 //actions
 export const addPostActionAC = (data: string) => ({type: ACTIONS_TYPE.ADD_POST, data} as const)
 export const updateNewPostTextAC = (text: PostTextType) => ({type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, text} as const)
-export const setUserProfileAC = (profile: ProfileDataType) => ({
-    type: ACTIONS_TYPE.SET_SOME_USER_PROFILE,
-    profile
-} as const);
-export const setMyProfilePhotoAC = (photo: string | undefined) => ({
-    type: ACTIONS_TYPE.SET_MY_PROFILE_PHOTO,
-    photo
-} as const);
+export const setUserProfileAC = (profile: ProfileDataType) => ({type: ACTIONS_TYPE.SET_SOME_USER_PROFILE, profile} as const);
+export const savePhotoAC = (photos: userProfilePhotosType) => ({type: ACTIONS_TYPE.SAVE_MY_PROFILE_PHOTO, photos} as const);
 export const setStatusAC = (status: string) => ({type: ACTIONS_TYPE.SET_STATUS, status} as const);
 export const deletePostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_POST, id} as const);
 
@@ -76,7 +78,7 @@ const initialState: ProfilePageType = {
         {id: v1(), message: "What is the good weather today,isn't it?", likesCount: 0},
     ],
     status: "",
-    photo: "",
+
     profile: {
         fullName: "",
         lookingForAJob: true,
@@ -99,23 +101,19 @@ const initialState: ProfilePageType = {
             }
     }
 }
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
-        case ACTIONS_TYPE.ADD_POST: {
+        case ACTIONS_TYPE.ADD_POST:
             return {
                 ...state,
                 postsData: [...state.postsData, {id: v1(), message: action.data, likesCount: 0}]
             };
-        }
-        case ACTIONS_TYPE.SET_SOME_USER_PROFILE: {
+        case ACTIONS_TYPE.SET_SOME_USER_PROFILE:
             return {...state, profile: action.profile}
-        }
-        case ACTIONS_TYPE.SET_MY_PROFILE_PHOTO: {
-            return {...state, photo: action.photo}
-        }
-        case ACTIONS_TYPE.SET_STATUS: {
+        case ACTIONS_TYPE.SET_STATUS:
             return {...state, status: action.status}
-        }
+        case ACTIONS_TYPE.SAVE_MY_PROFILE_PHOTO:
+            return {...state, profile: {...state.profile, photos: action.photos}}
         case ACTIONS_TYPE.DELETE_POST:
             return {...state, postsData: state.postsData.filter(post => post.id !== action.id)}
         default:
@@ -123,40 +121,57 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
     }
 }
 //thunks
-export const getProfileTC = (userId: number | null) => async (dispatch: Dispatch) => {
-
+export const getProfileTC = (userId: number | null) => async (dispatch: AppThunkDispatch) => {
+    dispatch(setAppStatusAC("loading"));
     let res = await profileAPI.getProfile(userId);
     try {
         dispatch(setUserProfileAC(res.data));
+        dispatch(setAppStatusAC("succeeded"));
     } catch (error: any) {
-        console.log(error.message)
+        handleNetworkError(error, dispatch);
     }
 
 }
 
-export const getUserStatusTC = (userId: number | null) => async (dispatch: Dispatch) => {
-
+export const getUserStatusTC = (userId: number | null) => async (dispatch: AppThunkDispatch) => {
+    dispatch(setAppStatusAC("loading"));
     let res = await profileAPI.getStatus(userId);
     try {
         if (res.status === 200) {
             dispatch(setStatusAC(res.data));
+            dispatch(setAppStatusAC("succeeded"));
         }
     } catch (error: any) {
-        console.log(error.message)
+        handleNetworkError(error, dispatch);
     }
 
 }
 
-
-export const updateUserStatusTC = (status: string) => async (dispatch: Dispatch) => {
-
+export const updateUserStatusTC = (status: string) => async (dispatch: AppThunkDispatch) => {
+    dispatch(setAppStatusAC("loading"));
     let res = await profileAPI.updateStatus(status)
     try {
         if (res.data.resultCode === 0) {
             dispatch(setStatusAC(status))
+            dispatch(setAppStatusAC("succeeded"));
         }
     } catch (error: any) {
-        console.log(error.message)
+        handleNetworkError(error, dispatch);
     }
+}
+
+export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
+    dispatch(setAppStatusAC("loading"));
+    const userId = getState().Auth.data.id;
+    let res = await profileAPI.uploadAvatar(photoFile)
+    try {
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatusAC("succeeded"));
+            dispatch(await getProfileTC(userId))
+        }
+    } catch (error: any) {
+        handleNetworkError(error, dispatch);
+    }
+
 }
 

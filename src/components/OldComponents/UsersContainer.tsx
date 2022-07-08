@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
 
-import {AppRootStateType} from "../../Redux/reduxStore";
+import {AppRootStateType} from "../../Redux/store";
 import {Dispatch} from "redux";
 import {
-    followSuccess, toggleFollowingProgressAC,
+    followSuccessAC, toggleFollowingProgressAC,
     setCurrentPageAC,
     setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
-    unFollowSuccess, follow,
+    unFollowSuccessAC, follow,
     UserType, unfollow
 } from "../../Redux/UsersReducer";
 import React from "react";
@@ -87,10 +87,10 @@ let mapStateToProps = (state: AppRootStateType) => {
 let mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         follow: (userID: string) => {
-            dispatch(followSuccess(userID))
+            dispatch(followSuccessAC(userID))
         },
         unfollow: (userID: string) => {
-            dispatch(unFollowSuccess(userID))
+            dispatch(unFollowSuccessAC(userID))
         },
         setUsers: (users: UserType[]) => {
             dispatch(setUsersAC(users))

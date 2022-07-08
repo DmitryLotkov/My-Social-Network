@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Profile.module.scss"
-import {ProfileInfo} from "./MyPosts/ProfileInfo/ProfileInfo";
+import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {addPostActionAC} from "../../Redux/ProfileReducer";
 import commonStyle from "../Common/boxStyle.module.scss"
 import {useDispatch} from "react-redux";
@@ -8,7 +8,7 @@ import {MyPosts} from "./MyPosts";
 import {myUserID} from "../../Redux/AuthReducer";
 import {placeholderText} from "../Common/TextAreaForm/textAreaData";
 import {postsDataSelector, profileSelector} from "../Common/Selectors/Selectors";
-import {useAppSelector} from "../../Redux/reduxStore";
+import {useAppSelector} from "../../Redux/store";
 
 type ProfilePropsType = {
     userID: number| null

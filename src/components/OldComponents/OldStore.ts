@@ -1,7 +1,7 @@
 import {v1} from "uuid";
-import dialogsReducer, {DialogsStateType} from "../../Redux/DialogsReducer";
+import {DialogsStateType} from "../../Redux/DialogsReducer";
 
-import {ActionsTypes} from "../../Redux/ActionsTypes";
+import {ActionsTypes} from "./ActionsTypes";
 
 
 
@@ -114,12 +114,11 @@ export let oldStore: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action: ActionsTypes) {
-        this._state.DialogPage = dialogsReducer(this._state.DialogPage, action);
+    dispatch() {
+        //this._state.DialogPage = dialogsReducer(this._state.DialogPage, action);
         //this._state.ProfilePage = profileReducer(this._state.ProfilePage, action);
         //this._state.SideBar = sidebarReducer(this._state.SideBar, action);
-
-        this.callSubscriber(this._state);
+        //this.callSubscriber(this._state);
     }
 }
 

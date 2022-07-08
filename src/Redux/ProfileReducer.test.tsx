@@ -16,7 +16,6 @@ beforeEach(() => {
             {id: "3", message: "What is the good weather today,isn't it?", likesCount: 0},
         ],
         status: "",
-        photo: "",
         profile: {
             fullName: "",
             lookingForAJob: true,

@@ -1,6 +1,7 @@
-import {Dispatch} from "redux";
 import {authAPI, AuthDataType} from "../components/api";
 import {setAppErrorAC} from "./AppReducer";
+import {AppThunkDispatch} from "./store";
+
 
 
 export const myUserID = 21748;
@@ -11,7 +12,6 @@ export enum ACTIONS_TYPE {
     AUTH_SET_IS_INITIALIZED = "SET-IS-INITIALIZED",
     AUTH_SET_PROFILE_DATA = "SET-PROFILE-DATA",
 }
-
 
 export type AuthActionsType =
     ReturnType<typeof setIsLoggedInAC>
@@ -69,7 +69,7 @@ export const setAuthProfileAC = (profileData: AuthDataType) =>
     ({type: ACTIONS_TYPE.AUTH_SET_PROFILE_DATA, data: profileData} as const);
 
 //thunks
-export const initializeAppTC = () => async (dispatch: Dispatch) => {
+export const initializeAppTC = () => async (dispatch: AppThunkDispatch) => {
 
     let res = await authAPI.me();
     try {
@@ -87,7 +87,7 @@ export const initializeAppTC = () => async (dispatch: Dispatch) => {
 }
 
 
-export const loginTC = (data: LoginParamsType) => async (dispatch: Dispatch) => {
+export const loginTC = (data: LoginParamsType) => async (dispatch: AppThunkDispatch) => {
 
     let res = await authAPI.login(data);
     try {
@@ -102,7 +102,7 @@ export const loginTC = (data: LoginParamsType) => async (dispatch: Dispatch) => 
 
 
 }
-export const logOutTC = () => async (dispatch: Dispatch) => {
+export const logOutTC = () => async (dispatch: AppThunkDispatch) => {
     let res = await authAPI.logout();
     try {
         if (res.data.resultCode === 0) {

@@ -1,7 +1,7 @@
 import React from "react";
 import {render, screen} from "@testing-library/react";
 import {Provider} from "react-redux";
-import {store} from "../../Redux/reduxStore";
+import {store} from "../../Redux/store";
 import {Users} from "../Users/Users";
 import {HashRouter} from "react-router-dom";
 

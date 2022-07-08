@@ -5,7 +5,7 @@ import {updateUserStatusTC} from "../../Redux/ProfileReducer";
 import {statusSelector} from "../Common/Selectors/Selectors";
 import {myUserID} from "../../Redux/AuthReducer";
 import {useParams} from "react-router-dom";
-import {useAppSelector} from "../../Redux/reduxStore";
+import {useAppSelector} from "../../Redux/store";
 
 
 export const ProfileStatus = () => {

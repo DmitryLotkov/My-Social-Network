@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {UsersType} from "../Redux/UsersReducer";
+import {UsersPageType} from "../Redux/UsersReducer";
 import {ProfileDataType} from "../Redux/ProfileReducer";
 import {LoginParamsType} from "../Redux/AuthReducer";
 
@@ -24,7 +24,7 @@ type RespType<T = {}> = {
 }
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get<UsersType>(`users?page=${currentPage}&count=${pageSize}`);
+        return instance.get<UsersPageType>(`users?page=${currentPage}&count=${pageSize}`);
     },
 }
 
@@ -38,6 +38,15 @@ export const profileAPI = {
     updateStatus(status: string | null) {
 
         return instance.put<AxiosResponse<RespType>,any>(`profile/status`, {status})
+    },
+    uploadAvatar(photoFile:File){
+        const formData = new FormData();
+        formData.append("image", photoFile);
+        return instance.put<RespType<{photos:{small:"", large:""}}>>(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
 

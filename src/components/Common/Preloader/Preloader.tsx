@@ -4,9 +4,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export function Preloader (){
     return (
-        <div className={styles.preloaderContainer} >
+        <div className={styles.main}>
             <div className={styles.progress}>
                 <CircularProgress size={50}/>
             </div>
-        </div>)
+        </div>
+    );
 }

@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, } from "react-redux";
 import {loginTC} from "../../Redux/AuthReducer";
-import {AppRootStateType} from "../../Redux/reduxStore";
+import {useAppSelector} from "../../Redux/store";
 import {Navigate} from "react-router-dom";
-import {setAppErrorAC} from "../../Redux/AppReducer";
+import {NullableType, setAppErrorAC} from "../../Redux/AppReducer";
 import Grid from "@mui/material/Grid";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
@@ -26,8 +26,8 @@ type FormikErrorType = {
     captcha: string
 }
 export const Login = React.memo(() => {
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.Auth.isLoggedIn);
-    const serverError = useSelector<AppRootStateType, string>(state => state.App.error);
+    const isLoggedIn = useAppSelector<boolean>(state => state.Auth.isLoggedIn);
+    const serverError = useAppSelector<NullableType<string>>(state => state.App.error);
     const dispatch = useDispatch();
     const [isPassType, setIsPassType] = useState<boolean>(true);
 
@@ -141,10 +141,6 @@ export const Login = React.memo(() => {
                                 {...formik.getFieldProps("rememberMe")}
                                 checked={formik.getFieldProps("rememberMe").value}
                             />
-
-
-                            {serverError && <div style={{color: "red"}}>{serverError}</div>}
-
 
                             <Button variant={'contained'}
                                     type={"submit"}>
