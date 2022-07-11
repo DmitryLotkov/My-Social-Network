@@ -3,9 +3,10 @@ import styles from "./Profile.module.scss";
 import {useDispatch} from "react-redux";
 import {updateUserStatusTC} from "../../Redux/ProfileReducer";
 import {statusSelector} from "../Common/Selectors/Selectors";
-import {myUserID} from "../../Redux/AuthReducer";
+
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../Redux/store";
+import { myUserID} from "../../constants";
 
 
 export const ProfileStatus = () => {
@@ -51,7 +52,8 @@ export const ProfileStatus = () => {
         </div>
         )
     }
-    if(editMode && userId === myUserID){
+
+    if((editMode && userId === myUserID) ){
         return (
         <div className={styles.editableDiv}
              data-testid="editableMyDiv"

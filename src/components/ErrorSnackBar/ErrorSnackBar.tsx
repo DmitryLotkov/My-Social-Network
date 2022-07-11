@@ -9,8 +9,11 @@ import {NullableType, setAppErrorAC} from "../../Redux/AppReducer";
 
 
 export const ErrorSnackBar = () => {
+
     const dispatch = useAppDispatch();
+
     const error = useAppSelector<NullableType<string>>(state => state.App.error);
+
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;

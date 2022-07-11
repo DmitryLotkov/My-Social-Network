@@ -12,10 +12,12 @@ import {useDispatch} from "react-redux";
 import {initializeAppTC} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
 import {Preloader} from "./components/Common/Preloader/Preloader";
-import {isInitializedSelector, isLoggedInSelector, userIDSelector} from "./components/Common/Selectors/Selectors";
+import {isInitializedSelector, isLoggedInSelector} from "./components/Common/Selectors/Selectors";
 import withSuspense from "./components/HOC/withSuspense";
 import {RequestStatusType} from "./Redux/AppReducer";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
+import {EditProfile} from "./components/EditProfile/EditProfile";
+
 
 
 const DialogContainerFC = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
@@ -29,7 +31,8 @@ export const PATH = {
     ANY_ROUTE: "*",
     DIALOGS: "/dialogs",
     EVENTS: "/events",
-    PHOTOS: "/photos"
+    PHOTOS: "/photos",
+    EDIT_PROFILE: "/edit_profile"
 }
 
 
@@ -38,9 +41,10 @@ const App: FC = () => {
     const appStatus = useAppSelector<RequestStatusType>(state => state.App.status);
     const state = store.getState();
     const dispatch = useDispatch();
-    const userID = useAppSelector(userIDSelector)
+    const userID = useAppSelector(state => state.Auth.data.id)
     const isLoggedIn = useAppSelector(isLoggedInSelector);
     const isInitialized = useAppSelector(isInitializedSelector);
+
 
     useEffect(() => {
         dispatch(initializeAppTC());
@@ -50,21 +54,22 @@ const App: FC = () => {
         return <Preloader/>
     }
 
-
     return (
         <div className={"App"}>
             <Header/>
             <main className={"mainContent"}>
+
                 {isLoggedIn && <SideBar SideBar={state.SideBar}/>}
                 {appStatus === 'loading' && <Preloader/>}
                 <Routes>
                     <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
-                    <Route path={`${PATH.PROFILE}/:userId`} element={withSuspense(ProfileContainerFC)({})}/>
+                    <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
                     <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
                     <Route path={PATH.EVENTS} element={<EventsContainer/>}/>
                     <Route path={PATH.PHOTOS} element={<PhotosContainer/>}/>
                     <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
+                    <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
                     <Route path={PATH.ANY_ROUTE} element={<Navigate to={PATH.ERROR404}/>}/>
                     <Route path={PATH.ERROR404} element={<div>Error 404</div>}/>
                 </Routes>

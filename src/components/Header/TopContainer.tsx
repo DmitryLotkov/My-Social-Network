@@ -13,8 +13,7 @@ export function TopContainer() {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(isLoggedInSelector);
 
-
-    const logOutHandler = () =>{
+    const logOutHandler = () => {
         dispatch(logOutTC());
         navigate("/login")
     }
@@ -22,14 +21,15 @@ export function TopContainer() {
     return (
         <div className={styles.headerContent}>
             <img src={"https://templates.envytheme.com/zust/default/assets/images/logo.png"} alt="logo"/>
-                <div className={styles.loginBlock}>
-                    {isLoggedIn && <MyProfilePhoto/>}
-                    {isLoggedIn && <Button className={styles.login} onClick={logOutHandler}>
-                        Log out
-                    </Button>}
-                </div>
+            <div className={styles.loginBlock}>
+                {isLoggedIn && <MyProfilePhoto/>}
+                {isLoggedIn && <Button className={styles.login} onClick={logOutHandler}>
+                    Log out
+                </Button>}
+            </div>
         </div>
 
     )
 }
+
 

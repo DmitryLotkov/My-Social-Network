@@ -5,10 +5,11 @@ import {addPostActionAC} from "../../Redux/ProfileReducer";
 import commonStyle from "../Common/boxStyle.module.scss"
 import {useDispatch} from "react-redux";
 import {MyPosts} from "./MyPosts";
-import {myUserID} from "../../Redux/AuthReducer";
+
 import {placeholderText} from "../Common/TextAreaForm/textAreaData";
 import {postsDataSelector, profileSelector} from "../Common/Selectors/Selectors";
 import {useAppSelector} from "../../Redux/store";
+import {myUserID} from "../../constants";
 
 type ProfilePropsType = {
     userID: number| null

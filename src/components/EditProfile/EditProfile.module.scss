@@ -1,0 +1,48 @@
+@import "./../Common/variables";
+.wrapper{
+  background-color: #F7F9FB;
+  border: 1px solid black;
+  width: 65%;
+  display: flex;
+  flex-grow: 1;
+
+  .content{
+    border: 1px solid black;
+    background-color: $contentColor;
+    width: 500px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column !important;
+    align-items: center;
+    font-size: 16px;
+
+    .formRow{
+      display: flex;
+      justify-content: flex-end;
+
+      align-items: center;
+
+      .contactText{
+        margin-right: 1rem;
+        color: $textColor
+      }
+      .checkBoxLabel{
+        display: flex !important;
+        justify-content: center;
+        color: $textColor
+      }
+
+    }
+  }
+
+
+
+  .button{
+    display: flex;
+    justify-content: center;
+    padding-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+}

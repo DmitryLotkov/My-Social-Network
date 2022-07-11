@@ -8,7 +8,7 @@ import {userIDSelector} from "../Selectors/Selectors";
 
 export const MyProfilePhoto = React.memo(() =>{
     const navigate = useNavigate()
-    const myPhoto = useSelector<AppRootStateType, string | undefined>(state => state.ProfilePage.profile.photos.small);
+    const myPhoto = useSelector<AppRootStateType, string | undefined>(state => state.ProfilePage.profile.photos?.small);
     const myLoginName = useSelector<AppRootStateType, string | null>(state => state.Auth.data.login);
     const userID = useSelector(userIDSelector)
     const navigateToMyMage = ()=>{

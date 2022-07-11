@@ -17,6 +17,7 @@ beforeEach(() => {
         ],
         status: "",
         profile: {
+            userId:0,
             fullName: "",
             lookingForAJob: true,
             lookingForAJobDescription: "",

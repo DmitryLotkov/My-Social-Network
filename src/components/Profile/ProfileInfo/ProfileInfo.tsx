@@ -15,6 +15,8 @@ import {useDispatch} from "react-redux";
 import {setAppErrorAC} from "../../../Redux/AppReducer";
 import {userIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
+import {maxPictureSize} from "../../../constants";
+import {ProfileData} from "../ProdileData/ProfileData";
 
 
 type profileInfoPropsType = {
@@ -34,8 +36,8 @@ const style = {
     borderRadius: 2,
 }
 export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
-    const maxPictureSize = 10000000;
-    const userPhoto = useAppSelector(state => state.ProfilePage.profile.photos.large);
+
+    const userPhoto = useAppSelector(state => state.ProfilePage.profile.photos?.large);
     const userId = Number(useParams<'userId'>().userId)
     const myId = useAppSelector(userIDSelector);
     const photoRef = useRef<HTMLInputElement>(null);
@@ -73,7 +75,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.descriptionBlock}>
-                <img className={styles.img} src={props.profile?.photos.large ?? defaultUserPhoto} alt={"userPhoto"}/>
+                <img className={styles.img} src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
                 {userId === myId && <div className={styles.menu} onClick={() => setOpen(true)}><p>Change your photo</p></div>}
             </div>
 
@@ -86,11 +88,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                     Looking for a job status: {props.profile.lookingForAJobDescription}
                 </div>
                 <div className={styles.contacts}>
-                    <span>contacts: </span>
-                    <div>facebook: {props.profile.contacts.facebook}</div>
-                    <div>instagram: {props.profile.contacts.instagram}</div>
-                    <div>YouTube: {props.profile.contacts.youtube}</div>
-                    <div>Vk: {props.profile.contacts.vk}</div>
+                    <ProfileData />
                 </div>
             </div>
             <Modal open={open}

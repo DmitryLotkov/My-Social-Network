@@ -1,10 +1,11 @@
 import {authAPI, AuthDataType} from "../components/api";
 import {setAppErrorAC} from "./AppReducer";
 import {AppThunkDispatch} from "./store";
+import {myUserID} from "../constants";
 
 
 
-export const myUserID = 21748;
+
 
 //types
 export enum ACTIONS_TYPE {

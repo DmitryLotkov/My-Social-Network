@@ -2,8 +2,9 @@ import {v1} from "uuid";
 import {profileAPI} from "../components/api";
 import {AppStoreType, AppThunkDispatch} from "./store";
 import {setAppStatusAC} from "./AppReducer";
-
 import {handleNetworkError} from "../utils/error.utils";
+import {Dispatch} from "redux";
+
 
 
 //types
@@ -14,15 +15,19 @@ export enum ACTIONS_TYPE {
     UPDATE_NEW_POST_TEXT = "PROFILE/UPDATE-NEW-POST-TEXT",
     SET_SOME_USER_PROFILE = "PROFILE/SET-SOME-USER-PROFILE",
     SET_STATUS = "PROFILE/SET-STATUS",
-    DELETE_POST = "PROFILE/DELETE-POST"
+    DELETE_POST = "PROFILE/DELETE-POST",
+
 }
 
-export type ProfileActionsType = ReturnType<typeof addPostActionAC>
+export type ProfileActionsType =
+      ReturnType<typeof addPostActionAC>
     | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof savePhotoAC>
     | ReturnType<typeof setStatusAC>
     | ReturnType<typeof deletePostAC>
+
+
 
 export type PostTextType = {
     text: string
@@ -37,27 +42,31 @@ export type PostType = {
     message: string
     likesCount: number
 }
-export type userProfileContactType = {
-    facebook: string | undefined
-    website: string | null
-    vk: string | undefined
-    twitter: string | undefined
-    instagram: string | undefined
-    youtube: string | undefined
-    github: string | null | undefined
-    mainLink: string | null
+export type UserProfileContactType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
 }
 export type userProfilePhotosType = {
     small: string
     large: string
 }
 export type ProfileDataType = {
-    aboutMe: string | null
-    contacts: userProfileContactType
+    userId: number,
+    AboutMe?: string
+    aboutMe?: string
     lookingForAJob: boolean
-    lookingForAJobDescription: string | null
-    fullName: string | null
-    photos: userProfilePhotosType
+    lookingForAJobDescription?: string
+    LookingForAJobDescription?: string
+    fullName?: string
+    FullName?: string
+    contacts: UserProfileContactType
+    photos?: userProfilePhotosType
 
 }
 
@@ -70,6 +79,7 @@ export const setStatusAC = (status: string) => ({type: ACTIONS_TYPE.SET_STATUS, 
 export const deletePostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_POST, id} as const);
 
 
+
 const initialState: ProfilePageType = {
 
     postsData: [
@@ -80,6 +90,7 @@ const initialState: ProfilePageType = {
     status: "",
 
     profile: {
+        userId:0,
         fullName: "",
         lookingForAJob: true,
         lookingForAJobDescription: "",
@@ -116,6 +127,8 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
             return {...state, profile: {...state.profile, photos: action.photos}}
         case ACTIONS_TYPE.DELETE_POST:
             return {...state, postsData: state.postsData.filter(post => post.id !== action.id)}
+        /*case ACTIONS_TYPE.UPDATE_PROFILE:
+            return {...state, profile}*/
         default:
             return state;
     }
@@ -125,9 +138,13 @@ export const getProfileTC = (userId: number | null) => async (dispatch: AppThunk
     dispatch(setAppStatusAC("loading"));
     let res = await profileAPI.getProfile(userId);
     try {
-        dispatch(setUserProfileAC(res.data));
-        dispatch(setAppStatusAC("succeeded"));
-    } catch (error: any) {
+        if(res.status === 200){
+            dispatch(setUserProfileAC(res.data));
+            dispatch(setAppStatusAC("succeeded"));
+        }
+
+    }
+    catch (error: any) {
         handleNetworkError(error, dispatch);
     }
 
@@ -141,7 +158,8 @@ export const getUserStatusTC = (userId: number | null) => async (dispatch: AppTh
             dispatch(setStatusAC(res.data));
             dispatch(setAppStatusAC("succeeded"));
         }
-    } catch (error: any) {
+    }
+    catch (error: any) {
         handleNetworkError(error, dispatch);
     }
 
@@ -173,5 +191,21 @@ export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDisp
         handleNetworkError(error, dispatch);
     }
 
+}
+export const updateProfileTC = (profile: ProfileDataType) => async (dispatch: Dispatch) =>{
+
+    dispatch(setAppStatusAC("loading"));
+    let res = await profileAPI.updateProfile(profile)
+
+    try{
+        if (res.data.resultCode === 0) {
+            dispatch(setAppStatusAC("succeeded"));
+        }else{
+                handleNetworkError(res.data, dispatch);
+            }
+    }
+    catch (error: any) {
+        handleNetworkError(error, dispatch);
+    }
 }
 

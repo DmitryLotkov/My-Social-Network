@@ -4,7 +4,9 @@ import chatStyles from "./ChatBlock.module.scss"
 import {NavLink} from "react-router-dom";
 import {SideBarType} from "../OldComponents/OldStore";
 import {ChatBlock} from "./ChatBlock";
-import {myUserID} from "../../Redux/AuthReducer";
+import {myUserID} from "../../constants";
+import {PATH} from "../../App";
+
 
 type NavBarPropsType = {
     SideBar: SideBarType,
@@ -21,22 +23,22 @@ export function SideBar(props: NavBarPropsType) {
     return (
         <aside className={style.sideWrapper}>
             <div className={style.NavItem}>
-                <NavLink  to={`/profile/${myUserID}`} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Profile</NavLink>
+                <NavLink  to={`${PATH.PROFILE}/${myUserID}`} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Profile</NavLink>
             </div>
             <div className={style.NavItem}>
-                <NavLink to={"/dialogs"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Messages</NavLink>
+                <NavLink to={PATH.DIALOGS} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Messages</NavLink>
             </div>
             <div className={style.NavItem}>
-                <NavLink to={"/events"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Events</NavLink>
+                <NavLink to={PATH.EVENTS} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Events</NavLink>
             </div>
             <div className={style.NavItem}>
-                <NavLink to={"/photos"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Photos</NavLink>
+                <NavLink to={PATH.PHOTOS} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Photos</NavLink>
             </div>
             <div className={style.NavItem}>
-                <NavLink to={"/users"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Find Friends</NavLink>
+                <NavLink to={PATH.USERS} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Find Friends</NavLink>
             </div>
             <div className={style.NavItem}>
-                <NavLink to={"/settings"} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Settings</NavLink>
+                <NavLink to={PATH.EDIT_PROFILE} style={({ isActive }) => ({ color: isActive ? "goldenrod" : 'black' })}>Settings</NavLink>
             </div>
 
             <div className={chatStyles.ChatBlock}>
