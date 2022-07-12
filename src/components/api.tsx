@@ -16,7 +16,7 @@ export type AuthDataType = {
     email: string
     login:string
 }
-type RespType<T = {}> = {
+export type RespType<T = {}> = {
     resultCode: 0
     data: T
     fieldsErrors: Array<string>
@@ -33,7 +33,7 @@ export const profileAPI = {
         return instance.get<ProfileDataType>(`profile/${userID}`);
     },
     getStatus(userID: number | null) {
-        return instance.get<AxiosResponse<string>, any>(`profile/status/${userID}`);
+        return instance.get<AxiosResponse<RespType>, any>(`profile/status/${userID}`);
     },
     updateStatus(status: string | null) {
 

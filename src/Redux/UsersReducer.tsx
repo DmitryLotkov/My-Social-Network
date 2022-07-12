@@ -1,6 +1,7 @@
 import {authAPI, userAPI} from "../components/api";
-import {handleNetworkError} from "../utils/error.utils";
+import {handleNetworkError, handleServerNetworkError} from "../utils/error.utils";
 import {AppThunkDispatch} from "./store";
+import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
 
 //types
 export enum ACTIONS_TYPE {
@@ -103,26 +104,28 @@ export const toggleFollowingProgressAC = (followingIsProgress: boolean, userID: 
 //thunks
 export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: AppThunkDispatch) => {
     dispatch(toggleIsFetchingAC(true));
-    let response = await userAPI.getUsers(currentPage, pageSize)
+    let res = await userAPI.getUsers(currentPage, pageSize)
     try {
         dispatch(toggleIsFetchingAC(false));
-        dispatch(setUsersAC(response.data.items));
-        dispatch(setUsersTotalCountAC(response.data.totalCount));
+        dispatch(setUsersAC(res.data.items));
+        dispatch(setUsersTotalCountAC(res.data.totalCount));
     } catch (error: any) {
-        handleNetworkError(error, dispatch);
+        console.log("Error when you try get users", error)
+        handleServerNetworkError(error, dispatch)
     }
 }
 
 export const onPageChangedTC = (pageSize: number, pageNumber: number) => async (dispatch: AppThunkDispatch) => {
     dispatch(toggleIsFetchingAC(true));
     dispatch(setCurrentPageAC(pageNumber));
-    let response = await userAPI.getUsers(pageNumber, pageSize)
+    let res = await userAPI.getUsers(pageNumber, pageSize)
     try {
-        dispatch(setUsersAC(response.data.items));
-        dispatch(setUsersTotalCountAC(response.data.totalCount));
+        dispatch(setUsersAC(res.data.items));
+        dispatch(setUsersTotalCountAC(res.data.totalCount));
         dispatch(toggleIsFetchingAC(false));
     } catch (error: any) {
-        handleNetworkError(error, dispatch);
+        console.log("Error when you try change page", error)
+        handleServerNetworkError(error, dispatch)
     }
 
 }
@@ -135,10 +138,14 @@ export const follow = (userID: string) => async (dispatch: AppThunkDispatch) => 
     try {
         if (response.data.resultCode === 0) {
             dispatch(followSuccessAC(userID));
+        } else{
+            dispatch(setAppErrorAC("Some error occupied"));
+            dispatch(setAppStatusAC("failed"));
         }
         dispatch(toggleFollowingProgressAC(false, userID));
     } catch (error: any) {
-        handleNetworkError(error, dispatch);
+        console.log("Error when you try follow user", error)
+        handleServerNetworkError(error, dispatch)
     }
 
 }

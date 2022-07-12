@@ -1,10 +1,8 @@
 import {authAPI, AuthDataType} from "../components/api";
-import {setAppErrorAC} from "./AppReducer";
 import {AppThunkDispatch} from "./store";
 import {myUserID} from "../constants";
-
-
-
+import {handleNetworkError, handleServerAppError, handleServerNetworkError} from "../utils/error.utils";
+import {setAppStatusAC} from "./AppReducer";
 
 
 //types
@@ -78,8 +76,12 @@ export const initializeAppTC = () => async (dispatch: AppThunkDispatch) => {
             dispatch(setIsLoggedInAC(true));
             dispatch(setAuthProfileAC(res.data.data));
         }
+        else {
+            dispatch(setAppStatusAC("failed"));
+        }
     } catch (error: any) {
-        console.log(error.message)
+        console.log("Error when you try initialize app", error)
+        handleNetworkError(error, dispatch);
     } finally {
         dispatch(setInitializedAC(true));
     }
@@ -95,10 +97,11 @@ export const loginTC = (data: LoginParamsType) => async (dispatch: AppThunkDispa
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
         } else {
-            dispatch(setAppErrorAC(res.data.messages[0]))
+            handleServerAppError(res.data, dispatch);
         }
     } catch (error: any) {
-        console.log(error.message)
+        console.log("Error when you try to login", error)
+        handleServerNetworkError(error, dispatch)
     }
 
 
@@ -109,8 +112,12 @@ export const logOutTC = () => async (dispatch: AppThunkDispatch) => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(false));
         }
+        else {
+            handleServerAppError(res.data, dispatch);
+        }
     } catch (error: any) {
-        console.log(error.message);
+        console.log("Error when you try to logout", error)
+        handleServerNetworkError(error, dispatch)
     }
 }
 

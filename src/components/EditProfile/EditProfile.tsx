@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import s from "./EditProfile.module.scss"
-import {useAppSelector} from "../../Redux/store";
+import {useAppDispatch, useAppSelector} from "../../Redux/store";
 import {profileSelector} from "../Common/Selectors/Selectors";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {Formik} from "formik";
 import {getProfileTC, updateProfileTC, UserProfileContactType} from "../../Redux/ProfileReducer";
-import {useDispatch} from "react-redux";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -22,8 +21,7 @@ type FormikErrorType = {
 export const EditProfile = React.memo(() => {
     const userId = useAppSelector(state => state.Auth.data.id)
     const profile = useAppSelector(profileSelector);
-
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getProfileTC(userId));
@@ -90,8 +88,8 @@ export const EditProfile = React.memo(() => {
                         && errors.contacts) {
                         errors.contacts.website = "Invalid URL format";
                     }
-
-                }}            // @ts-ignore
+                        return errors
+                }}
                         onSubmit={
                             values => dispatch(updateProfileTC(values))
                         }>
@@ -148,6 +146,7 @@ export const EditProfile = React.memo(() => {
                                            value={props.values.contacts.instagram}
                                            error={!!props.errors.contacts?.instagram}
                                            helperText={props.errors.contacts?.instagram}
+
                                 />
                             </div>
                             <div className={s.formRow}>
@@ -159,6 +158,7 @@ export const EditProfile = React.memo(() => {
                                            onChange={props.handleChange}
                                            onBlur={props.handleBlur}
                                            value={props.values.contacts.twitter}
+                                           error={props.errors.contacts && !!props.errors.contacts.twitter}
                                 />
                             </div>
                             <div className={s.formRow}>
@@ -170,6 +170,7 @@ export const EditProfile = React.memo(() => {
                                            onChange={props.handleChange}
                                            onBlur={props.handleBlur}
                                            value={props.values.contacts.youtube}
+                                           error={props.errors.contacts && !!props.errors.contacts.youtube}
                                 />
                             </div>
                             <div className={s.formRow}>
@@ -181,6 +182,7 @@ export const EditProfile = React.memo(() => {
                                            onChange={props.handleChange}
                                            onBlur={props.handleBlur}
                                            value={props.values.contacts.website}
+                                           error={props.errors.contacts && !!props.errors.contacts.website}
                                 />
                             </div>
                             <div className={s.formRow}>
@@ -192,6 +194,7 @@ export const EditProfile = React.memo(() => {
                                            onChange={props.handleChange}
                                            onBlur={props.handleBlur}
                                            value={props.values.contacts.mainLink}
+                                           error={props.errors.contacts && !!props.errors.contacts.mainLink}
                                 />
                             </div>
                             <div className={s.formRow}>
@@ -204,6 +207,8 @@ export const EditProfile = React.memo(() => {
                                            onChange={props.handleChange}
                                            onBlur={props.handleBlur}
                                            value={props.values.aboutMe}
+                                           error={!!props.errors.aboutMe}
+                                           helperText={props.errors.aboutMe}
                                 />
                             </div>
                             <div className={s.formRow}>
