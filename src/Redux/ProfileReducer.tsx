@@ -195,13 +195,14 @@ export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDisp
     }
 
 }
-export const updateProfileTC = (profile: ProfileDataType) => async (dispatch: AppThunkDispatch) => {
+export const updateProfileTC = (profile: ProfileDataType) => async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
 
     dispatch(setAppStatusAC("loading"));
     let res = await profileAPI.updateProfile(profile)
-
+    const userId = getState().Auth.data.id;
     try {
         if (res.data.resultCode === 0) {
+            dispatch(await getProfileTC(userId))
             dispatch(setAppStatusAC("succeeded"));
         } else {
             handleServerAppError(res.data, dispatch);

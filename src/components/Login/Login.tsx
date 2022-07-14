@@ -28,8 +28,10 @@ type FormikErrorType = {
 export const Login = React.memo(() => {
     const isLoggedIn = useAppSelector<boolean>(state => state.Auth.isLoggedIn);
     const serverError = useAppSelector<NullableType<string>>(state => state.App.error);
+    const captchaUrl = useAppSelector<NullableType<string>>(state => state.Auth.captchaUrl)
     const dispatch = useDispatch();
     const [isPassType, setIsPassType] = useState<boolean>(true);
+
 
     const formik = useFormik({
         validate: (values) => {
@@ -52,6 +54,7 @@ export const Login = React.memo(() => {
             email: "",
             password: "",
             rememberMe: true,
+            captcha: ""
         },
 
         onSubmit: values => {
@@ -71,6 +74,7 @@ export const Login = React.memo(() => {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+
     return (
 
         <Grid container justifyContent={"center"}>
@@ -142,7 +146,21 @@ export const Login = React.memo(() => {
                                 checked={formik.getFieldProps("rememberMe").value}
                             />
 
-                            <Button variant={'contained'}
+                            {captchaUrl &&
+                            <>
+                                <img src={captchaUrl} alt={"captchaImg"}/>
+                                <FormControl sx={{mTop: 2, width: '35ch'}} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-password">Captcha</InputLabel>
+                                    <Input {...formik.getFieldProps("captcha")}
+
+                                    />
+                                    {formik.touched.captcha && formik.errors.captcha ?
+                                        <div style={{color: "red"}}>{formik.errors.captcha}</div> : null}
+                                </FormControl>
+                            </>
+                            }
+
+                            <Button style={{marginTop:" 1rem"}} variant={'contained'}
                                     type={"submit"}>
                                 Login
                             </Button>

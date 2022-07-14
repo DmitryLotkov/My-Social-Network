@@ -71,3 +71,8 @@ export const authAPI = {
     }
 
 }
+export const securityAPI = {
+    captcha(){
+        return instance.get<{url:string| null}>(`/security/get-captcha-url`)
+    }
+}
