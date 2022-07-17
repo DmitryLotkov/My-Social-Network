@@ -1,6 +1,5 @@
 import React, {FC, useEffect} from 'react';
 import './App.scss';
-import {Header} from "./components/Header/Header";
 import {Route, Routes, Navigate} from "react-router-dom";
 import {useAppSelector} from "./Redux/store";
 import UsersContainerFC from './components/Users/UsersContainerFC';
@@ -16,6 +15,8 @@ import withSuspense from "./components/HOC/withSuspense";
 import {RequestStatusType} from "./Redux/AppReducer";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {EditProfile} from "./components/EditProfile/EditProfile";
+import PrivateRoutes from "./components/PrivateRoutes";
+import {Error404} from "./components/Error404/Error404";
 
 
 
@@ -53,22 +54,21 @@ const App: FC = () => {
 
     return (
         <div className={"App"}>
-            <Header/>
             <main className={"mainContent"}>
-
-                {/*{isLoggedIn && <SideBar SideBar={state.SideBar}/>}*/}
                 {appStatus === 'loading' && <Preloader/>}
                 <Routes>
                     <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>
+                    <Route element={<PrivateRoutes />}>
+                        <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
+                        <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
+                        <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
+                        <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
+                    </Route>
                     <Route path={PATH.LOGIN} element={<Login/>}/>
-                    <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
-                    <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
                     <Route path={PATH.EVENTS} element={<EventsContainer/>}/>
                     <Route path={PATH.PHOTOS} element={<PhotosContainer/>}/>
-                    <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
-                    <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
                     <Route path={PATH.ANY_ROUTE} element={<Navigate to={PATH.ERROR404}/>}/>
-                    <Route path={PATH.ERROR404} element={<div>Error 404</div>}/>
+                    <Route path={`${PATH.ERROR404}`} element={<Error404/>}/>
                 </Routes>
                 <ErrorSnackBar/>
             </main>

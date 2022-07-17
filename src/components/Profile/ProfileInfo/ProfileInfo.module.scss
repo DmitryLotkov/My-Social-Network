@@ -5,7 +5,7 @@
   flex-direction: column;
   background-color: $containerColor;
   width: 350px;
-  height: 280px;
+  /*height: 280px;*/
   border: 1px solid red;
   position: relative;
 
@@ -13,13 +13,14 @@
   .statusBlock {
     box-sizing: border-box;
     position: absolute;
-    top: 190px;
+    top: 230px;
     width: 100%;
     border: 1px solid;
     display: flex;
     flex-direction: column;
     background-color: $containerColor;
     align-items: center;
+
 
 
     .profileName {
@@ -33,20 +34,18 @@
     }
 
     .profileStatus {
-      border: 1px solid black;
-
-      margin-bottom: 1rem;
+      /*border: 1px solid black;*/
       height: 1.5rem;
     }
 
-    .contacts {
+    .profileDescription {
+      width: 250px;
       display: flex;
-      flex-direction: column;
-      width: 350px;
-      border: 1px solid;
-      background-color: $containerColor;
-
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
     }
+
   }
 
   .profilePhoto {
@@ -58,19 +57,19 @@
     text-align: center;
     top: 70px;
     background-color: $containerColor;
-    height: 120px !important;
+    height: 150px !important;
     box-sizing: border-box;
-    border-radius: 60px;
+    border-radius: 70px;
     cursor: pointer;
-    width: 120px;
+    width: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50px;
+      width: 140px;
+      height: 140px;
+      border-radius: 70px;
     }
 
     .menu {

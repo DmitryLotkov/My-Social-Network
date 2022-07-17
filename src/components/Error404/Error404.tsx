@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Error404.module.scss";
-import {NavLink} from "react-router-dom";
+import {NavLink, } from "react-router-dom";
 
 import astronaut from "./../../Images/astronaut.svg";
 import earth from "./../../Images/earth.svg";
@@ -11,7 +11,6 @@ import {PATH} from "../../App";
 
 export const Error404 = () => {
 
-
     return (
         <div className={styles.ErrorWrapper } >
 
@@ -19,7 +18,7 @@ export const Error404 = () => {
 
                 <div className={styles.centralBody}>
                     <img className={styles.image404} src={errorText} alt={"img404"}/>
-                    <NavLink to={PATH.PROFILE} className={styles.btnGoHome}>GO BACK HOME</NavLink>
+                    <NavLink to={`${PATH.HOME}`} className={styles.btnGoHome}>GO BACK HOME</NavLink>
                 </div>
                 <div className={styles.objects}>
                     <img className={styles.objectRocket} src={rocket} alt={"imgRocket"}/>

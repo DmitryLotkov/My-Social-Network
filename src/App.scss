@@ -12,16 +12,15 @@ body {
 }
   .mainContent {
     display: flex;
-
+    font-family: 'Poppins', sans-serif;
     justify-content: center;
-    margin-right: auto;
-    margin-left: auto;
-    width: 65%;
-    /*flex-wrap: wrap;*/
+
+    width: 100%;
+    flex-wrap: wrap;
     border: 1px solid blue;
     color: $defaultTextColor;
     min-width: 1000px;
-    /*max-height: 100vh;*/
+
     box-sizing: border-box;
   }
 }

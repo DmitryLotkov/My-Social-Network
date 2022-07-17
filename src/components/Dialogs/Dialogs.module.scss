@@ -1,7 +1,6 @@
-@import "src/components/Common/variables";
+@import "../Common/variables";
 
 .dialogsWrapper {
-  flex-grow: 1;
   padding: 10px;
   display: flex;
   flex-direction: column;

@@ -26,7 +26,7 @@ export const EditProfile = React.memo(() => {
 
 
     return (
-        <div className={s.wrapper}>
+        <div className={s.editProfileWrapper}>
             <div className={s.content}><h3>Edit profile</h3>
                 <p>Contacts: </p>
                 <Formik enableReinitialize={true}

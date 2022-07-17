@@ -7,16 +7,15 @@
   border: 1px solid green;
   border-radius: 4px;
   margin-bottom: 1rem;
-  width: 100%;
+  width: 65%;
   @media screen and (max-width: 400px) {
     flex-direction: column;
   }
 
   .editableDiv {
-    width: 280px;
     margin-bottom: 0.5rem;
     font-size: inherit;
-
+    cursor: pointer;
   }
 
   .editableDiv:hover {

@@ -71,7 +71,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
     }
 
-
+    console.log(props.profile.aboutMe)
     return (
         <div className={styles.profileInfoWrapper}>
             <img src={profileBackground} alt="avatarBackground"/>
@@ -85,10 +85,10 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
                 </div>
-                {/*<div className={styles.lookingForAJobDescription}>
-                    Looking for a job status: {props.profile.lookingForAJobDescription}
-                </div>
-                <div className={styles.contacts}>
+                <p className={styles.profileDescription}>
+                    {props.profile.aboutMe}
+                </p>
+                {/*<div className={styles.contacts}>
                     <ProfileData />
                 </div>*/}
             </div>
