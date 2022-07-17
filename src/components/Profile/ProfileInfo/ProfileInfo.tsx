@@ -16,7 +16,7 @@ import {setAppErrorAC} from "../../../Redux/AppReducer";
 import {userIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
-import {ProfileData} from "../ProdileData/ProfileData";
+import profileBackground from "./../../../Images/profileBackGround.svg"
 
 
 type profileInfoPropsType = {
@@ -73,10 +73,11 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
 
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.descriptionBlock}>
-                <img className={styles.img} src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
-                {userId === myId && <div className={styles.menu} onClick={() => setOpen(true)}><p>Change your photo</p></div>}
+        <div className={styles.profileInfoWrapper}>
+            <img src={profileBackground} alt="avatarBackground"/>
+            <div className={styles.profilePhoto}>
+                <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
+                {userId === myId && <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
             </div>
 
             <div className={styles.statusBlock}>
@@ -84,12 +85,12 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
                 </div>
-                <div className={styles.lookingForAJobDescription}>
+                {/*<div className={styles.lookingForAJobDescription}>
                     Looking for a job status: {props.profile.lookingForAJobDescription}
                 </div>
                 <div className={styles.contacts}>
                     <ProfileData />
-                </div>
+                </div>*/}
             </div>
             <Modal open={open}
                    onClose={handleCloseModal}

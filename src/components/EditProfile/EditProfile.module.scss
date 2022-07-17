@@ -1,5 +1,5 @@
 @import "./../Common/variables";
-.wrapper{
+.profileInfoWrapper{
   background-color: #F7F9FB;
   border: 1px solid black;
   width: 65%;
@@ -19,17 +19,16 @@
     .formRow{
       display: flex;
       justify-content: flex-end;
-
       align-items: center;
 
       .contactText{
         margin-right: 1rem;
-        color: $textColor
+        color: $defaultTextColor
       }
       .checkBoxLabel{
         display: flex !important;
         justify-content: center;
-        color: $textColor
+        color: $defaultTextColor
       }
 
     }

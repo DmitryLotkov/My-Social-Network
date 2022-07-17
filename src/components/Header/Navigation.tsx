@@ -16,8 +16,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 
 export function Navigation() {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isLoggedIn = useSelector(isLoggedInSelector);
     const logOutHandler = () => {
         dispatch(logOutTC());

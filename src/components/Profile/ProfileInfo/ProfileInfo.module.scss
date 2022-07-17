@@ -1,34 +1,40 @@
 @import "../../Common/variables";
 
-.wrapper {
+.profileInfoWrapper {
   display: flex;
-  align-items: flex-start;
-  background-color: $mainBackGroundColor;
+  flex-direction: column;
+  background-color: $containerColor;
+  width: 350px;
+  height: 280px;
+  border: 1px solid red;
+  position: relative;
+
 
   .statusBlock {
-    margin-left: 1rem;
+    box-sizing: border-box;
+    position: absolute;
+    top: 190px;
     width: 100%;
     border: 1px solid;
     display: flex;
     flex-direction: column;
     background-color: $containerColor;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 200px;
-    border-radius: 5px;
+    align-items: center;
+
 
     .profileName {
+      color: $defaultTextColor;
       font-size: 19px;
       line-height: 25px;
       font-weight: 400;
-      -webkit-font-smoothing: subpixel-antialiased;
-      -moz-osx-font-smoothing: auto;
       overflow: hidden;
       text-overflow: ellipsis;
 
     }
 
     .profileStatus {
+      border: 1px solid black;
+
       margin-bottom: 1rem;
       height: 1.5rem;
     }
@@ -43,21 +49,37 @@
     }
   }
 
-  .descriptionBlock {
+  .profilePhoto {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 70px;
     background-color: $containerColor;
-    margin-bottom: 1rem;
-    height: 200px;
-    border-radius: 5px;
-    position: relative;
+    height: 120px !important;
+    box-sizing: border-box;
+    border-radius: 60px;
     cursor: pointer;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+    }
 
     .menu {
       background: rgba(0, 0, 0, 0.50);
       display: none;
       position: absolute;
-      width: 200px;
+      width: 120px;
       height: 50px;
-      top: 150px;
+      top: 50px;
       transition: 1s;
     }
 
@@ -65,9 +87,11 @@
       color: #f4f7fc;
     }
   }
-  .descriptionBlock:hover div {
+
+  .profilePhoto:hover div {
     display: flex !important;
     justify-content: center;
+
   }
 
   .modalMainBox {

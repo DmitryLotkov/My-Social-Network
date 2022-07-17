@@ -2,23 +2,26 @@
 
 
 body {
-  background-color: $mainBackGroundColor;
+
   overflow-y: scroll;
 .App{
-  display: flex;
-  flex-direction: column;
+  /*display: flex;
+  flex-direction: column;*/
   width: 100%;
+  background-color: $mainBackGroundColor;
 }
   .mainContent {
     display: flex;
-    overflow: auto;
+
+    justify-content: center;
     margin-right: auto;
     margin-left: auto;
     width: 65%;
-    flex-wrap: wrap;
-    color: $textColor;
+    /*flex-wrap: wrap;*/
+    border: 1px solid blue;
+    color: $defaultTextColor;
     min-width: 1000px;
-    max-height: 100vh;
+    /*max-height: 100vh;*/
     box-sizing: border-box;
   }
 }

@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./Profile.module.scss"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {addPostActionAC} from "../../Redux/ProfileReducer";
-import commonStyle from "../Common/boxStyle.module.scss"
 import {useDispatch} from "react-redux";
 import {MyPosts} from "./MyPosts";
 
@@ -22,13 +21,15 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
 
     const addMessage = (text: string) =>{
         return  dispatch(addPostActionAC(text));
-    }
+    } //${commonStyle.mainBox}
     return (
-        <div className={`${styles.wrapper} ${commonStyle.mainBox}`}>
+        <div className={`${styles.profileWrapper} `}>
             <ProfileInfo profile={profile}/>
-            {props.userID === myUserID && <MyPosts placeholderText={placeholderText.profileAreaText}
-                                                   callBack={addMessage}
-                                                   postsData={postsData}/>}
+            {props.userID === myUserID &&
+            <MyPosts
+                placeholderText={placeholderText.profileAreaText}
+                callBack={addMessage}
+                postsData={postsData}/>}
         </div>)
 
 })

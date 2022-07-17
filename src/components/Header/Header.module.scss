@@ -7,11 +7,11 @@
   display: flex;
   align-items: center;
   width: 100%;
-  border: 1px solid black;
   box-sizing: border-box;
   flex-grow: 1;
 
   .sideWrapper {
+
     display: flex;
 
     .NavItem {
@@ -20,6 +20,7 @@
 
       .unActiveNavLink {
         color: $defaultTextColor ;
+        opacity: 0.6;
       }
 
       .activeNavLink {
@@ -44,12 +45,11 @@
       position: relative;
       text-decoration: none;
       display: flex;
-      /*padding: 15px 0;*/
     }
   }
 
   .logo {
-    border: 1px solid black;
+    border-right: 2px solid #F4F4F4;
     height: 80px;
     width: 130px;
     display: flex;
@@ -58,6 +58,9 @@
   }
 
   .headerContent {
+    height: inherit;
+    border-right: 2px solid #F4F4F4;
+    border-left: 2px solid #F4F4F4;
     min-width: 1000px;
     width: 65%;
     margin-right: auto;
@@ -67,27 +70,26 @@
     /*border: 1px white solid;*/
     justify-content: space-between;
 
-    .userName {
-      /*border: 1px solid red;*/
-    }
-
     .loginBlock {
+      height: inherit;
+      padding-left: 1rem;
+      border-left: 2px solid #F4F4F4;
       display: flex;
-      justify-content: flex-end;
+      /*justify-content: flex-end;*/
       align-items: center;
       color: $defaultTextColor;
-      /*border: 1px solid black;*/
       flex-wrap: wrap;
       cursor: pointer;
+      margin-right: 1rem;
+    }
+    .loginBlock:hover{
+      color: $activeTextColor;
     }
 
     .login {
       margin-left: 1rem;
       text-decoration: none;
       color: $activeTextColor;
-      /*width: 3.5rem;*/
-      /*border: 1px solid white;*/
-      /*background-color:  $activeTextColor;*/
     }
   }
 }

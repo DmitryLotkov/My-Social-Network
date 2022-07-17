@@ -3,13 +3,12 @@ import styles from "./Header.module.scss"
 import {Navigation} from "./Navigation";
 
 
+export function Header() {
 
-export function Header(){
-
-    return(
-            <header className={styles.headerWrapper}>
-                <Navigation/>
-            </header>
+    return (
+        <header className={styles.headerWrapper}>
+            <Navigation/>
+        </header>
 
     )
 }
