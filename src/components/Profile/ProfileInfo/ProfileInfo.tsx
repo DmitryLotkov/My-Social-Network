@@ -16,8 +16,8 @@ import {setAppErrorAC} from "../../../Redux/AppReducer";
 import {userIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
-import profileBackground from "./../../../Images/profileBackGround.svg"
-
+import profileBackground from "./../../../Images/backGroundProfilePhoto.jpg"
+import smallLogo from "../../../Images/smallLogo.svg"
 
 type profileInfoPropsType = {
     profile: ProfileDataType
@@ -45,6 +45,8 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const [base64Avatar, setLocalAvatar] = useState<any>(userPhoto);
     const [fileAvatar, setFileAvatar] = useState<any>();
     const dispatch = useDispatch();
+
+
     const handleCloseModal = () => setOpen(false);
     const handleSaveAvatar = () => {
         dispatch(uploadAvatarTC(fileAvatar));
@@ -71,7 +73,6 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
     }
 
-    console.log(props.profile.aboutMe)
     return (
         <div className={styles.profileInfoWrapper}>
             <img src={profileBackground} alt="avatarBackground"/>
@@ -81,7 +82,10 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             </div>
 
             <div className={styles.statusBlock}>
-                <div className={styles.profileName}>{props.profile.fullName}</div>
+                <div className={styles.profileName}>
+                    <strong>{props.profile.fullName}</strong>
+                    <img src={smallLogo} alt="smallLogo"/>
+                </div>
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
                 </div>

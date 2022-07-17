@@ -81,6 +81,11 @@
       flex-wrap: wrap;
       cursor: pointer;
       margin-right: 1rem;
+      .jobStatus{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
     .loginBlock:hover{
       color: $activeTextColor;

@@ -3,7 +3,6 @@ import styles from "./Header.module.scss"
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logOutTC} from "../../Redux/AuthReducer";
-import {MyProfilePhoto} from "../Common/MyProfilePhoto/MyProfilePhoto";
 import Button from "@mui/material/Button";
 import {isLoggedInSelector} from "../Common/Selectors/Selectors";
 import logo from "./../../Images/Logo.svg"
@@ -13,6 +12,7 @@ import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MessageIcon from '@mui/icons-material/Message';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { MyProfilePhotoAndStatus } from '../Common/MyProfilePhoto/MyProfilePhotoAndStatus';
 
 
 export function Navigation() {
@@ -59,8 +59,12 @@ export function Navigation() {
             </nav>
 
             <div className={styles.loginBlock}>
-                {isLoggedIn && <MyProfilePhoto/>}
-                {isLoggedIn && <Button variant={"outlined"} className={styles.login} onClick={logOutHandler}>
+
+                <div className={styles.jobStatus}>
+                    {isLoggedIn && <MyProfilePhotoAndStatus/>}
+                </div>
+                {isLoggedIn &&
+                <Button variant={"outlined"} className={styles.login} onClick={logOutHandler}>
                     Log out
                 </Button>}
             </div>

@@ -2,11 +2,8 @@
 
 
 body {
-
   overflow-y: scroll;
 .App{
-  /*display: flex;
-  flex-direction: column;*/
   width: 100%;
   background-color: $mainBackGroundColor;
 }
@@ -14,14 +11,13 @@ body {
     display: flex;
     font-family: 'Poppins', sans-serif;
     justify-content: center;
-
-    width: 100%;
+    width: inherit;
     flex-wrap: wrap;
     border: 1px solid blue;
     color: $defaultTextColor;
     min-width: 1000px;
-
     box-sizing: border-box;
+
   }
 }
 
