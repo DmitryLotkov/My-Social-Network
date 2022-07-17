@@ -1,9 +1,8 @@
 import React, {FC, useEffect} from 'react';
 import './App.scss';
 import {Header} from "./components/Header/Header";
-import {SideBar} from "./components/Navbar/SideBar";
 import {Route, Routes, Navigate} from "react-router-dom";
-import {store, useAppSelector} from "./Redux/store";
+import {useAppSelector} from "./Redux/store";
 import UsersContainerFC from './components/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
 import {EventsContainer} from "./components/Events/EventsContainer";
@@ -12,7 +11,7 @@ import {useDispatch} from "react-redux";
 import {initializeAppTC} from "./Redux/AuthReducer";
 import {Login} from "./components/Login/Login";
 import {Preloader} from "./components/Common/Preloader/Preloader";
-import {isInitializedSelector, isLoggedInSelector} from "./components/Common/Selectors/Selectors";
+import {isInitializedSelector} from "./components/Common/Selectors/Selectors";
 import withSuspense from "./components/HOC/withSuspense";
 import {RequestStatusType} from "./Redux/AppReducer";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
@@ -39,10 +38,8 @@ export const PATH = {
 const App: FC = () => {
 
     const appStatus = useAppSelector<RequestStatusType>(state => state.App.status);
-    const state = store.getState();
     const dispatch = useDispatch();
     const userID = useAppSelector(state => state.Auth.data.id)
-    const isLoggedIn = useAppSelector(isLoggedInSelector);
     const isInitialized = useAppSelector(isInitializedSelector);
 
 
@@ -59,7 +56,7 @@ const App: FC = () => {
             <Header/>
             <main className={"mainContent"}>
 
-                {isLoggedIn && <SideBar SideBar={state.SideBar}/>}
+                {/*{isLoggedIn && <SideBar SideBar={state.SideBar}/>}*/}
                 {appStatus === 'loading' && <Preloader/>}
                 <Routes>
                     <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>

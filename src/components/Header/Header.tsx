@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./Header.module.scss"
-import {TopContainer} from "./TopContainer";
+import {Navigation} from "./Navigation";
 
 
 
@@ -8,7 +8,7 @@ export function Header(){
 
     return(
             <header className={styles.headerWrapper}>
-                <TopContainer/>
+                <Navigation/>
             </header>
 
     )
