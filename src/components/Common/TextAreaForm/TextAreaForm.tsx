@@ -4,6 +4,8 @@ import styles from "./TextAreaForm.module.scss";
 import {MyPostsPropsType} from "../../Profile/MyPosts";
 import {maxMessageLength} from "./textAreaData";
 import Button from "@mui/material/Button";
+import TelegramIcon from '@mui/icons-material/Telegram';
+import {TextField} from "@mui/material";
 
 
 
@@ -38,13 +40,12 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
     return (
         <form  onSubmit={formik.handleSubmit}>
             <div className={styles.formWrapper}>
-                <textarea className={styles.textArea} maxLength={1000}
+                <TextField  multiline={true} className={styles.textArea}
                          placeholder={props.placeholderText}
-                         {...formik.getFieldProps("text")}
-                         autoFocus={true} onBlur={() => formik.errors.text = ""}
+                         {...formik.getFieldProps("text")} onBlur={() => formik.errors.text = ""}
             />
                 <div>
-                    <Button type={"submit"}>Publish</Button>
+                    <Button style={{backgroundColor: "#0077B5"}} variant={"contained"} type={"submit"}><TelegramIcon/></Button>
                 </div>
             </div>
             {formik.errors.text &&  <div style={{color: "red"}}> {formik.errors.text}</div>}

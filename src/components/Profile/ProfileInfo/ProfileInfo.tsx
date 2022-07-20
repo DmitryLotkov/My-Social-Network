@@ -19,6 +19,9 @@ import {maxPictureSize} from "../../../constants";
 import {ContactBlock} from "../ProdileData/ContactBlock";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Popover from "@mui/material/Popover";
+import {ChatBlock} from "../../Navbar/ChatBlock";
+import {OnlineFriendType} from "../../OldComponents/OldStore";
+import chatStyles from "../../OldComponents/ChatBlock.module.scss";
 
 type profileInfoPropsType = {
     profile: ProfileDataType
@@ -43,14 +46,14 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const userId = Number(useParams<'userId'>().userId)
     const myId = useAppSelector(userIDSelector);
     const photoRef = useRef<HTMLInputElement>(null);
+    const onlineFriends = useAppSelector<Array<OnlineFriendType>>(state => state.SideBar.onlineFriends)
 
     const [open, setOpen] = useState(false);
     const [base64Avatar, setLocalAvatar] = useState<any>(userPhoto);
     const [fileAvatar, setFileAvatar] = useState<any>();
     const [openPopover, setOpenPopover] = useState(false)
     const popoverAnchor = useRef(null);
-    let show = Object.values(props.profile.contacts).every(item => item !== null)
-
+    const show = Object.values(props.profile.contacts).every(item => item !== null)
 
     const handleCloseModal = () => setOpen(false);
     const handleClosePopover = () => setOpenPopover(false);
@@ -80,7 +83,11 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
         }
 
     }
-
+    let onlineFriendsArr = onlineFriends.map((f) =>
+            <ChatBlock
+                id={f.id}
+                avatar={f.avatar}/>
+        )
     return (
         <div className={styles.profileInfoWrapper}>
 
@@ -109,6 +116,11 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                 </p>
             </div>
             {show && <ContactBlock/>}
+
+            <div className={chatStyles.ChatBlock}>
+                <span className={chatStyles.Title}>Chat online</span>
+                {onlineFriendsArr}
+            </div>
             <Modal open={open}
                    onClose={handleCloseModal}
             >
@@ -159,16 +171,17 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             <Popover open={openPopover}
                      anchorEl={popoverAnchor.current}
                      onClose={handleClosePopover}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
+                     anchorOrigin={{
+                         vertical: 'top',
+                         horizontal: 'left',
+                     }}
+                     transformOrigin={{
+                         vertical: 'bottom',
+                         horizontal: 'right',
+                     }}
             >
-                <Typography sx={{ p: 1 }}>{props.profile.lookingForAJob ? "In search of a jpb" : "Not looking for a job" }</Typography>
+                <Typography
+                    sx={{p: 1}}>{props.profile.lookingForAJob ? "In search of a job" : "Not looking for a job"}</Typography>
             </Popover>
         </div>
     );

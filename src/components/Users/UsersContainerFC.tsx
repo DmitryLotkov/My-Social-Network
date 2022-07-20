@@ -28,7 +28,7 @@ const UserContainerFC: FC = React.memo(() => {
     // let Redirect= WithAuthRedirect(Users);
 
     useEffect(() => {
-        dispatch(getUsersTC(currentPage, pageSize));
+        dispatch(getUsersTC());
     }, [currentPage, pageSize, dispatch])
 
     const onPageChanged = (pageNumber: number) => {

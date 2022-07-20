@@ -1,6 +1,6 @@
 import {authAPI, userAPI} from "../components/api";
 import {handleNetworkError, handleServerNetworkError} from "../utils/error.utils";
-import {AppThunkDispatch} from "./store";
+import {AppStoreType, AppThunkDispatch} from "./store";
 import {setAppErrorAC, setAppStatusAC} from "./AppReducer";
 
 //types
@@ -102,7 +102,8 @@ export const toggleFollowingProgressAC = (followingIsProgress: boolean, userID: 
 } as const)
 
 //thunks
-export const getUsersTC = (currentPage: number, pageSize: number) => async (dispatch: AppThunkDispatch) => {
+export const getUsersTC = () => async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
+    let {currentPage, pageSize} = getState().UsersPage
     dispatch(toggleIsFetchingAC(true));
     let res = await userAPI.getUsers(currentPage, pageSize)
     try {
