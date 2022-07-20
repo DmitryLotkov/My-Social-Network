@@ -1,18 +1,16 @@
 @import "../Common/variables";
 .postBlock{
-    /*padding: 1rem;*/
-   /* border: 1px solid red;*/
+    /* border: 1px solid red;*/
     background-color: $mainBackGroundColor;
     border-radius: $messageBorderRadius;
     display: flex;
     flex-direction: column;
-    width:850px;
+    width:100%;
     flex-wrap: wrap;
     border: 1px solid black;
     margin-right: 40px;
-    padding-left: 1rem;
-    padding-top: 1rem;
-    box-sizing: border-box;
+    padding: 1rem 0 0 1rem;
+    /*box-sizing: border-box;*/
 
     .posts {
         margin-top: 10px;

@@ -105,6 +105,7 @@ export const loginTC = (data: LoginParamsType) => async (dispatch: AppThunkDispa
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
             dispatch(getCaptchaAC(null))
+            dispatch( await initializeAppTC())
         } else {
             if(res.data.resultCode === 10){
                 dispatch(await getCaptchaTC())

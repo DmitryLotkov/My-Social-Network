@@ -4,7 +4,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logOutTC} from "../../Redux/AuthReducer";
 import Button from "@mui/material/Button";
-import {isLoggedInSelector} from "../Common/Selectors/Selectors";
+import {isLoggedInSelector, userIDSelector} from "../Common/Selectors/Selectors";
 import logo from "./../../Images/Logo.svg"
 import {PATH} from "../../App";
 import {myUserID} from "../../constants";
@@ -12,7 +12,7 @@ import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MessageIcon from '@mui/icons-material/Message';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { MyProfilePhotoAndStatus } from '../Common/MyProfilePhoto/MyProfilePhotoAndStatus';
+import {useAppSelector} from "../../Redux/store";
 
 
 export function Navigation() {
@@ -23,7 +23,11 @@ export function Navigation() {
         dispatch(logOutTC());
         navigate("/login")
     }
-
+    const myLoginName = useAppSelector<string | null>(state => state.Auth.data.login);
+    const userID = useSelector(userIDSelector)
+    const navigateToMyMage = ()=>{
+        navigate(`/profile/${userID}`)
+    }
     return (
         <div className={styles.headerContent}>
             <div className={styles.logo}><img src={logo} alt="logo"/></div>
@@ -61,7 +65,9 @@ export function Navigation() {
             <div className={styles.loginBlock}>
 
                 <div className={styles.jobStatus}>
-                    {isLoggedIn && <MyProfilePhotoAndStatus/>}
+                    <div className={styles.userName} onClick={navigateToMyMage}>
+                        {myLoginName}
+                    </div>
                 </div>
                 {isLoggedIn &&
                 <Button variant={"outlined"} className={styles.login} onClick={logOutHandler}>

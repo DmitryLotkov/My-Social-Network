@@ -6,7 +6,7 @@ import {
 import defaultUserPhoto from "../../../Images/defaultUserImage.jpg";
 import {ProfileStatus} from "../ProfileStatus";
 import Modal from "@mui/material/Modal/Modal";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Close} from "@mui/icons-material";
 import {useAppSelector} from "../../../Redux/store";
@@ -16,8 +16,9 @@ import {setAppErrorAC} from "../../../Redux/AppReducer";
 import {userIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
-import profileBackground from "./../../../Images/backGroundProfilePhoto.jpg"
-import smallLogo from "../../../Images/smallLogo.svg"
+import {ContactBlock} from "../ProdileData/ContactBlock";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Popover from "@mui/material/Popover";
 
 type profileInfoPropsType = {
     profile: ProfileDataType
@@ -37,17 +38,24 @@ const style = {
 }
 export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
+    const dispatch = useDispatch();
     const userPhoto = useAppSelector(state => state.ProfilePage.profile.photos?.large);
     const userId = Number(useParams<'userId'>().userId)
     const myId = useAppSelector(userIDSelector);
     const photoRef = useRef<HTMLInputElement>(null);
+
     const [open, setOpen] = useState(false);
     const [base64Avatar, setLocalAvatar] = useState<any>(userPhoto);
     const [fileAvatar, setFileAvatar] = useState<any>();
-    const dispatch = useDispatch();
+    const [openPopover, setOpenPopover] = useState(false)
+    const popoverAnchor = useRef(null);
+    let show = Object.values(props.profile.contacts).every(item => item !== null)
 
 
     const handleCloseModal = () => setOpen(false);
+    const handleClosePopover = () => setOpenPopover(false);
+    const handleOpenPopover = () => setOpenPopover(true);
+
     const handleSaveAvatar = () => {
         dispatch(uploadAvatarTC(fileAvatar));
         handleCloseModal();
@@ -56,7 +64,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
         const reader = new FileReader();
         const file = e.target?.files;
 
-        if ((file && file[0].type) && (file[0].type === "image/png" || file[0].type === "image/jpeg" )) {
+        if ((file && file[0].type) && (file[0].type === "image/png" || file[0].type === "image/jpeg")) {
             setFileAvatar(file[0])
             reader.onloadend = function () {
                 setLocalAvatar(reader.result)
@@ -64,7 +72,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             if (file[0].size && file[0].size <= maxPictureSize) {
                 reader.readAsDataURL(file[0])
             } else {
-                dispatch(setAppErrorAC(`Your file size must be less then ${maxPictureSize/1000000}MB 😕`))
+                dispatch(setAppErrorAC(`Your file size must be less then ${maxPictureSize / 1000000}MB 😕`))
             }
 
         } else {
@@ -75,16 +83,23 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
     return (
         <div className={styles.profileInfoWrapper}>
-            <img src={profileBackground} alt="avatarBackground"/>
-            <div className={styles.profilePhoto}>
-                <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
-                {userId === myId && <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
-            </div>
 
+            <div className={styles.profilePhoto}>
+                <div className={styles.avatarWrapper}>
+                    <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
+                    {userId === myId &&
+                    <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
+                </div>
+            </div>
             <div className={styles.statusBlock}>
                 <div className={styles.profileName}>
                     <strong>{props.profile.fullName}</strong>
-                    <img src={smallLogo} alt="smallLogo"/>
+                    {/*<img src={smallLogo} alt="smallLogo"/>*/}
+                    <CheckCircleOutlineIcon
+                        className={styles.popover}
+                        ref={popoverAnchor}
+                        onClick={handleOpenPopover} fontSize={"small"}
+                        color={props.profile.lookingForAJob ? "success" : "error"}/>
                 </div>
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
@@ -92,10 +107,8 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                 <p className={styles.profileDescription}>
                     {props.profile.aboutMe}
                 </p>
-                {/*<div className={styles.contacts}>
-                    <ProfileData />
-                </div>*/}
             </div>
+            {show && <ContactBlock/>}
             <Modal open={open}
                    onClose={handleCloseModal}
             >
@@ -143,6 +156,20 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                     </Box>
                 </Box>
             </Modal>
+            <Popover open={openPopover}
+                     anchorEl={popoverAnchor.current}
+                     onClose={handleClosePopover}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+            >
+                <Typography sx={{ p: 1 }}>{props.profile.lookingForAJob ? "In search of a jpb" : "Not looking for a job" }</Typography>
+            </Popover>
         </div>
     );
 })

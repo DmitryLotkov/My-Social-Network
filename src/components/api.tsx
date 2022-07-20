@@ -22,6 +22,7 @@ export type RespType<T = {}> = {
     fieldsErrors: Array<string>
     messages: Array<string>
 }
+
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<UsersPageType>(`users?page=${currentPage}&count=${pageSize}`);
@@ -68,6 +69,9 @@ export const authAPI = {
     },
     logout(){
         return instance.delete<RespType>('/auth/login');
+    },
+    getFollowers(userID: string | undefined){
+        return instance.get(`follow/${userID}`)
     }
 
 }

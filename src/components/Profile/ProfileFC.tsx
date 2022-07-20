@@ -21,7 +21,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
 
     const addMessage = (text: string) =>{
         return  dispatch(addPostActionAC(text));
-    } //${commonStyle.mainBox}
+    }
     return (
         <div className={`${styles.profileWrapper} `}>
             <ProfileInfo profile={profile}/>

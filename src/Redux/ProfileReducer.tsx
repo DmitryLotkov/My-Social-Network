@@ -57,9 +57,7 @@ export type ProfileDataType = {
     aboutMe?: string
     lookingForAJob: boolean
     lookingForAJobDescription?: string
-    LookingForAJobDescription?: string
     fullName?: string
-    FullName?: string
     contacts: UserProfileContactType
     photos?: userProfilePhotosType
 
