@@ -85,6 +85,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     }
     let onlineFriendsArr = onlineFriends.map((f) =>
             <ChatBlock
+                key={f.id}
                 id={f.id}
                 avatar={f.avatar}/>
         )

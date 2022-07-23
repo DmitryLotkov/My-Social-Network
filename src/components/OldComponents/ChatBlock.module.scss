@@ -15,7 +15,7 @@
 }
 .Title {
     grid-area: t;
-    background: #0077b5;
+    background: $activeTextColor;
     padding: 1px 20px;
     width: 70%;
     height: 20px;
