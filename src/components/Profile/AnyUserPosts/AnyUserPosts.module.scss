@@ -1,0 +1,69 @@
+@import "../../Common/variables";
+
+.itemWrapper {
+  margin-right: 40px;
+  color: $defaultTextColor;
+  background-color: $mainBackGroundColor;
+
+  .anyUserPost {
+    border-radius: $messageBorderRadius;
+    padding: 20px 30px 20px 30px;
+    margin-bottom: 1rem;
+    background-color: $containerColor;
+
+    .userPhotoAndDescriptionBlock {
+      display: flex;
+      align-items: center;
+
+      > img {
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+      }
+
+      .userDescription {
+        margin-left: 0.7rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+
+        .userPosition {
+          font-size: 10px;
+          line-height: 15px;
+        }
+      }
+    }
+
+    .postPhoto {
+      margin-bottom: 1rem;
+    }
+
+    .likeBlock {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 0.5rem;
+        cursor: pointer;
+        color: $postColor;
+      }
+
+    }
+
+    .likeBlock::before {
+      content: "";
+      background-color: #E5E5E5;
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      bottom: 30px;
+      left: 0;
+      box-sizing: border-box;
+
+    }
+
+  }
+
+}
+

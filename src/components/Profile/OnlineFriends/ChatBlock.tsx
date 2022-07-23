@@ -1,7 +1,10 @@
-import {OnlineFriendType} from "../OldComponents/OldStore";
-import React from "react";
-import chatStyles from "../OldComponents/ChatBlock.module.scss"
 
+import React from "react";
+import chatStyles from "./ChatBlock.module.scss"
+type OnlineFriendType = {
+    id: string
+    avatar: string
+}
 export function ChatBlock(props: OnlineFriendType) {
 
     return (

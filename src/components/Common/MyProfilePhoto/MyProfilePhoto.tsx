@@ -20,7 +20,7 @@ export const MyProfilePhoto = React.memo(() =>{
         <div className={styles.myProfilePhotoWrapper}>
             <img className={styles.mySmallPhoto} src={myPhoto || defaultUserPhoto} alt={"userPhoto"}/>
             <div className={styles.userName} onClick={navigateToMyMage}>
-                {myLoginName}
+                <strong>{myLoginName}</strong>
             </div>
         </div>
     )

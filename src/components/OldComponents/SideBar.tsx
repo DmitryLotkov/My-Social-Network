@@ -1,9 +1,9 @@
 import React from 'react';
-import style from "../Navbar/Navbar.module.scss"
-import chatStyles from "./ChatBlock.module.scss"
+import style from "./Navbar.module.scss"
+import chatStyles from "../Profile/OnlineFriends/ChatBlock.module.scss"
 import {NavLink} from "react-router-dom";
 import {SideBarType} from "./OldStore";
-import {ChatBlock} from "../Navbar/ChatBlock";
+import {ChatBlock} from "../Profile/OnlineFriends/ChatBlock";
 import {myUserID} from "../../constants";
 import {PATH} from "../../App";
 

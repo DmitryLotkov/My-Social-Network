@@ -1,4 +1,4 @@
-@import "./src/components/Common/variables";
+@import "../Common/variables";
 
 .sideWrapper {
   padding: 20px;
@@ -27,7 +27,7 @@
   .ChatBlock {
     margin: 40px 0 20px;
     text-align: center;
-      display: flex;
+    display: flex;
   }
 }
 

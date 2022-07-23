@@ -4,25 +4,16 @@
   padding: 20px 30px 20px 30px;
   color: $defaultTextColor;
   margin-bottom: 1rem;
-  margin-top: 1rem;
-  border: 1px solid $mainBackGroundColor;
-  /*padding: 0.5rem;*/
   background-color: $containerColor;
   border-radius: $messageBorderRadius;
-
-  .userAndLoginBlock {
-    color: $postColor !important;
-    display: flex;
-    cursor: pointer;
-    align-items: flex-start;
-  }
 
   img {
     width: 60px !important;
     height: 60px !important;
     border-radius: 30px !important;
   }
-  .likeBlock{
+
+  .likeBlock {
     position: relative;
     display: flex;
     align-items: center;
@@ -34,7 +25,8 @@
     }
 
   }
-  .likeBlock::before{
+
+  .likeBlock::before {
     content: "";
     background-color: #E5E5E5;
     position: absolute;

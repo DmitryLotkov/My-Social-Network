@@ -3,19 +3,19 @@ import styles from "./Post.module.scss"
 import {MyProfilePhoto} from "../../../Common/MyProfilePhoto/MyProfilePhoto";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
+export const maxLikesCount = 300;
 type MyPostsPropsType = {
     message: string
     likeCount: number
 }
-type likeObjType = {
+export type likeObjType = {
     likeCount: number
     updated: boolean
 }
 export function Post(props: MyPostsPropsType) {
     const [likeObj, setLikeObj] = useState<likeObjType>({likeCount: 5, updated: false});
 
-    const maxLikesCount = 1000;
+
     const generateLike = () => {
         let likeGenerator = Math.round(Math.random() * maxLikesCount)
         setLikeObj({likeCount: likeGenerator, updated: false});
@@ -34,9 +34,7 @@ export function Post(props: MyPostsPropsType) {
 
     return (
         <div className={styles.itemWrapper}>
-            <div className={styles.userAndLoginBlock}>
                 <MyProfilePhoto/>
-            </div>
             <p>
                 {props.message}
             </p>

@@ -9,6 +9,7 @@ import {placeholderText} from "../Common/TextAreaForm/textAreaData";
 import {postsDataSelector, profileSelector} from "../Common/Selectors/Selectors";
 import {useAppSelector} from "../../Redux/store";
 import {myUserID} from "../../constants";
+import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
 
 type ProfilePropsType = {
     userID: number| null
@@ -30,6 +31,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
                 placeholderText={placeholderText.profileAreaText}
                 callBack={addMessage}
                 postsData={postsData}/>}
+            {props.userID !== myUserID && <AnyUserPosts/>}
         </div>)
 
 })

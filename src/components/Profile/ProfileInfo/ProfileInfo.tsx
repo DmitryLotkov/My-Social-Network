@@ -19,9 +19,9 @@ import {maxPictureSize} from "../../../constants";
 import {ContactBlock} from "../ProdileData/ContactBlock";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Popover from "@mui/material/Popover";
-import {ChatBlock} from "../../Navbar/ChatBlock";
+import {ChatBlock} from "../OnlineFriends/ChatBlock";
 import {OnlineFriendType} from "../../OldComponents/OldStore";
-import chatStyles from "../../OldComponents/ChatBlock.module.scss";
+import chatStyles from "../OnlineFriends/ChatBlock.module.scss";
 
 type profileInfoPropsType = {
     profile: ProfileDataType
@@ -46,7 +46,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const userId = Number(useParams<'userId'>().userId)
     const myId = useAppSelector(userIDSelector);
     const photoRef = useRef<HTMLInputElement>(null);
-    const onlineFriends = useAppSelector<Array<OnlineFriendType>>(state => state.SideBar.onlineFriends)
+    const onlineFriends = useAppSelector<Array<OnlineFriendType>>(state => state.HardcodedUsers.onlineFriends)
 
     const [open, setOpen] = useState(false);
     const [base64Avatar, setLocalAvatar] = useState<any>(userPhoto);
@@ -118,7 +118,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             </div>
             {show && <ContactBlock/>}
 
-            <div className={chatStyles.ChatBlock}>
+           <div className={chatStyles.ChatBlock}>
                 <span className={chatStyles.Title}>Chat online</span>
                 {onlineFriendsArr}
             </div>

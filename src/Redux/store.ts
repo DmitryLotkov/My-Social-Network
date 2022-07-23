@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 
 
-import sidebarReducer from "./NavBarReducer";
+import hardcodedUsersReducer from "./HardCodedUserReducer";
 import {UsersActionsType, userReducer} from "./UsersReducer";
 import {AuthActionsType, authReducer} from "./AuthReducer";
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
@@ -20,7 +20,7 @@ export const useAppDispatch: () => AppThunkDispatch = useDispatch;
 const rootReducer = combineReducers({
     ProfilePage: profileReducer,
     DialogPage: dialogsReducer,
-    SideBar: sidebarReducer,
+    HardcodedUsers: hardcodedUsersReducer,
     UsersPage: userReducer,
     Auth: authReducer,
     App: appReducer

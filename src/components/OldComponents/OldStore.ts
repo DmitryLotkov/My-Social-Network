@@ -40,11 +40,7 @@ export type ProfilePageTypeOld = {
     postsData: Array<PostType>
     NewPostText: string
 }
-/*export type DialogPageType = {
-    dialogs: Array<DialogsType>,
-    messages: Array<MessagesType>
 
-}*/
 export type RootStateType = {
     DialogPage: DialogsStateType,
     ProfilePage: ProfilePageTypeOld,
