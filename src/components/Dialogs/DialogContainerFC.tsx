@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../Redux/store";
+import {AppRootStateType} from "../../store/store";
 import {Dialogs} from "./Dialogs";
 
-import {DialogsStateType} from "../../Redux/DialogsReducer";
+import {DialogsStateType} from "../../store/DialogsReducer";
 
 
 

@@ -1,15 +1,12 @@
-import {AppRootStateType} from "../../../Redux/store";
-import {UserType} from "../../../Redux/UsersReducer";
-import {PostType, ProfileDataType} from "../../../Redux/ProfileReducer";
+import {AppRootStateType} from "../../../store/store";
+import {UserType} from "../../../store/UsersReducer";
+import {ProfileDataType} from "../../../store/ProfileReducer";
 
 export const statusSelector = (state:AppRootStateType):string =>{
     return state.ProfilePage.status;
 }
 export const userIDSelector = (state:AppRootStateType):number =>{
     return state.Auth.data.id;
-}
-export const postsDataSelector = (state:AppRootStateType):Array<PostType> =>{
-    return state.ProfilePage.postsData;
 }
 export const profileSelector = (state:AppRootStateType):ProfileDataType =>{
     return state.ProfilePage.profile;

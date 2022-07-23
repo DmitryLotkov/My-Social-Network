@@ -2,21 +2,21 @@ import React, {ChangeEvent, useRef, useState} from "react";
 import styles from "./ProfileInfo.module.scss"
 import {
     ProfileDataType, uploadAvatarTC,
-} from "../../../Redux/ProfileReducer";
+} from "../../../store/ProfileReducer";
 import defaultUserPhoto from "../../../Images/defaultUserImage.jpg";
 import {ProfileStatus} from "../ProfileStatus";
 import Modal from "@mui/material/Modal/Modal";
 import {Box, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Close} from "@mui/icons-material";
-import {useAppSelector} from "../../../Redux/store";
+import {useAppSelector} from "../../../store/store";
 import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
-import {setAppErrorAC} from "../../../Redux/AppReducer";
+import {setAppErrorAC} from "../../../store/AppReducer";
 import {userIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
-import {ContactBlock} from "../ProdileData/ContactBlock";
+import {ContactBlock} from "../ContactBlock/ContactBlock";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Popover from "@mui/material/Popover";
 import {ChatBlock} from "../OnlineFriends/ChatBlock";
@@ -83,7 +83,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
         }
 
     }
-    let onlineFriendsArr = onlineFriends.map((f) =>
+    const onlineFriendsArr = onlineFriends.map((f) =>
             <ChatBlock
                 key={f.id}
                 id={f.id}
@@ -112,9 +112,9 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
                 </div>
-                <p className={styles.profileDescription}>
+                {props.profile.aboutMe && <p className={styles.profileDescription}>
                     {props.profile.aboutMe}
-                </p>
+                </p>}
             </div>
             {show && <ContactBlock/>}
 

@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import style from "./users.module.scss";
 import userPhoto from "../../Images/defaultUserImage.jpg";
-import {UserType} from "../../Redux/UsersReducer";
+import {UserType} from "../../store/UsersReducer";
 import Pagination from '@mui/material/Pagination';
 import {useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";

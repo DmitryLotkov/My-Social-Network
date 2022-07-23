@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {DialogsStateType} from "../../Redux/DialogsReducer";
+import {DialogsStateType} from "../../store/DialogsReducer";
 
 import {ActionsTypes} from "./ActionsTypes";
 

@@ -9,10 +9,20 @@ import user7 from "./../Images/Users/user-7.jpg";
 import user8 from "./../Images/Users/user-8.jpg";
 import user9 from "./../Images/Users/user-9.jpg";
 import postPhoto from "./../Images/Post photo.png";
+import {
+    PostType,
+} from "./ProfileReducer";
+
 
 export type OnlineFriendType = {
     id: string
     avatar: string
+}
+enum ACTIONS_TYPE {
+
+    ADD_POST = "PROFILE/ADD-POST",
+    DELETE_POST = "PROFILE/DELETE-POST",
+
 }
 export type UsersOnWallType = {
     id: string
@@ -23,11 +33,19 @@ export type UsersOnWallType = {
     postPhoto: string | undefined
 
 }
-export type SideBarType = {
+export type ProfileActionsType =
+    ReturnType<typeof addPostActionAC>
+    | ReturnType<typeof deletePostAC>
+
+export type PostsType = {
     onlineFriends: Array<OnlineFriendType>
-    usersOnTheWall: Array<UsersOnWallType>
+    anyUserPostsData: Array<UsersOnWallType>
+    myPostsData: Array<PostType>
 }
-const initialState: SideBarType = {
+const initialState: PostsType = {
+    myPostsData: [
+        {id: v1(), message: "I want to be a serious frontend developer.", likesCount: 0},
+    ],
     onlineFriends: [
         {id: v1(), avatar: user1},
         {id: v1(), avatar: user2},
@@ -39,7 +57,8 @@ const initialState: SideBarType = {
         {id: v1(), avatar: user8},
         {id: v1(), avatar: user9},
     ],
-    usersOnTheWall: [
+    anyUserPostsData: [
+
         {
             id: v1(),
             avatar: user5,
@@ -70,7 +89,24 @@ const initialState: SideBarType = {
         },
     ]
 }
-const HardcodedUserReducer = (state: SideBarType = initialState) => {
-    return state
+const UserPostsReducer = (state: PostsType = initialState, action: ProfileActionsType) => {
+    switch (action.type) {
+        case ACTIONS_TYPE.ADD_POST:
+            return {
+                ...state,
+                myPostsData: [...state.myPostsData, {id: v1(), message: action.message, likesCount: 0}]
+            };
+        case ACTIONS_TYPE.DELETE_POST:
+
+            return {...state, myPostsData: state.myPostsData.filter(post => post.id !== action.id)}
+        default:
+            return state;
+    }
 }
-export default HardcodedUserReducer;
+
+//actions
+export const addPostActionAC = (message: string) => ({type: ACTIONS_TYPE.ADD_POST,  message} as const)
+
+export const deletePostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_POST, id} as const);
+
+export default UserPostsReducer;

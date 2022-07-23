@@ -1,37 +1,37 @@
 import React from "react";
 import styles from "./Profile.module.scss"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {addPostActionAC} from "../../Redux/ProfileReducer";
 import {useDispatch} from "react-redux";
 import {MyPosts} from "./MyPosts";
-
 import {placeholderText} from "../Common/TextAreaForm/textAreaData";
-import {postsDataSelector, profileSelector} from "../Common/Selectors/Selectors";
-import {useAppSelector} from "../../Redux/store";
-import {myUserID} from "../../constants";
+import {profileSelector} from "../Common/Selectors/Selectors";
+import {useAppSelector} from "../../store/store";
 import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
+import {addPostActionAC} from "../../store/UserPostsReducer";
 
 type ProfilePropsType = {
-    userID: number| null
+    userID: number | null
 }
 
 export const ProfileFC = React.memo((props: ProfilePropsType) => {
-    const postsData = useAppSelector(postsDataSelector);
+    const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
     const profile = useAppSelector(profileSelector);
     const dispatch = useDispatch();
 
-    const addMessage = (text: string) =>{
-        return  dispatch(addPostActionAC(text));
+    const addMessage = (text: string) => {
+        dispatch(addPostActionAC(text));
     }
     return (
-        <div className={`${styles.profileWrapper} `}>
+        <div className={styles.profileWrapper}>
             <ProfileInfo profile={profile}/>
-            {props.userID === myUserID &&
-            <MyPosts
-                placeholderText={placeholderText.profileAreaText}
-                callBack={addMessage}
-                postsData={postsData}/>}
-            {props.userID !== myUserID && <AnyUserPosts/>}
+
+            <div className={styles.allPostsBlock}>
+                <MyPosts
+                    placeholderText={placeholderText.profileAreaText}
+                    callBack={addMessage}
+                    postsData={postsData}/>
+                <AnyUserPosts/>
+            </div>
         </div>)
 
 })

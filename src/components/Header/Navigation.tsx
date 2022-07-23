@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./Header.module.scss"
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {logOutTC} from "../../Redux/AuthReducer";
+import {logOutTC} from "../../store/AuthReducer";
 import Button from "@mui/material/Button";
 import {isLoggedInSelector, userIDSelector} from "../Common/Selectors/Selectors";
 import logo from "./../../Images/Logo.svg"
@@ -12,7 +12,7 @@ import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MessageIcon from '@mui/icons-material/Message';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {useAppSelector} from "../../Redux/store";
+import {useAppSelector} from "../../store/store";
 
 
 export function Navigation() {

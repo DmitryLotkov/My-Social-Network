@@ -1,8 +1,8 @@
-import {addPostActionAC, updateNewPostTextAC} from "../../Redux/ProfileReducer";
-import {MyPosts} from "../Profile/MyPosts";
-import {AppRootStateType} from "../../Redux/store";
-import {connect} from "react-redux";
+import React from "react";
+/*import {updateNewPostTextAC} from "../../store/ProfileReducer";
+import {AppRootStateType} from "../../store/store";
 import {Dispatch} from "redux";
+import {addPostActionAC} from "../../store/UserPostsReducer";*/
 
 
 /*type MyPostsPropsType = {
@@ -32,9 +32,9 @@ import {Dispatch} from "redux";
     );
 }*/
 
-let mapStateToProps = (state:AppRootStateType) => {
+/*let mapStateToProps = (state:AppRootStateType) => {
     return {
-        postsData: state.ProfilePage.postsData,
+        postsData: state.ProfilePage,
     }
 }
 let mapDispatchToProps = (dispatch:Dispatch) =>{
@@ -46,5 +46,5 @@ let mapDispatchToProps = (dispatch:Dispatch) =>{
 
         }
     }
-}
-export const MyPostsContainerOld = connect (mapStateToProps, mapDispatchToProps)(MyPosts)
+}*/
+/*export const MyPostsContainerOld = connect (mapStateToProps, mapDispatchToProps)(MyPosts)*/

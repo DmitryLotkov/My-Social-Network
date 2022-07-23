@@ -1,10 +1,10 @@
 import {
-    addPostActionAC, deletePostAC, savePhotoAC,
+    savePhotoAC,
     setStatusAC,
     setUserProfileAC,
     updateNewPostTextAC
-} from "../../Redux/ProfileReducer";
-import {addMessageAC} from "../../Redux/DialogsReducer";
+} from "../../store/ProfileReducer";
+import {addMessageAC} from "../../store/DialogsReducer";
 import {
     followSuccessAC,
     setCurrentPageAC,
@@ -12,11 +12,11 @@ import {
     setUsersTotalCountAC, toggleFollowingProgressAC,
     toggleIsFetchingAC,
     unFollowSuccessAC
-} from "../../Redux/UsersReducer";
+} from "../../store/UsersReducer";
 
 
 
-export type ActionsTypes = ReturnType<typeof addPostActionAC> |
+export type ActionsTypes =
     ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof followSuccessAC>|
@@ -28,8 +28,8 @@ export type ActionsTypes = ReturnType<typeof addPostActionAC> |
     ReturnType<typeof setUserProfileAC>|
     ReturnType<typeof toggleFollowingProgressAC>|
     ReturnType<typeof savePhotoAC>|
-    ReturnType<typeof setStatusAC> |
-    ReturnType<typeof deletePostAC>
+    ReturnType<typeof setStatusAC>
+
 
 
 

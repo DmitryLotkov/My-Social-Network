@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
-import {UsersPageType} from "../Redux/UsersReducer";
-import {ProfileDataType} from "../Redux/ProfileReducer";
-import {LoginParamsType} from "../Redux/AuthReducer";
+import {UsersPageType} from "../store/UsersReducer";
+import {ProfileDataType} from "../store/ProfileReducer";
+import {LoginParamsType} from "../store/AuthReducer";
 
 
 export const instance = axios.create({

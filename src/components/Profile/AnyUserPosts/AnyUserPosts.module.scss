@@ -1,7 +1,6 @@
 @import "../../Common/variables";
 
 .itemWrapper {
-  margin-right: 40px;
   color: $defaultTextColor;
   background-color: $mainBackGroundColor;
 
@@ -36,6 +35,8 @@
 
     .postPhoto {
       margin-bottom: 1rem;
+      box-sizing: border-box;
+      width: 100%;
     }
 
     .likeBlock {

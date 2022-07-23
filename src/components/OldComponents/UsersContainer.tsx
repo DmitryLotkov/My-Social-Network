@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 
-import {AppRootStateType} from "../../Redux/store";
+import {AppRootStateType} from "../../store/store";
 import {Dispatch} from "redux";
 import {
     followSuccessAC, toggleFollowingProgressAC,
@@ -8,7 +8,7 @@ import {
     setUsersAC, setUsersTotalCountAC, toggleIsFetchingAC,
     unFollowSuccessAC, follow,
     UserType, unfollow
-} from "../../Redux/UsersReducer";
+} from "../../store/UsersReducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "../Users/Users";

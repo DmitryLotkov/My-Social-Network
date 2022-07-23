@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 
 
-import hardcodedUsersReducer from "./HardCodedUserReducer";
+import hardcodedUsersReducer from "./UserPostsReducer";
 import {UsersActionsType, userReducer} from "./UsersReducer";
 import {AuthActionsType, authReducer} from "./AuthReducer";
 import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'

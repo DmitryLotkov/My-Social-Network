@@ -1,6 +1,5 @@
 import {
-    addPostActionAC,
-    deletePostAC, ProfileDataType,
+    ProfileDataType,
     ProfilePageType,
     profileReducer,
     setStatusAC,
@@ -10,11 +9,6 @@ import {
 let startState: ProfilePageType;
 beforeEach(() => {
     startState = {
-        postsData: [
-            {id: "1", message: "Do you have a job for me? What if I find it?", likesCount: 0},
-            {id: "2", message: "I want to be a serious frontend developer.", likesCount: 0},
-            {id: "3", message: "What is the good weather today,isn't it?", likesCount: 0},
-        ],
         status: "",
         profile: {
             userId:0,
@@ -39,26 +33,6 @@ beforeEach(() => {
                 }
         }
     }
-});
-test('new post should be added', () => {
-
-    const action = addPostActionAC("new String");
-
-    const endState = profileReducer(startState, action)
-
-    expect(endState.postsData.length).toBe(4);
-    expect(endState.postsData[3].message).toBe("new String");
-
-});
-
-test('chosen post must be deleted', () => {
-
-    const action = deletePostAC("1");
-
-    const endState = profileReducer(startState, action)
-
-    expect(endState.postsData.length).toBe(2);
-    expect(endState.postsData[0].id).toBe("2")
 });
 
 test('profile status must be updated', () => {

@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {
     follow, getUsersTC, onPageChangedTC, unfollow
-} from "../../Redux/UsersReducer";
+} from "../../store/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
 import {Preloader} from "../Common/Preloader/Preloader";
@@ -12,7 +12,7 @@ import {
     totalUserCountSelector,
     usersSelector
 } from "../Common/Selectors/Selectors";
-import {useAppSelector} from "../../Redux/store";
+import {useAppSelector} from "../../store/store";
 
 
 

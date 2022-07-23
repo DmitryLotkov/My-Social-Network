@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch} from "react-redux";
-import {updateUserStatusTC} from "../../Redux/ProfileReducer";
+import {updateUserStatusTC} from "../../store/ProfileReducer";
 import {statusSelector} from "../Common/Selectors/Selectors";
 
 import {useParams} from "react-router-dom";
-import {useAppSelector} from "../../Redux/store";
+import {useAppSelector} from "../../store/store";
 import { myUserID} from "../../constants";
 
 

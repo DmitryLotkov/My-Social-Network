@@ -1,6 +1,6 @@
 import {AxiosError} from "axios";
-import {AppThunkDispatch} from "../Redux/store";
-import {setAppErrorAC, setAppStatusAC} from "../Redux/AppReducer";
+import {AppThunkDispatch} from "../store/store";
+import {setAppErrorAC, setAppStatusAC} from "../store/AppReducer";
 import {RespType} from "../components/api";
 
 

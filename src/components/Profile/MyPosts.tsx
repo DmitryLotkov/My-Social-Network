@@ -4,6 +4,7 @@ import styles from "./MyPosts.module.scss"
 import {PostType} from "../OldComponents/OldStore";
 import {TextAreaForm} from "../Common/TextAreaForm/TextAreaForm";
 
+
 export type MyPostsPropsType = {
     postsData?: Array<PostType>
     callBack: (text: string) => void
@@ -13,6 +14,7 @@ export type MyPostsPropsType = {
 export const MyPosts = React.memo((props: MyPostsPropsType) => {
 
     let postsElements = props.postsData?.map(p => <Post key={p.id}
+                                                        id={p.id}
                                                         message={p.message}
                                                         likeCount={p.likesCount}/>).reverse()
     return (

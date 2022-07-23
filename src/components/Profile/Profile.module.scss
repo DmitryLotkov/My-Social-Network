@@ -11,7 +11,11 @@
   @media screen and (max-width: 400px) {
     flex-direction: column;
   }
-
+  .allPostsBlock{
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+  }
   .editableDiv {
     margin-bottom: 0.5rem;
     font-size: inherit;

@@ -3,7 +3,7 @@ import styles from "./AnyUserPosts.module.scss";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import {UsersOnWallType} from "../../../Redux/HardCodedUserReducer";
+import {UsersOnWallType} from "../../../store/UserPostsReducer";
 import {likeObjType, maxLikesCount} from "../MyPosts/Post/Post";
 
 const AnyUserPost = ({avatar, name, position, postText, postPhoto}: UsersOnWallType) => {

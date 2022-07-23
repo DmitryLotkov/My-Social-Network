@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import s from "./EditProfile.module.scss"
-import {useAppSelector} from "../../Redux/store";
+import {useAppSelector} from "../../store/store";
 import {profileSelector} from "../Common/Selectors/Selectors";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {Formik} from "formik";
-import {getProfileTC, updateProfileTC} from "../../Redux/ProfileReducer";
+import {getProfileTC, updateProfileTC} from "../../store/ProfileReducer";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {useDispatch} from 'react-redux';

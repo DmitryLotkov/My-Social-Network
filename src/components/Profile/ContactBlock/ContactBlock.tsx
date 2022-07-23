@@ -1,5 +1,5 @@
 import React from 'react';
-import {useAppSelector} from "../../../Redux/store";
+import {useAppSelector} from "../../../store/store";
 import {profileSelector} from "../../Common/Selectors/Selectors";
 import style from "./ContactBlock.module.scss"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

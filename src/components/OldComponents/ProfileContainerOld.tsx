@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 import {connect} from "react-redux";
-import {AppRootStateType} from "../../Redux/store";
-import {setUserProfileAC, ProfileDataType} from "../../Redux/ProfileReducer";
+import {AppRootStateType} from "../../store/store";
+import {setUserProfileAC, ProfileDataType} from "../../store/ProfileReducer";
 import {Dispatch} from "redux";
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {UserType} from "../../Redux/UsersReducer";
+import {UserType} from "../../store/UsersReducer";
 import style from "../Users/users.module.scss"
 import axios from "axios";
 import userPhoto from "../../Images/defaultUserImage.jpg";

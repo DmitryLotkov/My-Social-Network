@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {useFormik} from "formik";
 import {useDispatch, } from "react-redux";
-import {loginTC} from "../../Redux/AuthReducer";
-import {useAppSelector} from "../../Redux/store";
+import {loginTC} from "../../store/AuthReducer";
+import {useAppSelector} from "../../store/store";
 import {Navigate} from "react-router-dom";
-import {NullableType, setAppErrorAC} from "../../Redux/AppReducer";
+import {NullableType, setAppErrorAC} from "../../store/AppReducer";
 import Grid from "@mui/material/Grid";
 import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";

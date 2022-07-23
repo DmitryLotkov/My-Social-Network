@@ -3,8 +3,8 @@ import Snackbar from '@mui/material/Snackbar';
 
 import Alert from "@mui/material/Alert";
 import {AlertTitle} from "@mui/material";
-import {useAppDispatch, useAppSelector} from "../../Redux/store";
-import {NullableType, setAppErrorAC} from "../../Redux/AppReducer";
+import {useAppDispatch, useAppSelector} from "../../store/store";
+import {NullableType, setAppErrorAC} from "../../store/AppReducer";
 
 
 

@@ -4,10 +4,10 @@ import React, {FC, useEffect} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {ProfileFC} from "./ProfileFC";
 import {isLoggedInSelector} from "../Common/Selectors/Selectors";
-import {useAppSelector} from "../../Redux/store";
+import {useAppSelector} from "../../store/store";
 import {PATH} from "../../App";
 import {myUserID} from "../../constants";
-import {getProfileTC, getUserStatusTC} from "../../Redux/ProfileReducer";
+import {getProfileTC, getUserStatusTC} from "../../store/ProfileReducer";
 import {useDispatch} from "react-redux";
 
 

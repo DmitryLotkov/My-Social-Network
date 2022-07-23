@@ -7,10 +7,9 @@
   background-color: $containerColor;
   border-radius: $messageBorderRadius;
 
-  img {
-    width: 60px !important;
-    height: 60px !important;
-    border-radius: 30px !important;
+  .avatarAndClose {
+    display: flex;
+    justify-content: space-between;
   }
 
   .likeBlock {

@@ -11,10 +11,9 @@
     margin-right: 40px;
 
 
-
     .myPostForm{
         padding: 0 30px 30px;
-
+        margin-bottom: 1rem;
         background-color: $containerColor;
         /*border: 1px solid black;*/
         .newPostHeader{
@@ -34,7 +33,6 @@
 
 
     .posts {
-        margin-top: 10px;
         width: 100%;
         display: flex;
         flex-wrap: wrap;

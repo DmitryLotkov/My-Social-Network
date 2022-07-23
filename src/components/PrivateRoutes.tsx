@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navigate, Outlet, useLocation} from "react-router-dom";
-import {useAppSelector} from "../Redux/store";
+import {useAppSelector} from "../store/store";
 import {isLoggedInSelector} from "./Common/Selectors/Selectors";
 import {Header} from "./Header/Header";
 
