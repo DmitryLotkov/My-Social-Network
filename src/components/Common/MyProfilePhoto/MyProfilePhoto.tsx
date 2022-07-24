@@ -12,14 +12,13 @@ export const MyProfilePhoto = React.memo(() =>{
     const myPhoto = useAppSelector<string | undefined>(state => state.ProfilePage.profile.photos?.small);
     const myLoginName = useAppSelector<string | null>(state => state.Auth.data.login);
     const userID = useSelector(userIDSelector)
-    const navigateToMyMage = ()=>{
-        navigate(`/profile/${userID}`)
-    }
+    const navigateToMyMage = () => navigate(`/profile/${userID}`)
+
 
     return (
-        <div className={styles.myProfilePhotoWrapper}>
+        <div onClick={navigateToMyMage} className={styles.myProfilePhotoWrapper}>
             <img className={styles.mySmallPhoto} src={myPhoto || defaultUserPhoto} alt={"userPhoto"}/>
-            <div onClick={navigateToMyMage}>
+            <div >
                 <strong>{myLoginName}</strong>
                 <div className={styles.jobDescription}>Frontend developer</div>
             </div>

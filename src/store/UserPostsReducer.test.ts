@@ -1,4 +1,4 @@
-import UserPostsReducer, {addPostActionAC, deletePostAC, PostsType} from "./UserPostsReducer";
+import UserPostsReducer, {addPostActionAC, deleteMyPostAC, PostsType} from "./UserPostsReducer";
 import {v1} from "uuid";
 import user1 from "../Images/Users/user-1.jpg";
 import user2 from "../Images/Users/user-2.jpg";
@@ -77,7 +77,7 @@ test('new post should be added', () => {
 
 test('chosen post must be deleted', () => {
 
-    const action = deletePostAC("1");
+    const action = deleteMyPostAC("1");
 
     const endState = UserPostsReducer(startState, action)
 

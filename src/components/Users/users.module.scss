@@ -21,7 +21,7 @@
     padding-bottom: 0.5rem;
     flex-wrap: wrap;
     flex: 1;
-    border-radius: 20px;
+    border-radius: $messageBorderRadius;
     background-color: $containerColor;
 
     .avatarAndFollowButton {
@@ -31,7 +31,6 @@
       margin-right: 1rem;
       margin-left:0.5rem;
       cursor: pointer;
-      /*border: 1px solid black;*/
 
       .avatar {
         width: 80px;
@@ -41,12 +40,9 @@
     }
 
     .nameAndStatus {
-      /*border: 1px solid #6d6e71;*/
       display: flex;
       flex-direction: column;
       align-content: center;
-      border-radius: 20px;
-
       flex: 1;
 
       .status {
@@ -54,11 +50,10 @@
         margin-left: 1rem;
         margin-right: 1rem;
         margin-bottom: 1rem;
-        /* border: 1px solid black;*/
+
       }
 
       .name {
-        /*border: 1px solid black;*/
         margin-left: 1rem;
         margin-top: 1rem;
         cursor: pointer;

@@ -10,28 +10,35 @@
     margin-bottom: 1rem;
     background-color: $containerColor;
 
-    .userPhotoAndDescriptionBlock {
+    .userWrapper {
       display: flex;
       align-items: center;
+      justify-content: space-between;
 
-      > img {
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-      }
-
-      .userDescription {
-        margin-left: 0.7rem;
+      .userPhotoAndDescriptionBlock {
         display: flex;
-        flex-direction: column;
-        justify-content: left;
+        align-items: center;
 
-        .userPosition {
-          font-size: 10px;
-          line-height: 15px;
+        > img {
+          width: 60px;
+          height: 60px;
+          border-radius: 30px;
+        }
+
+        .userDescription {
+          margin-left: 0.7rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: left;
+
+          .userPosition {
+            font-size: 10px;
+            line-height: 15px;
+          }
         }
       }
     }
+
 
     .postPhoto {
       margin-bottom: 1rem;

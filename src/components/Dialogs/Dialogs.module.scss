@@ -7,7 +7,7 @@
   flex-wrap: wrap;
   background-color: $containerColor;
   box-sizing: border-box;
-  border: 1px solid red;
+ /* border: 1px solid red;*/
   width: 65%;
 
 
@@ -22,14 +22,17 @@
     word-break: break-all;
 
     .userAvatarAndName {
-      a {
+
         display: flex;
         flex-direction: column;
         align-items: center;
         text-decoration: none;
         color: $defaultTextColor;
         margin-right: 1rem;
-      }
+        .jobDescription{
+          font-size: 10px;
+          line-height: 15px;
+        }
 
       img {
         width: 60px;
@@ -42,7 +45,6 @@
 }
 
 .messagesWrapper {
-  /*border: 1px solid black;*/
   display: flex;
   border-radius: $messageBorderRadius;
   justify-content: flex-end;

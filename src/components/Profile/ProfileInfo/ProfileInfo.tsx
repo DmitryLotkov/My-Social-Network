@@ -23,6 +23,7 @@ import {ChatBlock} from "../OnlineFriends/ChatBlock";
 import {OnlineFriendType} from "../../OldComponents/OldStore";
 import chatStyles from "../OnlineFriends/ChatBlock.module.scss";
 
+
 type profileInfoPropsType = {
     profile: ProfileDataType
 
@@ -59,6 +60,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const handleClosePopover = () => setOpenPopover(false);
     const handleOpenPopover = () => setOpenPopover(true);
 
+
     const handleSaveAvatar = () => {
         dispatch(uploadAvatarTC(fileAvatar));
         handleCloseModal();
@@ -84,11 +86,11 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
     }
     const onlineFriendsArr = onlineFriends.map((f) =>
-            <ChatBlock
-                key={f.id}
-                id={f.id}
-                avatar={f.avatar}/>
-        )
+        <ChatBlock
+            key={f.id}
+            id={f.id}
+            avatar={f.avatar}/>
+    )
     return (
         <div className={styles.profileInfoWrapper}>
 
@@ -99,6 +101,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                     <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
                 </div>
             </div>
+
             <div className={styles.statusBlock}>
                 <div className={styles.profileName}>
                     <strong>{props.profile.fullName}</strong>
@@ -118,7 +121,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             </div>
             {show && <ContactBlock/>}
 
-           <div className={chatStyles.ChatBlock}>
+            <div className={chatStyles.ChatBlock}>
                 <span className={chatStyles.Title}>Chat online</span>
                 {onlineFriendsArr}
             </div>

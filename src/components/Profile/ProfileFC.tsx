@@ -17,10 +17,8 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
     const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
     const profile = useAppSelector(profileSelector);
     const dispatch = useDispatch();
+    const addMessage = (text: string) => dispatch(addPostActionAC(text));
 
-    const addMessage = (text: string) => {
-        dispatch(addPostActionAC(text));
-    }
     return (
         <div className={styles.profileWrapper}>
             <ProfileInfo profile={profile}/>

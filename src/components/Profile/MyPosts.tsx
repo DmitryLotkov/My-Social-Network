@@ -26,7 +26,8 @@ export const MyPosts = React.memo((props: MyPostsPropsType) => {
             <div className={styles.posts}>
                 {postsElements}
             </div>
-        </div>)
+        </div>
+    )
 
 })
 

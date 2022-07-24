@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-
+import user4 from "./../Images/Users/user-4.jpg"
 
 
 
@@ -27,8 +27,8 @@ const initialState: DialogsStateType = {
     dialogs: [
         {
             id: v1(),
-            name: "Boris Jonson",
-            avatar: "https://themified.com/friend-finder/images/users/user-4.jpg",
+            name: "Kyle Fisher",
+            avatar: user4,
             message: "What is the weather forecast for tomorrow?"
         },
 

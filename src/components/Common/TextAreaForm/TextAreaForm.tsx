@@ -4,9 +4,8 @@ import styles from "./TextAreaForm.module.scss";
 import {MyPostsPropsType} from "../../Profile/MyPosts";
 import {maxMessageLength} from "./textAreaData";
 import Button from "@mui/material/Button";
-import TelegramIcon from '@mui/icons-material/Telegram';
 import {TextField} from "@mui/material";
-
+import SendIcon from '@mui/icons-material/Send';
 
 
 export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
@@ -45,7 +44,9 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
                          {...formik.getFieldProps("text")} onBlur={() => formik.errors.text = ""}
             />
                 <div>
-                    <Button style={{backgroundColor: "#0077B5"}} variant={"contained"} type={"submit"}><TelegramIcon/></Button>
+                    <Button variant={"outlined"} type={"submit"}>
+                        <SendIcon/>
+                    </Button>
                 </div>
             </div>
             {formik.errors.text &&  <div style={{color: "red"}}> {formik.errors.text}</div>}

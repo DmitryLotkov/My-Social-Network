@@ -17,6 +17,7 @@ import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
 import {EditProfile} from "./components/EditProfile/EditProfile";
 import PrivateRoutes from "./components/PrivateRoutes";
 import {Error404} from "./components/Error404/Error404";
+import {Footer} from "./components/Footer/Footer";
 
 
 
@@ -72,6 +73,7 @@ const App: FC = () => {
                 </Routes>
                 <ErrorSnackBar/>
             </main>
+            <Footer/>
         </div>
     );
 }

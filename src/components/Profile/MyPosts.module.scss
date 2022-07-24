@@ -1,44 +1,45 @@
 @import "../Common/variables";
-.postBlock{
 
-    background-color: $mainBackGroundColor;
-    border-radius: $messageBorderRadius;
+.postBlock {
+
+  background-color: $mainBackGroundColor;
+  border-radius: $messageBorderRadius;
+  display: flex;
+  flex-direction: column;
+  /*width:100%;*/
+  flex-wrap: wrap;
+
+  .myPostForm {
+
+    width: inherit;
+    padding: 0 30px 30px;
+    margin-bottom: 1rem;
+    background-color: $containerColor;
+    /*border: 1px solid black;*/
+    .newPostHeader {
+      position: relative;
+    }
+
+    .newPostHeader::after {
+      content: "";
+      background-color: #E5E5E5;
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      top: 30px;
+      left: 0;
+      box-sizing: border-box;
+    }
+  }
+
+
+  .posts {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    width:100%;
     flex-wrap: wrap;
-    /*border: 1px solid red;*/
-    margin-right: 40px;
-
-
-    .myPostForm{
-        padding: 0 30px 30px;
-        margin-bottom: 1rem;
-        background-color: $containerColor;
-        /*border: 1px solid black;*/
-        .newPostHeader{
-            position: relative;
-        }
-        .newPostHeader::after{
-            content: "";
-            background-color: #E5E5E5;
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            top: 30px;
-            left: 0;
-            box-sizing: border-box;
-        }
-    }
-
-
-    .posts {
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        box-sizing: border-box;
-        word-break: break-all;
-    }
+    flex-direction: column;
+    box-sizing: border-box;
+    word-break: break-all;
+  }
 }
 

@@ -3,7 +3,7 @@ import styles from "./Post.module.scss"
 import {MyProfilePhoto} from "../../../Common/MyProfilePhoto/MyProfilePhoto";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {deletePostAC} from "../../../../store/UserPostsReducer";
+import {deleteMyPostAC} from "../../../../store/UserPostsReducer";
 import CloseIcon from "@mui/icons-material/Close";
 import {useDispatch} from "react-redux";
 import {IconButton} from "@mui/material";
@@ -14,16 +14,16 @@ type MyPostsPropsType = {
     message: string
     likeCount: number
 }
-export type likeObjType = {
+export type LikeObjType = {
     likeCount: number
     updated: boolean
 }
 
 export function Post(props: MyPostsPropsType) {
-    const [likeObj, setLikeObj] = useState<likeObjType>({likeCount: 5, updated: false});
-    const dispatch = useDispatch()
+    const [likeObj, setLikeObj] = useState<LikeObjType>({likeCount: 5, updated: false});
+    const dispatch = useDispatch();
     const deletePost = (userId: string) => {
-        dispatch(deletePostAC(userId))
+        dispatch(deleteMyPostAC(userId))
     }
     const generateLike = () => {
         let likeGenerator = Math.round(Math.random() * maxLikesCount)

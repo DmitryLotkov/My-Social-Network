@@ -18,12 +18,13 @@ export type OnlineFriendType = {
     id: string
     avatar: string
 }
+
 enum ACTIONS_TYPE {
-
     ADD_POST = "PROFILE/ADD-POST",
-    DELETE_POST = "PROFILE/DELETE-POST",
-
+    DELETE_MY_POST = "PROFILE/DELETE-MY-POST",
+    DELETE_USERS_POST = "PROFILE/DELETE-USERS-POST"
 }
+
 export type UsersOnWallType = {
     id: string
     avatar: string
@@ -33,9 +34,9 @@ export type UsersOnWallType = {
     postPhoto: string | undefined
 
 }
-export type ProfileActionsType =
-    ReturnType<typeof addPostActionAC>
-    | ReturnType<typeof deletePostAC>
+export type ProfileActionsType = ReturnType<typeof addPostActionAC>
+    | ReturnType<typeof deleteMyPostAC>
+    | ReturnType<typeof deleteUsersPostAC>
 
 export type PostsType = {
     onlineFriends: Array<OnlineFriendType>
@@ -96,17 +97,18 @@ const UserPostsReducer = (state: PostsType = initialState, action: ProfileAction
                 ...state,
                 myPostsData: [...state.myPostsData, {id: v1(), message: action.message, likesCount: 0}]
             };
-        case ACTIONS_TYPE.DELETE_POST:
-
+        case ACTIONS_TYPE.DELETE_MY_POST:
             return {...state, myPostsData: state.myPostsData.filter(post => post.id !== action.id)}
+        case ACTIONS_TYPE.DELETE_USERS_POST:
+            return {...state, anyUserPostsData: state.anyUserPostsData.filter(post => post.id !== action.id)}
         default:
             return state;
     }
 }
 
 //actions
-export const addPostActionAC = (message: string) => ({type: ACTIONS_TYPE.ADD_POST,  message} as const)
-
-export const deletePostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_POST, id} as const);
+export const addPostActionAC = (message: string) => ({type: ACTIONS_TYPE.ADD_POST, message} as const)
+export const deleteMyPostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_MY_POST, id} as const);
+export const deleteUsersPostAC = (id: string) => ({type: ACTIONS_TYPE.DELETE_USERS_POST, id} as const);
 
 export default UserPostsReducer;
