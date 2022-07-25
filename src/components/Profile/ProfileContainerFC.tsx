@@ -19,7 +19,6 @@ export const ProfileContainerFC: FC = React.memo(() =>{
     useEffect(() => {
 
         if (userId !== myUserID){
-
             dispatch(getProfileTC(userId));
             dispatch(getUserStatusTC(userId));
         }else{

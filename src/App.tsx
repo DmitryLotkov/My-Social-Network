@@ -73,7 +73,7 @@ const App: FC = () => {
                 </Routes>
                 <ErrorSnackBar/>
             </main>
-            {location.pathname !== "/404" && <Footer/>}
+            <Footer/>
         </div>
     );
 }

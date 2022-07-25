@@ -12,7 +12,7 @@
 
   .profilePhoto {
     background-image: url("../../../Images/backGroundProfilePhoto.jpg");
-    background-color: $containerColor;
+    background-color: $whiteColor;
     height: 210px;
     box-sizing: border-box;
     background-repeat: no-repeat;
@@ -23,14 +23,14 @@
     align-items: center;
     position: relative;
     /*border: 1px solid black;*/
-    border-radius: $messageBorderRadius;
+    border-radius: $borderRadius;
 
 
     .avatarWrapper {
       width: 160px;
       height: 160px;
       border-radius: 80px;
-      background-color: $containerColor;
+      background-color: $whiteColor;
       position: absolute;
       top: 50px;
       margin-left: auto;
@@ -60,7 +60,7 @@
       height: 50px;
       top: 60px;
       transition: 1s;
-      border-radius: $messageBorderRadius;
+      border-radius: $borderRadius;
     }
 
     p {
@@ -73,7 +73,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: $containerColor;
+    background-color: $whiteColor;
     align-items: center;
     border-radius: 4px;
     margin-bottom: 1rem;

@@ -1,12 +1,42 @@
 @import "./../Common/variables";
+
 .LastContactContainer {
   display: flex;
   justify-content: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
   background-color: #F7F9FB;
-  /*:hover {
-    color: $buttonAndFocusTextColor;
-  }*/
+  color: $defaultTextColor;
+
+  a {
+    color: $defaultTextColor;
+    text-decoration: none;
+
+    :hover {
+      color: $activeTextColor;
+    }
+  }
+}
+
+.error404Display {
+  position: absolute;
+  top: 94vh;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  color: $whiteColor;
+  left: 0;
+  right: 0;
+
+  a {
+    color: $whiteColor;
+    text-decoration: none;
+
+    :hover {
+      color: $activeTextColor;
+    }
+  }
 }
 

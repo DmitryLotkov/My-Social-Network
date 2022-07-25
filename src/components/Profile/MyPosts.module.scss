@@ -3,19 +3,19 @@
 .postBlock {
 
   background-color: $mainBackGroundColor;
-  border-radius: $messageBorderRadius;
+  border-radius: $borderRadius;
   display: flex;
   flex-direction: column;
   /*width:100%;*/
   flex-wrap: wrap;
 
   .myPostForm {
-
+    border-radius: $borderRadius;
     width: inherit;
     padding: 0 30px 30px;
     margin-bottom: 1rem;
-    background-color: $containerColor;
-    /*border: 1px solid black;*/
+    background-color: $whiteColor;
+
     .newPostHeader {
       position: relative;
     }

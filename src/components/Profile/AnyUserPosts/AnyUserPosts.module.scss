@@ -5,10 +5,10 @@
   background-color: $mainBackGroundColor;
 
   .anyUserPost {
-    border-radius: $messageBorderRadius;
+    border-radius: $borderRadius;
     padding: 20px 30px 20px 30px;
     margin-bottom: 1rem;
-    background-color: $containerColor;
+    background-color: $whiteColor;
 
     .userWrapper {
       display: flex;

@@ -1,4 +1,4 @@
-@import "./src/components/Common/variables";
+@import "../variables";
 .formWrapper{
   display: flex;
   align-items: center;
@@ -19,7 +19,7 @@
     color: $defaultTextColor;
     line-height: inherit;
     box-sizing: border-box;
-    background-color: $containerColor;
+    background-color: $whiteColor;
     margin-right: 1rem;
   }
 }

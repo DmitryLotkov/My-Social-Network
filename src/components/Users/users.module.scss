@@ -21,8 +21,8 @@
     padding-bottom: 0.5rem;
     flex-wrap: wrap;
     flex: 1;
-    border-radius: $messageBorderRadius;
-    background-color: $containerColor;
+    border-radius: $borderRadius;
+    background-color: $whiteColor;
 
     .avatarAndFollowButton {
       display: flex;

@@ -59,7 +59,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const handleCloseModal = () => setOpen(false);
     const handleClosePopover = () => setOpenPopover(false);
     const handleOpenPopover = () => setOpenPopover(true);
-
+    const uploadPhoto = () => photoRef.current && photoRef.current.click();
 
     const handleSaveAvatar = () => {
         dispatch(uploadAvatarTC(fileAvatar));
@@ -146,7 +146,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                     <Box style={{
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: 'center',
+                        /*justifyContent: 'space-between',*/
                         alignItems: "center"
                     }}>
 
@@ -156,17 +156,20 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                             />
                         </Box>
 
-                        <Box>
-                            <label htmlFor="icon-button-file">
-                                <input type={"file"} style={{display: "none"}} id={"answer"} ref={photoRef}
-                                       accept="image/*" onChange={onChangeAvatar}/>
-                                <Button sx={{textTransform: "none"}} variant={"contained"}
-                                        onClick={() => photoRef.current && photoRef.current.click()}>Upload
-                                    photo</Button>
-                                <Button sx={{textTransform: "none"}} variant={"contained"}
-                                        onClick={handleSaveAvatar}>Save
-                                </Button>
-                            </label>
+                        <Box style={{
+                            display: "flex",
+                            justifyContent: 'space-between',
+                            width: "200px"
+                        }}>
+                            <input type={"file"} style={{display: "none"}} id={"answer"} ref={photoRef}
+                                   accept="image/*" onChange={onChangeAvatar}/>
+                            <Button sx={{textTransform: "none"}} variant={"contained"}
+                                    onClick={uploadPhoto}>
+                                Upload photo
+                            </Button>
+                            <Button sx={{textTransform: "none"}} variant={"contained"} onClick={handleSaveAvatar}>
+                                Save
+                            </Button>
                         </Box>
                         <p>You can upload images in JPG or PNG format</p>
                     </Box>
