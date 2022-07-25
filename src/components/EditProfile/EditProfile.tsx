@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import s from "./EditProfile.module.scss"
 import {useAppSelector} from "../../store/store";
-import {profileSelector} from "../Common/Selectors/Selectors";
+
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {Formik} from "formik";
-import {getProfileTC, updateProfileTC} from "../../store/ProfileReducer";
+import {updateProfileTC} from "../../store/ProfileReducer";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import {useDispatch} from 'react-redux';
@@ -16,14 +16,9 @@ import {PATH} from "../../App";
 
 export const EditProfile = React.memo(() => {
     const userId = useAppSelector(state => state.Auth.data.id);
-    const profile = useAppSelector(profileSelector);
+    const myProfile = useAppSelector(state => state.Auth.myProfile);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        dispatch(getProfileTC(userId));
-    }, [userId, dispatch]);
-
 
     return (
         <div className={s.editProfileWrapper}>
@@ -32,19 +27,19 @@ export const EditProfile = React.memo(() => {
                 <Formik enableReinitialize={true}
                         initialValues={{
                             userId: userId,
-                            lookingForAJob: profile.lookingForAJob,
-                            lookingForAJobDescription: profile.lookingForAJobDescription,
-                            fullName: profile.fullName,
-                            aboutMe: profile.aboutMe,
+                            lookingForAJob: myProfile && myProfile.lookingForAJob,
+                            lookingForAJobDescription: myProfile &&  myProfile.lookingForAJobDescription,
+                            fullName: myProfile &&  myProfile.fullName,
+                            aboutMe: myProfile &&  myProfile.aboutMe,
                             contacts: {
-                                facebook: profile.contacts.facebook,
-                                website: profile.contacts.website,
-                                vk: profile.contacts.vk,
-                                twitter: profile.contacts.twitter,
-                                instagram: profile.contacts.instagram,
-                                youtube: profile.contacts.youtube,
-                                github: profile.contacts.github,
-                                mainLink: profile.contacts.mainLink,
+                                facebook: myProfile &&  myProfile.contacts.facebook,
+                                website: myProfile &&  myProfile.contacts.website,
+                                vk: myProfile &&  myProfile.contacts.vk,
+                                twitter: myProfile &&  myProfile.contacts.twitter,
+                                instagram: myProfile &&  myProfile.contacts.instagram,
+                                youtube: myProfile &&  myProfile.contacts.youtube,
+                                github: myProfile &&  myProfile.contacts.github,
+                                mainLink: myProfile &&  myProfile.contacts.mainLink,
                             }
 
                         }}

@@ -12,8 +12,7 @@ import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MessageIcon from '@mui/icons-material/Message';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SettingsIcon from '@mui/icons-material/Settings';
-import {useAppSelector} from "../../store/store";
-
+import {MyProfilePhoto} from "../Common/MyProfilePhoto/MyProfilePhoto";
 
 export function Navigation() {
     const navigate = useNavigate();
@@ -23,7 +22,6 @@ export function Navigation() {
         dispatch(logOutTC());
         navigate("/login")
     }
-    const myLoginName = useAppSelector<string | null>(state => state.Auth.data.login);
     const userID = useSelector(userIDSelector)
     const navigateToMyMage = ()=>{
         navigate(`/profile/${userID}`)
@@ -63,12 +61,14 @@ export function Navigation() {
             </nav>
 
             <div className={styles.loginBlock}>
-
-                <div className={styles.jobStatus}>
+                <div className={styles.profilePhoto} onClick={navigateToMyMage}>
+                    <MyProfilePhoto/>
+                </div>
+                {/*<div className={styles.jobStatus}>
                     <div className={styles.userName} onClick={navigateToMyMage}>
                         {myLoginName}
                     </div>
-                </div>
+                </div>*/}
                 {isLoggedIn &&
                 <Button variant={"outlined"} className={styles.login} onClick={logOutHandler}>
                     Log out

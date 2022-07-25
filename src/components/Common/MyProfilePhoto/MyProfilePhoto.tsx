@@ -8,12 +8,11 @@ import {userIDSelector} from "../Selectors/Selectors";
 
 
 export const MyProfilePhoto = React.memo(() =>{
-    const navigate = useNavigate()
-    const myPhoto = useAppSelector<string | undefined>(state => state.ProfilePage.profile.photos?.small);
-    const myLoginName = useAppSelector<string | null>(state => state.Auth.data.login);
-    const userID = useSelector(userIDSelector)
-    const navigateToMyMage = () => navigate(`/profile/${userID}`)
-
+    const navigate = useNavigate();
+    const myPhoto = useAppSelector<string | undefined>(state => state.Auth.myProfile?.photos?.small);
+    const myLoginName = useAppSelector<string | undefined>(state => state.Auth.myProfile?.fullName);
+    const userID = useSelector(userIDSelector);
+    const navigateToMyMage = () => navigate(`/profile/${userID}`);
 
     return (
         <div onClick={navigateToMyMage} className={styles.myProfilePhotoWrapper}>

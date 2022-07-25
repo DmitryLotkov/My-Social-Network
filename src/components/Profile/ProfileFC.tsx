@@ -30,6 +30,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
                     postsData={postsData}/>
                 <AnyUserPosts/>
             </div>
-        </div>)
+        </div>
+    )
 
 })

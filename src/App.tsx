@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import './App.scss';
-import {Route, Routes, Navigate} from "react-router-dom";
+import {Route, Routes, Navigate, useLocation} from "react-router-dom";
 import {useAppSelector} from "./store/store";
 import UsersContainerFC from './components/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
@@ -18,6 +18,7 @@ import {EditProfile} from "./components/EditProfile/EditProfile";
 import PrivateRoutes from "./components/PrivateRoutes";
 import {Error404} from "./components/Error404/Error404";
 import {Footer} from "./components/Footer/Footer";
+
 
 
 
@@ -43,7 +44,7 @@ const App: FC = () => {
     const dispatch = useDispatch();
     const userID = useAppSelector(state => state.Auth.data.id)
     const isInitialized = useAppSelector(isInitializedSelector);
-
+    const location = useLocation();
 
     useEffect(() => {
         dispatch(initializeAppTC());
@@ -52,7 +53,6 @@ const App: FC = () => {
     if (!isInitialized) {
         return <Preloader/>
     }
-
     return (
         <div className={"App"}>
             <main className={"mainContent"}>
@@ -73,7 +73,7 @@ const App: FC = () => {
                 </Routes>
                 <ErrorSnackBar/>
             </main>
-            <Footer/>
+            {location.pathname !== "/404" && <Footer/>}
         </div>
     );
 }

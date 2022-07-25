@@ -2,6 +2,7 @@ import {profileAPI} from "../components/api";
 import {AppStoreType, AppThunkDispatch} from "./store";
 import {setAppStatusAC} from "./AppReducer";
 import {handleNetworkError, handleServerAppError, handleServerNetworkError} from "../utils/error.utils";
+import {setMyProfileAC} from "./AuthReducer";
 
 //types
 enum ACTIONS_TYPE {
@@ -51,12 +52,11 @@ export type userProfilePhotosType = {
 export type ProfileDataType = {
     userId: number,
     aboutMe?: string
-    lookingForAJob: boolean
+    lookingForAJob?: boolean
     lookingForAJobDescription?: string
     fullName?: string
-    contacts: UserProfileContactType
+    contacts: Partial<UserProfileContactType>
     photos?: userProfilePhotosType
-
 }
 
 //actions
@@ -74,7 +74,6 @@ export const setStatusAC = (status: string) => ({type: ACTIONS_TYPE.SET_STATUS, 
 
 const initialState: ProfilePageType = {
     status: "",
-
     profile: {
         userId: 0,
         fullName: "",
@@ -100,7 +99,6 @@ const initialState: ProfilePageType = {
 }
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsType): ProfilePageType => {
     switch (action.type) {
-
         case ACTIONS_TYPE.SET_SOME_USER_PROFILE:
             return {...state, profile: action.profile}
         case ACTIONS_TYPE.SET_STATUS:
@@ -112,11 +110,16 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
     }
 }
 //thunks
-export const getProfileTC = (userId: number | null) => async (dispatch: AppThunkDispatch) => {
+export const getProfileTC = (userId: number | null, isMyProfile?: boolean) => async (dispatch: AppThunkDispatch) => {
     dispatch(setAppStatusAC("loading"));
-    let res = await profileAPI.getProfile(userId);
     try {
-        dispatch(setUserProfileAC(res.data));
+        let res = await profileAPI.getProfile(userId);
+        if (isMyProfile) {
+            dispatch(setMyProfileAC(res.data))
+        }
+        else {
+            dispatch(setUserProfileAC(res.data));
+        }
         dispatch(setAppStatusAC("succeeded"));
     } catch (error: any) {
         handleNetworkError(error, dispatch);
@@ -126,8 +129,9 @@ export const getProfileTC = (userId: number | null) => async (dispatch: AppThunk
 
 export const getUserStatusTC = (userId: number | null) => async (dispatch: AppThunkDispatch) => {
     dispatch(setAppStatusAC("loading"));
-    let res = await profileAPI.getStatus(userId);
+
     try {
+        let res = await profileAPI.getStatus(userId);
         if (res.status === 200) {
             dispatch(setStatusAC(res.data));
             dispatch(setAppStatusAC("succeeded"));
@@ -143,8 +147,9 @@ export const getUserStatusTC = (userId: number | null) => async (dispatch: AppTh
 
 export const updateUserStatusTC = (status: string) => async (dispatch: AppThunkDispatch) => {
     dispatch(setAppStatusAC("loading"));
-    let res = await profileAPI.updateStatus(status)
+
     try {
+        let res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
             dispatch(setStatusAC(status))
             dispatch(setAppStatusAC("succeeded"));
@@ -160,8 +165,9 @@ export const updateUserStatusTC = (status: string) => async (dispatch: AppThunkD
 export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
     dispatch(setAppStatusAC("loading"));
     const userId = getState().Auth.data.id;
-    let res = await profileAPI.uploadAvatar(photoFile)
+
     try {
+        let res = await profileAPI.uploadAvatar(photoFile)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatusAC("succeeded"));
             dispatch(await getProfileTC(userId))
@@ -177,11 +183,12 @@ export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDisp
 export const updateProfileTC = (profile: ProfileDataType) => async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
 
     dispatch(setAppStatusAC("loading"));
-    let res = await profileAPI.updateProfile(profile)
+
     const userId = getState().Auth.data.id;
     try {
+        let res = await profileAPI.updateProfile(profile)
         if (res.data.resultCode === 0) {
-            dispatch(await getProfileTC(userId))
+            await dispatch( getProfileTC(userId, true))
             dispatch(setAppStatusAC("succeeded"));
         } else {
             handleServerAppError(res.data, dispatch);
