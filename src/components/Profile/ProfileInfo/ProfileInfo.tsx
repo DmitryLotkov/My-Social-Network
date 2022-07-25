@@ -25,7 +25,7 @@ import chatStyles from "../OnlineFriends/ChatBlock.module.scss";
 
 
 type profileInfoPropsType = {
-    profile: ProfileDataType
+    profile: ProfileDataType | undefined
 
 }
 
@@ -54,7 +54,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const [fileAvatar, setFileAvatar] = useState<any>();
     const [openPopover, setOpenPopover] = useState(false)
     const popoverAnchor = useRef(null);
-    const show = Object.values(props.profile.contacts).every(item => item !== null)
+    const show = props.profile && Object.values( props.profile.contacts).every(item => item !== null)
 
     const handleCloseModal = () => setOpen(false);
     const handleClosePopover = () => setOpenPopover(false);
@@ -96,7 +96,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
             <div className={styles.profilePhoto}>
                 <div className={styles.avatarWrapper}>
-                    <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>
+                    {props.profile && <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>}
                     {userId === myId &&
                     <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
                 </div>
@@ -104,18 +104,18 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
 
             <div className={styles.statusBlock}>
                 <div className={styles.profileName}>
-                    <strong>{props.profile.fullName}</strong>
+                    {props.profile && <strong>{props.profile.fullName}</strong>}
                     {/*<img src={smallLogo} alt="smallLogo"/>*/}
                     <CheckCircleOutlineIcon
                         className={styles.popover}
                         ref={popoverAnchor}
                         onClick={handleOpenPopover} fontSize={"small"}
-                        color={props.profile.lookingForAJob ? "success" : "error"}/>
+                        color={props.profile && props.profile.lookingForAJob ? "success" : "error"}/>
                 </div>
                 <div className={styles.profileStatus}>
                     <ProfileStatus/>
                 </div>
-                {props.profile.aboutMe && <p className={styles.profileDescription}>
+                {props.profile && <p className={styles.profileDescription}>
                     {props.profile.aboutMe}
                 </p>}
             </div>
@@ -188,7 +188,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
                      }}
             >
                 <Typography
-                    sx={{p: 1}}>{props.profile.lookingForAJob ? "In search of a job" : "Not looking for a job"}</Typography>
+                    sx={{p: 1}}>{props.profile && props.profile.lookingForAJob ? "In search of a job" : "Not looking for a job"}</Typography>
             </Popover>
         </div>
     );
