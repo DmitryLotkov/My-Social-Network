@@ -1,9 +1,9 @@
 @import "./../../Common/variables";
+@import "./../../Common/constants";
 .contactsBlock {
 
-  /*border: 1px solid black;*/
   width: 100%;
-  padding: 2rem;
+  padding: 20px 30px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -11,35 +11,17 @@
   box-sizing: border-box;
   background-color: $whiteColor;
   border-radius: $borderRadius;
+
   >div{
     width: 100%;
-
   }
   margin-bottom: 1rem;
-  @media screen and (max-width: 500px) {
-
-    padding-top: 1rem;
-    margin-left: 1.875rem;
-    display: flex;
-    flex-direction: column !important;
-    flex-wrap: wrap !important;
-    font-size: 17px;
-  }
-  @media screen and (max-width: 1620px) {
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-left: 2rem;
-    padding-right: 1rem;
-
-  }
 
   .contactsBlockItem {
     display: flex;
     align-items: center;
     margin-bottom: 0.6875rem;
     flex-wrap: wrap;
-    margin-right: 1rem;
 
     .icon {
       margin-right: 0.875rem;
@@ -57,9 +39,6 @@
     align-items: center;
     flex-wrap: wrap;
     margin-right: 1rem;
-    @media screen and (max-width: 1620px) {
-      margin-bottom: 0.6875rem;
-    }
 
     .icon {
       margin-right: 0.875rem;

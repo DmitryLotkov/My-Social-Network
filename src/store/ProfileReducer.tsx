@@ -170,7 +170,7 @@ export const uploadAvatarTC = (photoFile: File) => async (dispatch: AppThunkDisp
         let res = await profileAPI.uploadAvatar(photoFile)
         if (res.data.resultCode === 0) {
             dispatch(setAppStatusAC("succeeded"));
-            dispatch(await getProfileTC(userId))
+            await dispatch( getProfileTC(userId))
         } else {
             handleServerAppError(res.data, dispatch);
         }

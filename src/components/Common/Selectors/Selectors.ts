@@ -5,7 +5,7 @@ import {ProfileDataType} from "../../../store/ProfileReducer";
 export const statusSelector = (state:AppRootStateType):string =>{
     return state.ProfilePage.status;
 }
-export const userIDSelector = (state:AppRootStateType):number =>{
+export const myIDSelector = (state:AppRootStateType):number =>{
     return state.Auth.data.id;
 }
 export const profileSelector = (state:AppRootStateType):ProfileDataType =>{

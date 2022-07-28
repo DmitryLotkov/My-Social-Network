@@ -4,14 +4,14 @@ import {useAppSelector} from "../../../store/store";
 import styles from "./MyProfilePhoto.module.scss";
 import defaultUserPhoto from "../../../Images/defaultUserImage.jpg";
 import { useNavigate } from "react-router-dom";
-import {userIDSelector} from "../Selectors/Selectors";
+import {myIDSelector} from "../Selectors/Selectors";
 
 
 export const MyProfilePhoto = React.memo(() =>{
     const navigate = useNavigate();
     const myPhoto = useAppSelector<string | undefined>(state => state.Auth.myProfile?.photos?.small);
     const myLoginName = useAppSelector<string | undefined>(state => state.Auth.myProfile?.fullName);
-    const userID = useSelector(userIDSelector);
+    const userID = useSelector(myIDSelector);
     const navigateToMyMage = () => navigate(`/profile/${userID}`);
 
     return (

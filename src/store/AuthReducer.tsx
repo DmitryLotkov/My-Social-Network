@@ -1,6 +1,5 @@
 import {authAPI, AuthDataType, securityAPI} from "../components/api";
 import {AppThunkDispatch} from "./store";
-import {myUserID} from "../constants";
 import {handleNetworkError, handleServerAppError, handleServerNetworkError} from "../utils/error.utils";
 import {setAppStatusAC} from "./AppReducer";
 import {getProfileTC, ProfileDataType} from "./ProfileReducer";
@@ -39,7 +38,7 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
     data: {
-        id: myUserID,
+        id: 0,
         email: "",
         login: "",
 
@@ -86,9 +85,9 @@ export const initializeAppTC = () => async (dispatch: AppThunkDispatch) => {
     try {
         let res = await authAPI.me();
         if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true));
             dispatch(setAuthProfileAC(res.data.data));
-            await dispatch(getProfileTC(res.data.data.id, true));
+            await dispatch(getProfileTC(res.data.data.id, true)); // этот запрос делается, чтобы записать мои данные в отдельный стейт
+            dispatch(setIsLoggedInAC(true));
         } else {
             dispatch(setAppStatusAC("failed"));
         }

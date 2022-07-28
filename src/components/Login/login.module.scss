@@ -1,0 +1,63 @@
+@import "../Common/variables";
+@import "../Common/mixins";
+
+
+.loginWrapper {
+  height: 100vh;
+  @media (max-height: 700px) and  (orientation: landscape){
+    height: max-content;
+  }
+
+  @media (min-height: 700px) and (orientation: landscape){
+    height: 100vh;
+  }
+
+  .login {
+    @include windows();
+
+    .newPassTextFields {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      width: 280px;
+
+    }
+    .textFields {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      width: 280px;
+      position: relative;
+
+      .emailError {
+        position: absolute;
+        top: 15.5rem;
+        color: red;
+        font-size: 14px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+      .checkbox {
+        display: flex;
+        align-items: center;
+        margin-left: -10px;
+        margin-top: 30px;
+        cursor: pointer;
+      }
+      .passError{
+        @extend .emailError;
+        top: 3.4rem;
+      }
+    }
+    .button{
+      display: flex;
+      justify-content: center;
+    }
+
+    }
+  }

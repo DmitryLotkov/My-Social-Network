@@ -18,6 +18,7 @@ import {InputAdornment} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
+import styles from "./login.module.scss";
 
 type FormikErrorType = {
     email: string
@@ -77,10 +78,15 @@ export const Login = React.memo(() => {
 
     return (
 
-        <Grid container justifyContent={"center"}>
-            <Grid item justifyContent={'center'}>
-                <h1>Login</h1>
-                <FormControl>
+        <Grid className={styles.loginWrapper} container justifyContent={"center"}>
+            <Grid className={styles.login} item justifyContent={'center'}>
+                <h2 >
+                    Social network
+                </h2>
+                <h2 >
+                    Sign in
+                </h2>
+                <FormControl className={styles.textFields}>
                     <FormLabel>
                         <p>To log in get registered
                             <a href={'https://social-network.samuraijs.com/'}
@@ -92,20 +98,14 @@ export const Login = React.memo(() => {
                         <p>Password: free</p>
                     </FormLabel>
                     <form onSubmit={formik.handleSubmit}>
-                        <FormGroup>
+                        <FormGroup >
                             <FormControl  sx={{mTop: 2, width: '35ch'}} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
                                 <Input {...formik.getFieldProps("email")} onFocus={removeError}
                                 />
                             </FormControl>
-                            {/*<TextField label="Email"
-                                       placeholder={"email"}
-                                       type="email"
-                                       margin="normal"
-                                       {...formik.getFieldProps("email")} onFocus={removeError}/>*/}
-
                             {formik.touched.email && formik.errors.email ?
-                                <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+                                <div className={styles.emailError}>{formik.errors.email}</div> : null}
 
                             <FormControl sx={{mTop: 2, width: '35ch'}} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -123,23 +123,12 @@ export const Login = React.memo(() => {
                                                </IconButton>
                                            </InputAdornment>
                                        }
-
                                 />
                                 {formik.touched.password && formik.errors.password ?
-                                    <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                                    <div className={styles.passError}>{formik.errors.password}</div> : null}
                             </FormControl>
-                            {/*<TextField type={"password"}
-                                       label="Password"
-                                       margin="normal"
-                                       placeholder={"Password"}
-                                       {...formik.getFieldProps("password")}
-                                       onFocus={removeError}/>
 
-                            {formik.touched.password && formik.errors.password ?
-                                <div style={{color: "red"}}>{formik.errors.password}</div> : null}*/}
-
-
-                            <FormControlLabel
+                            <FormControlLabel className={styles.checkbox}
                                 label={'Remember me'}
                                 control={<Checkbox/>}
                                 {...formik.getFieldProps("rememberMe")}
@@ -160,10 +149,13 @@ export const Login = React.memo(() => {
                             </>
                             }
 
-                            <Button style={{marginTop:" 1rem"}} variant={'contained'}
-                                    type={"submit"}>
+                            <div className={styles.button}>
+                                <Button style={{marginTop: " 1rem", marginBottom: "1rem", width: "200px"}}
+                                       variant={'contained'}
+                                       type={"submit"}>
                                 Login
                             </Button>
+                            </div>
                         </FormGroup>
                     </form>
                 </FormControl>

@@ -2,20 +2,19 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch} from "react-redux";
 import {updateUserStatusTC} from "../../store/ProfileReducer";
-import {statusSelector} from "../Common/Selectors/Selectors";
-
-import {useParams} from "react-router-dom";
+import {myIDSelector, statusSelector} from "../Common/Selectors/Selectors";
 import {useAppSelector} from "../../store/store";
-import { myUserID} from "../../constants";
+
 
 
 export const ProfileStatus = () => {
     const dispatch = useDispatch();
     const status = useAppSelector(statusSelector);
-    const userId = Number(useParams<'userId'>().userId)
+    //const userId = Number(useParams<'userId'>().userId)
     const [localStatus, setLocalStatus] = useState(status);
     const [editMode, setEditMode] = useState<boolean>(true);
-
+    const userId = useAppSelector(state => state.ProfilePage.profile.userId);
+    const myID = useAppSelector(myIDSelector);
 
     const activateEditMode = () => {
         setLocalStatus(status);
@@ -34,7 +33,7 @@ export const ProfileStatus = () => {
         }
     }
 
-    if ( userId !== myUserID ) {
+    if ( userId !== myID ) {
 
         return (
             <div data-testid="editableDiv">
@@ -42,7 +41,8 @@ export const ProfileStatus = () => {
             </div>
         )
     }
-    if(editMode && userId === myUserID && !status){
+
+    if(editMode && userId === myID && !status){
 
         return (
         <div
@@ -53,7 +53,7 @@ export const ProfileStatus = () => {
         )
     }
 
-    if((editMode && userId === myUserID) ){
+    if((editMode && userId === myID) ){
         return (
         <div className={styles.editableDiv}
              data-testid="editableMyDiv"

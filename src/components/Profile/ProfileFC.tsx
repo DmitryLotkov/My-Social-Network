@@ -14,13 +14,13 @@ type ProfilePropsType = {
 
 export const ProfileFC = React.memo((props: ProfilePropsType) => {
     const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
-    const myProfile = useAppSelector(state => state.Auth.myProfile);
+    const profile = useAppSelector(state => state.ProfilePage.profile);
     const dispatch = useDispatch();
     const addMessage = (text: string) => dispatch(addPostActionAC(text));
 
     return (
         <div className={styles.profileWrapper}>
-            <ProfileInfo profile={myProfile}/>
+            <ProfileInfo profile={profile}/>
 
             <div className={styles.allPostsBlock}>
                 <MyPosts

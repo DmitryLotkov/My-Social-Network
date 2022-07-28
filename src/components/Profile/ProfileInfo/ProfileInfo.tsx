@@ -13,7 +13,7 @@ import {useAppSelector} from "../../../store/store";
 import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
 import {setAppErrorAC} from "../../../store/AppReducer";
-import {userIDSelector} from "../../Common/Selectors/Selectors";
+import {myIDSelector} from "../../Common/Selectors/Selectors";
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
 import {ContactBlock} from "../ContactBlock/ContactBlock";
@@ -45,7 +45,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const dispatch = useDispatch();
     const userPhoto = useAppSelector(state => state.ProfilePage.profile.photos?.large);
     const userId = Number(useParams<'userId'>().userId)
-    const myId = useAppSelector(userIDSelector);
+    const myId = useAppSelector(myIDSelector);
     const photoRef = useRef<HTMLInputElement>(null);
     const onlineFriends = useAppSelector<Array<OnlineFriendType>>(state => state.HardcodedUsers.onlineFriends)
 

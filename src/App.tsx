@@ -42,12 +42,12 @@ const App: FC = () => {
 
     const appStatus = useAppSelector<RequestStatusType>(state => state.App.status);
     const dispatch = useDispatch();
-    const userID = useAppSelector(state => state.Auth.data.id)
     const isInitialized = useAppSelector(isInitializedSelector);
 
     useEffect(() => {
         dispatch(initializeAppTC());
     }, [dispatch]);
+
 
     if (!isInitialized) {
         return <Preloader/>
@@ -57,8 +57,9 @@ const App: FC = () => {
             <main className={"mainContent"}>
                 {appStatus === 'loading' && <Preloader/>}
                 <Routes>
-                    <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}/${userID}`}/>}/>
+                    <Route path={PATH.HOME} element={<Navigate to={`${PATH.PROFILE}`}/>}/>
                     <Route element={<PrivateRoutes />}>
+                        <Route path={`${PATH.PROFILE}`} element={<ProfileContainerFC/>}/>
                         <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
                         <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
                         <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
@@ -78,3 +79,5 @@ const App: FC = () => {
 }
 
 export default App;
+
+

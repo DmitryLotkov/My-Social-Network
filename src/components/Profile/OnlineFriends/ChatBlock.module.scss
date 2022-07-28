@@ -1,53 +1,59 @@
 @import "../../Common/variables";
+@import "../../Common/constants";
+
 .ChatBlock {
-    background-color: $whiteColor;
-    padding: 20px;
-    border-radius: 4px;
-   /* margin: 2rem 0 2rem;*/
-    text-align: center;
-    display: grid;
-    grid-template-areas:
+  background-color: $whiteColor;
+  padding: 20px 10px;
+  border-radius: 4px;
+  /* margin: 2rem 0 2rem;*/
+  text-align: center;
+  display: grid;
+  grid-template-areas:
             "t t t"
             "i i i"
             "i i i"
-            "i i i"
-            ;
+            "i i i";
+  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    margin-bottom: 1rem;
+  }
 }
+
 .Title {
-    grid-area: t;
-    background: $activeTextColor;
-    padding: 1px 20px;
-    width: 70%;
-    height: 20px;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    margin: 0 auto 20px;
+  grid-area: t;
+  background: $activeTextColor;
+
+  width: 85%;
+  height: 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto 20px;
 }
 
 .imgProfilePhoto {
-    grid-area: i;
-    height: 58px;
-    width: 58px;
-    border-radius: 50%;
-    margin: 5px 3px 3px;
-    position: relative;
+  grid-area: i;
+  height: 58px;
+  width: 58px;
+  border-radius: 50%;
+  margin: 5px 3px 3px;
+  position: relative;
 }
-.OnlineDot{
-    grid-area: dot;
-    background: linear-gradient(to bottom, #0077b5, rgb(77, 175, 236));
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 0;
-    border: 2px solid #fff;
-    left: calc(50% - 6px);
-    right: 0;
+
+.OnlineDot {
+  grid-area: dot;
+  background: linear-gradient(to bottom, #0077b5, rgb(77, 175, 236));
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  border: 2px solid #fff;
+  left: calc(50% - 6px);
+  right: 0;
 }
 
 .onlineFriendsWrapper {
-    position: relative;
+  position: relative;
 }
