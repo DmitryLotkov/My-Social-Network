@@ -10,9 +10,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh !important;
+
   @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
     height: max-content;
+    background-color: $whiteColor;
   }
   @media (min-width: $tablet-and-mobile-min-width) and (max-width: $tablet-and-mobile-max-width) {
     height: max-content;

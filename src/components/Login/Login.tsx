@@ -33,7 +33,6 @@ export const Login = React.memo(() => {
     const dispatch = useDispatch();
     const [isPassType, setIsPassType] = useState<boolean>(true);
 
-
     const formik = useFormik({
         validate: (values) => {
             const errors: Partial<FormikErrorType> = {};
@@ -99,7 +98,7 @@ export const Login = React.memo(() => {
                     </FormLabel>
                     <form onSubmit={formik.handleSubmit}>
                         <FormGroup >
-                            <FormControl  sx={{mTop: 2, width: '35ch'}} variant="standard">
+                            <FormControl  sx={{mTop: 2, width: '30ch'}} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-email">Email</InputLabel>
                                 <Input {...formik.getFieldProps("email")} onFocus={removeError}
                                 />
@@ -107,7 +106,7 @@ export const Login = React.memo(() => {
                             {formik.touched.email && formik.errors.email ?
                                 <div className={styles.emailError}>{formik.errors.email}</div> : null}
 
-                            <FormControl sx={{mTop: 2, width: '35ch'}} variant="standard">
+                            <FormControl sx={{mTop: 2, width: '30ch'}} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                                 <Input {...formik.getFieldProps("password")}
                                        id="standard-adornment-password"
@@ -138,7 +137,7 @@ export const Login = React.memo(() => {
                             {captchaUrl &&
                             <>
                                 <img src={captchaUrl} alt={"captchaImg"}/>
-                                <FormControl sx={{mTop: 2, width: '35ch'}} variant="standard">
+                                <FormControl sx={{mTop: 2, width: '30ch'}} variant="standard">
                                     <InputLabel htmlFor="standard-adornment-password">Captcha</InputLabel>
                                     <Input {...formik.getFieldProps("captcha")}
 

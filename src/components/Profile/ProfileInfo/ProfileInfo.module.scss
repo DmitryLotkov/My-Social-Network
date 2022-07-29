@@ -105,17 +105,17 @@
     }
 
     .profileStatus {
-      /*border: 1px solid black;*/
       height: 1.5rem;
     }
 
     .profileDescription {
       color: $defaultTextColor;
-      width: 250px;
+      padding-left: 30px;
+      padding-right: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 14px;
+      //font-size: 14px;
     }
 
   }

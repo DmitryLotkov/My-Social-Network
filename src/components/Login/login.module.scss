@@ -3,14 +3,7 @@
 
 
 .loginWrapper {
-  height: 100vh;
-  @media (max-height: 700px) and  (orientation: landscape){
-    height: max-content;
-  }
-
-  @media (min-height: 700px) and (orientation: landscape){
-    height: 100vh;
-  }
+  /*height: 100vh;*/
 
   .login {
     @include windows();
@@ -20,20 +13,20 @@
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
-      width: 280px;
-
     }
+
     .textFields {
+
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
-      width: 280px;
+      width: 100%;
       position: relative;
 
       .emailError {
         position: absolute;
-        top: 15.5rem;
+        top: 14rem;
         color: red;
         font-size: 14px;
         margin-left: auto;
@@ -42,6 +35,7 @@
         right: 0;
         text-align: center;
       }
+
       .checkbox {
         display: flex;
         align-items: center;
@@ -49,15 +43,17 @@
         margin-top: 30px;
         cursor: pointer;
       }
-      .passError{
+
+      .passError {
         @extend .emailError;
         top: 3.4rem;
       }
     }
-    .button{
+
+    .button {
       display: flex;
       justify-content: center;
     }
 
-    }
   }
+}

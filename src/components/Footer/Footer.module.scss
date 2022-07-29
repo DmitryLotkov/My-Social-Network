@@ -1,13 +1,18 @@
 @import "./../Common/variables";
+@import "./../Common/constants";
 
 .LastContactContainer {
   display: flex;
   justify-content: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #F7F9FB;
+  background-color: $mainBackGroundColor;
   color: $defaultTextColor;
-
+  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    //display: none;
+    background-color: $whiteColor;
+    padding-left: 30px;
+  }
   a {
     color: $defaultTextColor;
     text-decoration: none;

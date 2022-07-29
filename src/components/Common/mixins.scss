@@ -17,33 +17,19 @@
   width: 413px;
   height: max-content;
   font-size: 16px;
+
   @media screen and (max-width: 500px) {
     border-radius: 0;
     width: 100%;
     margin-top: 0;
-    height: 100vh;
-    label {
-      @include windowMargin(20px, 20px);
-
-      div {
-        @include windowMargin(0, 0);
-      }
-
-    }
-    div {
-      @include windowMargin(20px, 20px);
-
-    }
 
     input + div {
       @include windowMargin(0, 0);
     }
     p {
-      width: 311px !important;
+      width: 300px !important;
     }
-    span {
-      margin-left: 40px;
-    }
+
     button > span {
       margin: 0;
     }

@@ -55,7 +55,7 @@ export function Navigation() {
                         <div className={styles.hideForMobile}>All Users</div>
                     </NavLink>
                 </div>
-                <div className={styles.NavItem}>
+                <div className={styles.LastNavItem}>
                     <NavLink to={PATH.EDIT_PROFILE}
                              className={({isActive}) => isActive ? `${styles.activeNavLink}` : `${styles.unActiveNavLink}`}>
                         <SettingsIcon fontSize={'large'}/>

@@ -10,7 +10,6 @@ import {useAppSelector} from "../../store/store";
 export const ProfileStatus = () => {
     const dispatch = useDispatch();
     const status = useAppSelector(statusSelector);
-    //const userId = Number(useParams<'userId'>().userId)
     const [localStatus, setLocalStatus] = useState(status);
     const [editMode, setEditMode] = useState<boolean>(true);
     const userId = useAppSelector(state => state.ProfilePage.profile.userId);
