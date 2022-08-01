@@ -10,7 +10,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh !important;
 
   @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
     height: max-content;

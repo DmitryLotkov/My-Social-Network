@@ -6,16 +6,20 @@
   width: 65%;
   display: flex;
   justify-content: center;
-  height: max-content;
-
+  height: 83vh;
+  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    height: max-content;
+  }
+  @media (min-width: $mobile-max-width) and (max-width: 900px) {
+    height: max-content;
+  }
   .content {
     border-radius: $borderRadius;
-
     background-color: $whiteColor;
-    width: 700px;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
-    flex-direction: column !important;
+    flex-direction: column;
     align-items: center;
     font-size: 16px;
 
@@ -51,9 +55,13 @@
         background: $whiteColor;
         width: 300px;
 
-        @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-          width: 200px;
+        @media (min-width: $mobile-middle-width) and (max-width: 900px) {
+          width: 200px !important;
         }
+        @media (min-width: $mobile-min-width) and (max-width: $mobile-middle-width) {
+          width: 140px;
+        }
+
       }
 
       .checkBoxLabel {

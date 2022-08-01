@@ -22,11 +22,18 @@
   .sideWrapper {
 
     display: flex;
+    justify-content: center ;
+    width: 45%;
 
+    @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-max-width) {
+      width: max-content;
+      justify-content: space-between ;
+    }
     .NavItem {
       margin-right: 2rem;
+      display: flex;
 
-      @media (min-width: $mobile-min-width) {
+      @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width){
         margin-right: 1rem;
       }
       @media (min-width: 375px) and (max-width: $mobile-max-width) {
@@ -34,9 +41,10 @@
       }
 
       .hideForMobile {
-        @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        @media (min-width: $mobile-min-width) and (max-width: $ipad-pro12-max-width) {
           display: none;
         }
+
       }
 
       .unActiveNavLink {
@@ -55,9 +63,10 @@
         width: 100%;
         height: 2px;
         top: 60px;
-        @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        @media (min-width: $mobile-min-width) and (max-width: $ipad-pro12-max-width) {
           top: 40px;
         }
+
       }
     }
 
@@ -76,7 +85,7 @@
     @media (min-width: 375px) and (max-width: $mobile-max-width) {
       margin-right: 1.2rem !important;
     }
-    @media (min-width: $mobile-min-width) and (min-width: 374px){
+    @media (min-width: $mobile-min-width) and (min-width: 374px) {
       margin-right: 0.5rem;
     }
   }
@@ -137,10 +146,16 @@
         @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
           display: flex;
         }
+        @media screen and (max-width: $desktop-dpi-mix-width) {
+          display: flex;
+        }
       }
 
       .profilePhoto {
         @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+          display: none;
+        }
+        @media screen and (max-width: $ipad-pro-max-width) {
           display: none;
         }
 
@@ -162,6 +177,9 @@
       color: $activeTextColor;
 
       @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        display: none;
+      }
+      @media screen and (max-width: $desktop-dpi-mix-width) {
         display: none;
       }
     }
