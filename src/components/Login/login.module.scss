@@ -7,6 +7,10 @@
 
   .login {
     @include windows();
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+    .h2 {
+      color: $activeTextColor;
+    }
 
     .newPassTextFields {
       display: flex;

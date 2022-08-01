@@ -1,7 +1,6 @@
 import React from 'react';
 import s from "./EditProfile.module.scss"
 import {useAppSelector} from "../../store/store";
-
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {Formik} from "formik";
@@ -23,7 +22,7 @@ export const EditProfile = React.memo(() => {
     return (
         <div className={s.editProfileWrapper}>
             <div className={s.content}><h3>Edit profile</h3>
-                <p>Contacts: </p>
+
                 <Formik enableReinitialize={true}
                         initialValues={{
                             userId: userId,
@@ -54,8 +53,8 @@ export const EditProfile = React.memo(() => {
                     {props => (
                         <form onSubmit={props.handleSubmit}>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Github: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>Github: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.github"}
@@ -67,8 +66,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Facebook: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>Facebook: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.facebook"}
@@ -79,8 +78,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>VK: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>VK: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.vk"}
@@ -91,8 +90,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Instagram: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>Instagram: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.instagram"}
@@ -104,8 +103,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Twitter: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>Twitter: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.twitter"}
@@ -116,8 +115,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>YouTube: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>YouTube: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.youtube"}
@@ -127,8 +126,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Your WebSite: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>WebSite: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.website"}
@@ -138,8 +137,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>Main link: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>Main link: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"contacts.mainLink"}
@@ -149,8 +148,8 @@ export const EditProfile = React.memo(() => {
                                 />
                             </div>
                             <div className={s.formRow}>
-                                <p className={s.contactText}>About me: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <div className={s.contactText}>About me: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            multiline={true}
                                            size={"small"}
                                            type="text"
@@ -162,9 +161,9 @@ export const EditProfile = React.memo(() => {
                                 />
 
                             </div>
-                            <div className={s.formRow}>
-                                <p className={s.contactText}>Full name: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                            <div className={s.formRowWithoutMargin}>
+                                <div className={s.contactText}>Full name: </div>
+                                <TextField inputProps={{ className: s.textField }}
                                            size={"small"}
                                            type="text"
                                            name={"fullName"}
@@ -174,11 +173,11 @@ export const EditProfile = React.memo(() => {
 
                                 />
                             </div>
-                            <div style={{display: "flex", justifyContent: "center"}}>
+                            <div  className={s.formRowWithoutMargin}>
 
                                 <FormControlLabel
                                     labelPlacement={"start"}
-                                    className={s.contactText}
+
                                     label={'Looking for a job:'}
                                     name={"lookingForAJob"}
                                     control={<Checkbox/>}
@@ -188,7 +187,7 @@ export const EditProfile = React.memo(() => {
                             </div>
                             <div className={s.formRow}>
                                 <p className={s.contactText}>Job description: </p>
-                                <TextField style={{background: "#FFFFFF", width: "300px"}}
+                                <TextField inputProps={{ className: s.textField }}
                                            multiline={true}
                                            size={"small"}
                                            name={"lookingForAJobDescription"}

@@ -79,7 +79,7 @@ export const Login = React.memo(() => {
 
         <Grid className={styles.loginWrapper} container justifyContent={"center"}>
             <Grid className={styles.login} item justifyContent={'center'}>
-                <h2 >
+                <h2 className={styles.h2}>
                     Social network
                 </h2>
                 <h2 >

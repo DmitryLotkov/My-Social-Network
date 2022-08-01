@@ -1,11 +1,14 @@
 @import "./../Common/variables";
-.editProfileWrapper{
+@import "./../Common/constants";
+
+.editProfileWrapper {
   background-color: $mainBackGroundColor;
   width: 65%;
   display: flex;
   justify-content: center;
+  height: max-content;
 
-  .content{
+  .content {
     border-radius: $borderRadius;
 
     background-color: $whiteColor;
@@ -16,16 +19,44 @@
     align-items: center;
     font-size: 16px;
 
-    .formRow{
+    .checkBox {
       display: flex;
       justify-content: flex-end;
       align-items: center;
-
-      .contactText{
-        margin-right: 1rem;
-        color: $defaultTextColor
+    }
+    .formRowWithoutMargin{
+      @extend .formRow;
+      @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        margin-bottom: 0 !important;
       }
-      .checkBoxLabel{
+    }
+    .formRow {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      font-size: 14px;
+      margin-bottom: 0.5rem;
+      @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+        margin-bottom: 0.7rem;
+      }
+
+      .contactText {
+        margin-right: 1rem;
+        color: $defaultTextColor;
+
+      }
+
+      .textField {
+        background: $whiteColor;
+        width: 300px;
+
+        @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+          width: 200px;
+        }
+      }
+
+      .checkBoxLabel {
         display: flex !important;
         justify-content: center;
         color: $defaultTextColor
@@ -34,7 +65,7 @@
     }
   }
 
-  .button{
+  .button {
     display: flex;
     justify-content: center;
     padding-left: 2rem;
