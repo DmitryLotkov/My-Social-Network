@@ -9,9 +9,8 @@
   min-width: 290px;
   border-radius: 0 4px;
 
-  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+  @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-min-width) {
     width: 100%;
-
   }
 
   .profilePhoto {
@@ -27,7 +26,7 @@
     align-items: center;*/
     position: relative;
     border-radius: $borderRadius;
-    @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+    @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-min-width) {
       background-size: cover;
     }
 

@@ -9,7 +9,7 @@
   background-color: $mainBackGroundColor;
   color: $defaultTextColor;
   @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-    //display: none;
+    display: none;
     background-color: $whiteColor;
     padding-left: 30px;
   }

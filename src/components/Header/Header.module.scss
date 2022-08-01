@@ -16,7 +16,9 @@
     z-index: 10;
     width: 100%;
     margin-bottom: 0;
-
+  }
+  @media screen and (max-width: $ipad-pro-min-width) {
+    margin-bottom: 0;
   }
 
   .sideWrapper {
@@ -85,7 +87,7 @@
     @media (min-width: 375px) and (max-width: $mobile-max-width) {
       margin-right: 1.2rem !important;
     }
-    @media (min-width: $mobile-min-width) and (min-width: 374px) {
+    @media (min-width: $mobile-min-width) and (min-width: 360px) {
       margin-right: 0.5rem;
     }
   }
