@@ -19,9 +19,11 @@
     margin-right: 40px;
   }
   .editableDiv {
-    margin-bottom: 0.5rem;
     font-size: inherit;
     cursor: pointer;
+    word-break: break-word;
+    padding-right: 30px;
+    padding-left: 30px;
   }
 
   .editableDiv:hover {

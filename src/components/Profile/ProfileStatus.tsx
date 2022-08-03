@@ -6,7 +6,6 @@ import {myIDSelector, statusSelector} from "../Common/Selectors/Selectors";
 import {useAppSelector} from "../../store/store";
 
 
-
 export const ProfileStatus = () => {
     const dispatch = useDispatch();
     const status = useAppSelector(statusSelector);
@@ -32,7 +31,7 @@ export const ProfileStatus = () => {
         }
     }
 
-    if ( userId !== myID ) {
+    if (userId !== myID) {
 
         return (
             <div data-testid="editableDiv">
@@ -41,32 +40,30 @@ export const ProfileStatus = () => {
         )
     }
 
-    if(editMode && userId === myID && !status){
+    if (editMode && userId === myID && !status) {
 
         return (
-        <div
+            <div
                 className={styles.editableDiv}
                 onClick={activateEditMode}>
                 Set status
-        </div>
+            </div>
         )
     }
 
-    if((editMode && userId === myID) ){
+    if ((editMode && userId === myID)) {
         return (
-        <div className={styles.editableDiv}
-             data-testid="editableMyDiv"
-            onClick={activateEditMode}>
-            {status}
-        </div>)
-    }
-
-    else return <input className={styles.input}
-                       onChange={changeTitle}
-                       onKeyPress={onKeyPressHandler}
-                       onBlur={deactivateEditMode}
-                       type="text"
-                       data-testid="input"
-                       value={localStatus}/>
+            <div className={styles.editableDiv}
+                 data-testid="editableMyDiv"
+                 onClick={activateEditMode}>
+                 {status}
+            </div>)
+    } else return <input className={styles.input}
+                         onChange={changeTitle}
+                         onKeyPress={onKeyPressHandler}
+                         onBlur={deactivateEditMode}
+                         type="text"
+                         data-testid="input"
+                         value={localStatus}/>
 };
 
