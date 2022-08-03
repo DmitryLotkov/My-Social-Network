@@ -60,7 +60,6 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
     const handleClosePopover = () => setOpenPopover(false);
     const handleOpenPopover = () => setOpenPopover(true);
     const uploadPhoto = () => photoRef.current && photoRef.current.click();
-
     const handleSaveAvatar = () => {
         dispatch(uploadAvatarTC(fileAvatar));
         handleCloseModal();
@@ -97,7 +96,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
             <div className={styles.profilePhoto}>
                 <div className={styles.avatarWrapper}>
                     {props.profile && <img src={props.profile.photos?.large ?? defaultUserPhoto} alt={"userPhoto"}/>}
-                    {userId === myId &&
+                    {(userId === myId || isNaN(userId)) &&
                     <div className={styles.menu} onClick={() => setOpen(true)}><p>Change photo</p></div>}
                 </div>
             </div>

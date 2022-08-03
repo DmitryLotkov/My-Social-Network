@@ -31,7 +31,9 @@ export function Navigation() {
     }
     return (
         <div className={styles.headerContent}>
-            <div className={styles.logo}><img src={logo} alt="logo"/></div>
+            <div className={styles.logo}>
+                <img src={logo} alt="logo"/>
+            </div>
             <nav className={styles.sideWrapper}>
                 <div className={styles.NavItem}>
                     <NavLink to={`${PATH.PROFILE}/${myID}`}
