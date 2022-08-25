@@ -11,7 +11,7 @@ import {
 } from "../../store/UsersReducer";
 import React from "react";
 import axios from "axios";
-import {Users} from "../Users/Users";
+import {Users} from "../../Pages/Users/Users";
 import {Preloader} from "../Common/Preloader/Preloader";
 
 export type UserPropsType = {

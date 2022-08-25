@@ -2,27 +2,27 @@ import React, {FC, useEffect} from 'react';
 import './App.scss';
 import {Route, Routes, Navigate} from "react-router-dom";
 import {useAppSelector} from "./store/store";
-import UsersContainerFC from './components/Users/UsersContainerFC';
+import UsersContainerFC from './Pages/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
-import {EventsContainer} from "./components/Events/EventsContainer";
-import PhotosContainer from "./components/Photos/PhotosContainer";
+
+import PhotosContainer from "./Pages/Photos/PhotosContainer";
 import {useDispatch} from "react-redux";
 import {initializeAppTC} from "./store/AuthReducer";
-import {Login} from "./components/Login/Login";
 import {Preloader} from "./components/Common/Preloader/Preloader";
 import {isInitializedSelector} from "./components/Common/Selectors/Selectors";
 import withSuspense from "./components/HOC/withSuspense";
 import {RequestStatusType} from "./store/AppReducer";
 import {ErrorSnackBar} from "./components/ErrorSnackBar/ErrorSnackBar";
-import {EditProfile} from "./components/EditProfile/EditProfile";
 import PrivateRoutes from "./components/PrivateRoutes";
-import {Error404} from "./components/Error404/Error404";
-import {Footer} from "./components/Footer/Footer";
+import {Error404} from "./Pages/Error404/Error404";
+import {Login} from "./Pages/Login/Login";
+import {Footer} from "./Pages/Footer/Footer";
+import {EditProfile} from "./Pages/EditProfile/EditProfile";
+import {EventsContainer} from "./Pages/Events/EventsContainer";
 
 
-
-
-const DialogContainerFC = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
+const SuspendedDialogContainer = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
+const SuspendedChatPage = React.lazy(() => import("./Pages/Chat/ChatPage"));
 
 export const PATH = {
     HOME: "/",
@@ -61,7 +61,7 @@ const App: FC = () => {
                     <Route element={<PrivateRoutes />}>
                         <Route path={`${PATH.PROFILE}`} element={<ProfileContainerFC/>}/>
                         <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
-                        <Route path={PATH.DIALOGS} element={withSuspense(DialogContainerFC)({})}/>
+                        <Route path={PATH.DIALOGS} element={withSuspense(SuspendedChatPage)({})}/>
                         <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
                         <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
                     </Route>

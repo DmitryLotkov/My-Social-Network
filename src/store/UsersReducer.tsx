@@ -1,4 +1,4 @@
-import {authAPI, userAPI} from "../components/api";
+import {authAPI, userAPI} from "../api/api";
 import {handleNetworkError, handleServerNetworkError} from "../utils/error.utils";
 import {AppStoreType, AppThunkDispatch} from "./store";
 import {setAppErrorAC, setAppStatusAC} from "./AppReducer";

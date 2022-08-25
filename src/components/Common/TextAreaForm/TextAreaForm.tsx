@@ -7,8 +7,12 @@ import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 
+type TexAreaPostType = MyPostsPropsType & {
+    webSocketStatus?: boolean
+}
 
-export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
+
+export const TextAreaForm = React.memo((props: TexAreaPostType) => {
     type FormikErrorType = {
         text?: string
     }
@@ -18,9 +22,6 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
         },
         validate: values => {
             const errors: FormikErrorType = {};
-            if(!values.text){
-                errors.text = "Enter a message"
-            }
             if(values.text.length >= maxMessageLength){
                 errors.text = `Max length of message is ${maxMessageLength} symbols.`
             }
@@ -35,7 +36,6 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
 
     })
 
-
     return (
         <form  onSubmit={formik.handleSubmit}>
             <div className={styles.formWrapper}>
@@ -44,7 +44,7 @@ export const TextAreaForm = React.memo((props: MyPostsPropsType) => {
                          {...formik.getFieldProps("text")} onBlur={() => formik.errors.text = ""}
             />
                 <div>
-                    <Button variant={"outlined"} type={"submit"}>
+                    <Button variant={"outlined"} type={"submit"} disabled={props.webSocketStatus}>
                         <SendIcon/>
                     </Button>
                 </div>

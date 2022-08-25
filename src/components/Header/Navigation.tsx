@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {logOutTC} from "../../store/AuthReducer";
 import Button from "@mui/material/Button";
 import {isLoggedInSelector, myIDSelector} from "../Common/Selectors/Selectors";
-import logo from "./../../Images/Logo.svg"
+import logo from "../../Images/Logo.svg"
 import {PATH} from "../../App";
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import MessageIcon from '@mui/icons-material/Message';

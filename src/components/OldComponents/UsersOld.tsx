@@ -1,6 +1,6 @@
 import React from "react";
 import {UserType} from "../../store/UsersReducer";
-import style from "../Users/users.module.scss"
+import style from "../../Pages/Users/users.module.scss"
 import axios from "axios";
 import userPhoto from "../../Images/defaultUserImage.jpg";
 

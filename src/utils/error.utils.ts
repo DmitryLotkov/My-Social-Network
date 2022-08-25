@@ -1,7 +1,7 @@
 import {AxiosError} from "axios";
 import {AppThunkDispatch} from "../store/store";
 import {setAppErrorAC, setAppStatusAC} from "../store/AppReducer";
-import {RespType} from "../components/api";
+import {RespType} from "../api/api";
 
 
 export const handleNetworkError = (Error: AxiosError<{ error: string }>, dispatch: AppThunkDispatch) =>{

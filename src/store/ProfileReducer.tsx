@@ -1,4 +1,4 @@
-import {profileAPI} from "../components/api";
+import {profileAPI} from "../api/api";
 import {AppStoreType, AppThunkDispatch} from "./store";
 import {setAppStatusAC} from "./AppReducer";
 import {handleNetworkError, handleServerAppError, handleServerNetworkError} from "../utils/error.utils";

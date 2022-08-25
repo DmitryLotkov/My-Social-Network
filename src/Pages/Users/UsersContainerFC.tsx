@@ -4,14 +4,14 @@ import {
 } from "../../store/UsersReducer";
 import React, {FC, useEffect} from "react";
 import {Users} from "./Users";
-import {Preloader} from "../Common/Preloader/Preloader";
+import {Preloader} from "../../components/Common/Preloader/Preloader";
 import {
     currentPageSelector, followingArrSelector,
     isFetchingSelector,
     pageSizeSelector,
     totalUserCountSelector,
     usersSelector
-} from "../Common/Selectors/Selectors";
+} from "../../components/Common/Selectors/Selectors";
 import {useAppSelector} from "../../store/store";
 
 
