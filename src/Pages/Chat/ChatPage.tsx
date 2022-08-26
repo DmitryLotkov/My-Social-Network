@@ -11,7 +11,6 @@ export type ChatMessageType = {
 
 
 const ChatPage = () => {
-
     return (
         <div style={{width: "65%"}}>
             <Chat/>
@@ -21,29 +20,59 @@ const ChatPage = () => {
 
 const Chat = () => {
     const [readyStatus, setReadyStatus] = useState<"pending" | "ready">("pending");
-    const [webChannel, setWebChannel] = useState<WebSocket | null>(null)
+    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null);
+    const [channelStatus, setChannelStatus] = useState<"connected" | "disconnected">("connected");
 
-
-    function createChannel() {
-        setWebChannel(new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx"));
-    }
 
     useEffect(() => {
+        let ws: WebSocket;
+        const closeHandler = () => {
+            console.log("Close ws");
+            setTimeout(createChannel, 3000);
+            setChannelStatus("disconnected")
+        }
 
-    }, [webChannel])
-    useEffect(() => {
+        if (channelStatus === "disconnected") {
+            alert("Web connection was interrupted")
+        }
+
+        function createChannel() {
+            ws?.removeEventListener("close", closeHandler); // (проверка на "если вед сокет был, то удалим") при реконекте удаляем подписчик на старый веб сокет
+            ws?.close(); // при реконекте закрываем старый веб сокет
+            ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx");
+            ws.addEventListener("close", closeHandler);
+            setWsChannel(ws);
+            setChannelStatus("connected");
+
+        }
+
         createChannel()
-        webChannel?.addEventListener("open", () => {
-            setReadyStatus("ready")
-        })
-    }, [])
-    const sendMessage = (message: string) => webChannel?.send(message)
+        return () => {
+            ws.removeEventListener("close", closeHandler);
+            ws.close();
+        }
+    }, [channelStatus])
+
+
+    useEffect(() => {
+        let openHandler = () => {
+            setReadyStatus("ready");
+        }
+        wsChannel?.addEventListener("open", openHandler);
+        return () => {
+            wsChannel?.removeEventListener("open", openHandler); //отписываемся от старого веб сокета
+        }
+    }, [wsChannel])
+
+    const sendMessage = (message: string) => wsChannel?.send(message);
 
     return (
         <div>
-            <Messages wssChannel={webChannel}/>
-            <TextAreaForm webSocketStatus={readyStatus !== "ready"} placeholderText={"Enter a message"}
-                          callBack={sendMessage}/>
+            <Messages wssChannel={wsChannel}/>
+            <TextAreaForm
+                webSocketStatus={wsChannel === null || readyStatus !== "ready" || channelStatus === "disconnected"}
+                placeholderText={"Enter a message"}
+                callBack={sendMessage}/>
         </div>
     );
 };
@@ -56,10 +85,14 @@ const Messages = ({wssChannel}: MessagesPropsType) => {
     const [messages, setMessages] = useState<Array<ChatMessageType>>([]);
 
     useEffect(() => {
-        wssChannel?.addEventListener("message", (e) => {
+        let messageHandler = (e: MessageEvent) => {
             let newMessages = JSON.parse(e.data)
             setMessages((prevMessages) => [...prevMessages, ...newMessages]) //data приходит как текст а не JSON. Поэтому парсим в JSON
-        })
+        }
+        wssChannel?.addEventListener("message", messageHandler)
+
+        return () => wssChannel?.removeEventListener("message", messageHandler);
+
     }, [wssChannel])
 
 
