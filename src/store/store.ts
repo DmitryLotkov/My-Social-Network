@@ -9,12 +9,13 @@ import {appReducer, AppActionsType} from "./AppReducer";
 import {ProfileActionsType, profileReducer} from "./ProfileReducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {dialogsReducer} from "./DialogsReducer";
+import {ChatActionsType, chatReducer} from "./chatReducer";
 
 
 
 
 export type AppRootStateType = ReturnType <typeof rootReducer>
-export type RootActionsType = AuthActionsType | AppActionsType | ProfileActionsType | UsersActionsType
+export type RootActionsType = AuthActionsType | AppActionsType | ProfileActionsType | UsersActionsType | ChatActionsType
 export type AppThunkDispatch = ThunkDispatch<AppStoreType, null, RootActionsType>;
 export const useAppDispatch: () => AppThunkDispatch = useDispatch;
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
     HardcodedUsers: hardcodedUsersReducer,
     UsersPage: userReducer,
     Auth: authReducer,
-    App: appReducer
+    App: appReducer,
+    ChatPage: chatReducer
 })
 
 declare global {
@@ -36,7 +38,3 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 export type AppStoreType = ReturnType<typeof rootReducer>;
 export const useAppSelector: TypedUseSelectorHook<AppStoreType> = useSelector;
-
-
-// @ts-ignore
-window.store = store

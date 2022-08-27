@@ -44,7 +44,7 @@ export const TextAreaForm = React.memo((props: TexAreaPostType) => {
                          {...formik.getFieldProps("text")} onBlur={() => formik.errors.text = ""}
             />
                 <div>
-                    <Button variant={"outlined"} type={"submit"} disabled={props.webSocketStatus}>
+                    <Button variant={"outlined"} type={"submit"} disabled={/*props?.webSocketStatus && */formik.values.text === ""}>
                         <SendIcon/>
                     </Button>
                 </div>

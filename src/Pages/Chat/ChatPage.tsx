@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {TextAreaForm} from "../../components/Common/TextAreaForm/TextAreaForm";
+import {ChatMessageType} from "../../api/chatAPI";
+import {useDispatch} from "react-redux";
+import {sendMessageTC, startMessagesListeningTC, stopMessagesListeningTC} from "../../store/chatReducer";
+import {useAppSelector} from "../../store/store";
 
 
-export type ChatMessageType = {
-    message: string,
-    photo: string,
-    userId: number,
-    userName: string
-}
+
 
 
 const ChatPage = () => {
@@ -19,86 +18,38 @@ const ChatPage = () => {
 }
 
 const Chat = () => {
-    const [readyStatus, setReadyStatus] = useState<"pending" | "ready">("pending");
+   /* const [readyStatus, setReadyStatus] = useState<"pending" | "ready">("pending");
     const [wsChannel, setWsChannel] = useState<WebSocket | null>(null);
-    const [channelStatus, setChannelStatus] = useState<"connected" | "disconnected">("connected");
+    const [channelStatus, setChannelStatus] = useState<"connected" | "disconnected">("connected");*/
+    const dispatch = useDispatch()
 
-
-    useEffect(() => {
-        let ws: WebSocket;
-        const closeHandler = () => {
-            console.log("Close ws");
-            setTimeout(createChannel, 3000);
-            setChannelStatus("disconnected")
-        }
-
-        if (channelStatus === "disconnected") {
-            alert("Web connection was interrupted")
-        }
-
-        function createChannel() {
-            ws?.removeEventListener("close", closeHandler); // (проверка на "если вед сокет был, то удалим") при реконекте удаляем подписчик на старый веб сокет
-            ws?.close(); // при реконекте закрываем старый веб сокет
-            ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx");
-            ws.addEventListener("close", closeHandler);
-            setWsChannel(ws);
-            setChannelStatus("connected");
-
-        }
-
-        createChannel()
+    useEffect(()=>{
+        dispatch(startMessagesListeningTC());
         return () => {
-            ws.removeEventListener("close", closeHandler);
-            ws.close();
+            dispatch(stopMessagesListeningTC())
         }
-    }, [channelStatus])
+    }, [dispatch])
 
-
-    useEffect(() => {
-        let openHandler = () => {
-            setReadyStatus("ready");
-        }
-        wsChannel?.addEventListener("open", openHandler);
-        return () => {
-            wsChannel?.removeEventListener("open", openHandler); //отписываемся от старого веб сокета
-        }
-    }, [wsChannel])
-
-    const sendMessage = (message: string) => wsChannel?.send(message);
+    const sendMessageHandler = (message: string) => dispatch(sendMessageTC(message));
 
     return (
         <div>
-            <Messages wssChannel={wsChannel}/>
+            <Messages/>
             <TextAreaForm
-                webSocketStatus={wsChannel === null || readyStatus !== "ready" || channelStatus === "disconnected"}
+                //webSocketStatus={wsChannel === null || readyStatus !== "ready" || channelStatus === "disconnected"}
                 placeholderText={"Enter a message"}
-                callBack={sendMessage}/>
+                callBack={sendMessageHandler}/>
         </div>
     );
 };
 
-type MessagesPropsType = {
-    wssChannel: WebSocket | null
-}
 
-const Messages = ({wssChannel}: MessagesPropsType) => {
-    const [messages, setMessages] = useState<Array<ChatMessageType>>([]);
 
-    useEffect(() => {
-        let messageHandler = (e: MessageEvent) => {
-            let newMessages = JSON.parse(e.data)
-            setMessages((prevMessages) => [...prevMessages, ...newMessages]) //data приходит как текст а не JSON. Поэтому парсим в JSON
-        }
-        wssChannel?.addEventListener("message", messageHandler)
-
-        return () => wssChannel?.removeEventListener("message", messageHandler);
-
-    }, [wssChannel])
-
+const Messages = () => {
+    const messages = useAppSelector(state => state.ChatPage.messages)
 
     return (
         <div style={{height: "400px", overflowY: "auto"}}>
-
             {messages.map((m, index) => <Message message={m} key={index}/>)}
         </div>
     );
