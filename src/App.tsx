@@ -4,7 +4,6 @@ import {Route, Routes, Navigate} from "react-router-dom";
 import {useAppSelector} from "./store/store";
 import UsersContainerFC from './Pages/Users/UsersContainerFC';
 import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
-
 import PhotosContainer from "./Pages/Photos/PhotosContainer";
 import {useDispatch} from "react-redux";
 import {initializeAppTC} from "./store/AuthReducer";
@@ -19,10 +18,10 @@ import {Login} from "./Pages/Login/Login";
 import {Footer} from "./Pages/Footer/Footer";
 import {EditProfile} from "./Pages/EditProfile/EditProfile";
 import {EventsContainer} from "./Pages/Events/EventsContainer";
+import ChatPage from "./Pages/Chat/ChatPage";
 
 
 const SuspendedDialogContainer = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
-const SuspendedChatPage = React.lazy(() => import("./Pages/Chat/ChatPage"));
 
 export const PATH = {
     HOME: "/",
@@ -61,7 +60,7 @@ const App: FC = () => {
                     <Route element={<PrivateRoutes />}>
                         <Route path={`${PATH.PROFILE}`} element={<ProfileContainerFC/>}/>
                         <Route path={`${PATH.PROFILE}/:userId`} element={<ProfileContainerFC/>}/>
-                        <Route path={PATH.DIALOGS} element={withSuspense(SuspendedChatPage)({})}/>
+                        <Route path={PATH.DIALOGS} element={withSuspense(SuspendedDialogContainer)({})}/>
                         <Route path={PATH.USERS} element={<UsersContainerFC/>}/>
                         <Route path={PATH.EDIT_PROFILE} element={<EditProfile/>}/>
                     </Route>
@@ -72,6 +71,7 @@ const App: FC = () => {
                     <Route path={`${PATH.ERROR404}`} element={<Error404/>}/>
                 </Routes>
                 <ErrorSnackBar/>
+                <ChatPage/>
             </main>
             <Footer/>
         </div>

@@ -1,5 +1,5 @@
 import {StatusType} from "../store/chatReducer";
-
+//types
 export type ChatMessageAPIType = {
     message: string,
     photo: string,
@@ -15,18 +15,28 @@ const subscribers = {
 
 export type EventNamesType = "messageReceived" | "statusChanged";
 
+let isShowCloseAlert = true;
 let ws: WebSocket | null = null;
+let alertCounter = false;
+
 const closeHandler = () => {
     console.log("Close ws");
-
-    notifySubscribersAboutStatus("pending")
+    if(isShowCloseAlert){
+        alert("Internet connection was interrupted");
+        isShowCloseAlert = false
+    }
+    notifySubscribersAboutStatus("pending");
     setTimeout(createChannel, 3000);
+    alertCounter = true;
 }
 let messageHandler = (e: MessageEvent) => {
     const newMessages = JSON.parse(e.data);
     subscribers["messageReceived"].forEach(s => s(newMessages));
 }
 let openHandler = () => {
+    if(alertCounter){
+        alert("Internet connection was restored")
+    }
     notifySubscribersAboutStatus("ready");
 }
 let errorHandler = () => {

@@ -1,0 +1,23 @@
+@import "../../Styles/variables";
+
+.chatPageBlock {
+  width: 300px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+
+  .chatTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    background-color: $activeTextColor;
+    color: $whiteColor;
+    border-radius: $borderRadius $borderRadius 0 0;
+
+    .minimizeIcon{
+      color: $whiteColor;
+    }
+  }
+}

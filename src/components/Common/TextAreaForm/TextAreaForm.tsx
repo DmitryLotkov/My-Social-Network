@@ -3,9 +3,9 @@ import {useFormik} from "formik";
 import styles from "./TextAreaForm.module.scss";
 import {MyPostsPropsType} from "../../Profile/MyPosts";
 import {maxMessageLength} from "./textAreaData";
-import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import IconButton from "@mui/material/IconButton";
 
 type TexAreaPostType = MyPostsPropsType & {
     webSocketStatusDisabled?: boolean
@@ -47,11 +47,14 @@ export const TextAreaForm = React.memo((props: TexAreaPostType) => {
                          placeholder={props.placeholderText}
                          {...formik.getFieldProps("text")} onBlur={() => formik.errors.text = ""} onKeyUp={onKeyUpHandler }
             />
-                <div>
-                    {formik.values.text && <Button variant={"outlined"} type={"submit"} disabled={props?.webSocketStatusDisabled }>
-                        <SendIcon/>
-                    </Button>}
-                </div>
+                <>
+                    {
+                        formik.values.text &&
+                            <IconButton className={styles.iconButton} type={"submit"} disabled={props?.webSocketStatusDisabled }>
+                                 <SendIcon/>
+                            </IconButton>
+                    }
+                </>
             </div>
             {formik.errors.text &&  <div style={{color: "red"}}> {formik.errors.text}</div>}
         </form>

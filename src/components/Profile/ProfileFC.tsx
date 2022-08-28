@@ -8,6 +8,7 @@ import {useAppSelector} from "../../store/store";
 import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
 import {addPostActionAC} from "../../store/UserPostsReducer";
 
+
 type ProfilePropsType = {
     userID: number | null
 }
@@ -20,6 +21,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
 
     return (
         <div className={styles.profileWrapper}>
+
             <ProfileInfo profile={profile}/>
 
             <div className={styles.allPostsBlock}>
@@ -29,6 +31,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
                     postsData={postsData}/>
                 <AnyUserPosts/>
             </div>
+
         </div>
     )
 

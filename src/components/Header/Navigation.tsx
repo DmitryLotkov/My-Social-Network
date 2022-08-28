@@ -46,7 +46,7 @@ export function Navigation() {
                     <NavLink to={PATH.DIALOGS}
                              className={({isActive}) => isActive ? `${styles.activeNavLink}` : `${styles.unActiveNavLink}`}>
                         <MessageIcon fontSize={'large'}/>
-                        <div className={styles.hideForMobile}>Messages</div>
+                        <div className={styles.hideForMobile}>Chat</div>
                     </NavLink>
                 </div>
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useFormik} from "formik";
 import {useDispatch, } from "react-redux";
 import {loginTC} from "../../store/AuthReducer";
@@ -61,9 +61,7 @@ export const Login = React.memo(() => {
             dispatch(loginTC(values));
         }
     })
-    if (isLoggedIn) {
-        return <Navigate to={PATH.HOME}/>
-    }
+
 
     const removeError = () => {
         serverError && dispatch(setAppErrorAC(""));
@@ -74,7 +72,22 @@ export const Login = React.memo(() => {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+    useEffect(() => {
+        const listener = (event: KeyboardEvent) => {
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault();
+                formik.handleSubmit()
+            }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
+        };
+    }, [formik]);
 
+    if (isLoggedIn) {
+        return <Navigate to={PATH.HOME}/>
+    }
     return (
 
         <Grid className={styles.loginWrapper} container justifyContent={"center"}>

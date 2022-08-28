@@ -1,5 +1,5 @@
-@import "././components/Common/variables";
-@import "././components/Common/constants";
+@import "Styles/variables";
+@import "Styles/constants";
 
 
 body {
@@ -10,6 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 
   @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
     height: max-content;
