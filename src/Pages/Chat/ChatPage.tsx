@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {TextAreaForm} from "../../components/Common/TextAreaForm/TextAreaForm";
-import {ChatMessageType} from "../../api/chatAPI";
+import {ChatMessageAPIType} from "../../api/chatAPI";
 import {useDispatch} from "react-redux";
-import {sendMessageTC, startMessagesListeningTC, stopMessagesListeningTC} from "../../store/chatReducer";
+import {sendMessageTC, startMessagesListeningTC, StatusType, stopMessagesListeningTC} from "../../store/chatReducer";
 import {useAppSelector} from "../../store/store";
 
 
@@ -17,12 +17,10 @@ const ChatPage = () => {
     )
 }
 
-const Chat = () => {
-   /* const [readyStatus, setReadyStatus] = useState<"pending" | "ready">("pending");
-    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null);
-    const [channelStatus, setChannelStatus] = useState<"connected" | "disconnected">("connected");*/
-    const dispatch = useDispatch()
+const Chat = React.memo(() => {
 
+    const status = useAppSelector<StatusType>(state => state.ChatPage.status);
+    const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(startMessagesListeningTC());
         return () => {
@@ -34,31 +32,52 @@ const Chat = () => {
 
     return (
         <div>
-            <Messages/>
-            <TextAreaForm
-                //webSocketStatus={wsChannel === null || readyStatus !== "ready" || channelStatus === "disconnected"}
-                placeholderText={"Enter a message"}
-                callBack={sendMessageHandler}/>
+            {status === "error" && <div>Some error occurred. Please refresh the gage</div>}
+           <>
+                <Messages/>
+                <TextAreaForm webSocketStatusDisabled={status !== "ready"}
+                    placeholderText={"Enter a message"}
+                    callBack={sendMessageHandler}/>
+          </>
+
         </div>
     );
-};
+});
 
 
 
-const Messages = () => {
-    const messages = useAppSelector(state => state.ChatPage.messages)
+const Messages = React.memo(() => {
+    const[isAutoScroll, setIsAutoScroll] = useState(false);
+    const messages = useAppSelector(state => state.ChatPage.messages);
+    const messagesAnchorRef = useRef<HTMLDivElement>(null);
+    const scrollHandler = (e:React.UIEvent<HTMLDivElement, UIEvent>) =>{
+        const element = e.currentTarget;
+        if(Math.abs((element.scrollHeight - element.scrollTop) - element.clientHeight) < 300){
+            !isAutoScroll && setIsAutoScroll(true)
+        }
+        else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
+    }
 
+    useEffect(()=>{
+        if(isAutoScroll){
+            messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"});
+        }
+
+    }, [messages, isAutoScroll])
     return (
-        <div style={{height: "400px", overflowY: "auto"}}>
-            {messages.map((m, index) => <Message message={m} key={index}/>)}
+        <div style={{height: "400px", overflowY: "auto"}} onScroll={scrollHandler}>
+            {messages.map(m => <Message message={m} key={m.id}/>)}
+            <div ref={messagesAnchorRef}/>
         </div>
     );
-};
+});
 
 type MessagePropsType = {
-    message: ChatMessageType
+    message: ChatMessageAPIType
 }
-const Message = ({message}: MessagePropsType) => {
+const Message = React.memo(({message}: MessagePropsType) => {
 
     return (
         <div style={{border: "1px solid  black"}}>
@@ -69,7 +88,7 @@ const Message = ({message}: MessagePropsType) => {
             <hr/>
         </div>
     );
-};
+});
 
 
 export default ChatPage
