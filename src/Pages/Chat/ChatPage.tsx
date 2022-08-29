@@ -11,13 +11,13 @@ const ChatPage = React.memo(() => {
     const messages = useAppSelector(state => state.ChatPage.messages).filter(m => m.userId !== myId);
     const status = useAppSelector<StatusType>(state => state.ChatPage.status);
 
-    const [isChatOpen, setIsChatOpen] = useState<boolean>(true);
+    const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
     const [startMessages, setStartMessages] = useState<ChatMessageType[]>(messages);
     const newMessagesCount = messages.length - startMessages.length;
 
     const collapseChat = () => {
         setIsChatOpen(!isChatOpen);
-        setStartMessages(messages) //удалим флаг новых сообщений, засинхронизировав стейт по клику на свенуть
+        setStartMessages(messages) //удалим флаг новых сообщений, засинхронизировав стейт по клику на кнопку свенуть
     };
     /*console.log(newMessagesCount)
     console.log("startMessages", startMessages.length)

@@ -1,4 +1,5 @@
 @import "../../Styles/variables";
+@import "../../Styles/constants";
 
 .chatPageBlockOpen {
   width: 300px;
@@ -7,6 +8,13 @@
   bottom: 0;
   position: fixed;
   transition: .7s;
+  @media screen and (max-width: $ipad-pro-min-width){
+    bottom: 80px;
+  }
+  @media screen and (max-width: 299px){
+    //bottom: 57px;
+    width: 280px;
+  }
 
   .chatTitle {
     position: relative;
@@ -48,4 +56,7 @@
   @extend .chatPageBlockOpen;
   transform: translateY(490px);
   transition: .7s;
+  @media screen and (max-width: 299px){
+    transform: translateY(515px);
+  }
 }
