@@ -18,7 +18,6 @@ import {Login} from "./Pages/Login/Login";
 import {Footer} from "./Pages/Footer/Footer";
 import {EditProfile} from "./Pages/EditProfile/EditProfile";
 import {EventsContainer} from "./Pages/Events/EventsContainer";
-import ChatPage from "./Pages/Chat/ChatPage";
 
 
 const SuspendedDialogContainer = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
@@ -71,7 +70,7 @@ const App: FC = () => {
                     <Route path={`${PATH.ERROR404}`} element={<Error404/>}/>
                 </Routes>
                 <ErrorSnackBar/>
-                <ChatPage/>
+
             </main>
             <Footer/>
         </div>

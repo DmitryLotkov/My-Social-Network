@@ -1,13 +1,15 @@
 @import "../../Styles/variables";
 
-.chatPageBlock {
+.chatPageBlockOpen {
   width: 300px;
-  position: fixed;
+  border-radius: 20px;
   right: 0;
   bottom: 0;
-  border-radius: 20px;
+  position: fixed;
+  transition: .7s;
 
   .chatTitle {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,8 +18,34 @@
     color: $whiteColor;
     border-radius: $borderRadius $borderRadius 0 0;
 
-    .minimizeIcon{
+    .messageFlag {
+      position: absolute;
+      left: 110px;
+      top:5px;
+      width: 16px;
+      height: 16px;
+      background-color: #f33030;
+      font-size: 14px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: .7s;
+    }
+    .noMessageFlag {
+      display: none;
+      transition: .7s;
+    }
+
+    .minimizeIcon {
       color: $whiteColor;
     }
   }
+
+}
+
+.chatPageBlockCollapsed {
+  @extend .chatPageBlockOpen;
+  transform: translateY(490px);
+  transition: .7s;
 }

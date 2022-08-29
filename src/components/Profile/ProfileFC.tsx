@@ -7,6 +7,7 @@ import {placeholderText} from "../Common/TextAreaForm/textAreaData";
 import {useAppSelector} from "../../store/store";
 import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
 import {addPostActionAC} from "../../store/UserPostsReducer";
+import ChatPage from "../../Pages/Chat/ChatPage";
 
 
 type ProfilePropsType = {
@@ -30,6 +31,7 @@ export const ProfileFC = React.memo((props: ProfilePropsType) => {
                     callBack={addMessage}
                     postsData={postsData}/>
                 <AnyUserPosts/>
+                <ChatPage/>
             </div>
 
         </div>

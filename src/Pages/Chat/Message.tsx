@@ -2,6 +2,7 @@ import {ChatMessageAPIType} from "../../api/chatAPI";
 import React from "react";
 import styles from "./Message.module.scss"
 import {useAppSelector} from "../../store/store";
+import defaultUserImage from "../../Images/defaultUserImage.jpg"
 type MessagePropsType = {
     message: ChatMessageAPIType
     userId: number
@@ -21,7 +22,7 @@ export const Message = React.memo(({message, userId}: MessagePropsType) => {
                     <img style={{marginLeft: "10px"}} src={message.photo} alt={"chatUserPhoto"}/>
                 </>
                 :<>
-                    <img src={message.photo} alt={"chatUserPhoto"}/>
+                    <img src={message.photo || defaultUserImage} alt={"chatUserPhoto"}/>
                     <div className={myId === userId ? styles.myNameAndMessage : styles.someUserNameAndMessage}>
                         <div className={styles.userName}>{message.userName}</div>
                         <div>{message.message}</div>

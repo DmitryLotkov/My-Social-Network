@@ -53,7 +53,6 @@ const cleanUp = () => {
 const notifySubscribersAboutStatus = (status: StatusType) => subscribers["statusChanged"].forEach(s=>s(status));
 export function createChannel() {
     cleanUp()
-
     ws?.close(); // при реконекте закрываем старый веб сокет
     ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx");
     notifySubscribersAboutStatus("pending")

@@ -7,23 +7,28 @@ import {v1} from "uuid";
 //types
 export enum ACTIONS_TYPE {
     SET_MESSAGES = "CHAT/SET-MESSAGES",
-    CHANGE_STATUS = "CHAT/CHANGE-STATUS"
+    CHANGE_STATUS = "CHAT/CHANGE-STATUS",
+
 }
 export type StatusType = "pending" | "ready" | "error";
 export type ChatActionsType =
     ReturnType<typeof setMessagesAC> |
     ReturnType<typeof changeStatusAC>
 
-type ChatMessageType = ChatMessageAPIType & {id: string}
+export type ChatMessageType = ChatMessageAPIType & {id: string}
 
 type InitialStateType = {
     messages: ChatMessageType[];
+    oldMessages: ChatMessageType[];
     status: StatusType;
+   // isFirstRendering:boolean
 }
 
 const initialState: InitialStateType = {
     messages: [] as Array<ChatMessageType>,
-    status: "pending"
+    status: "pending",
+    oldMessages: [] as Array<ChatMessageType>,
+    //isFirstRendering: true
 }
 
 //reducer
@@ -32,12 +37,21 @@ export const chatReducer = (state: InitialStateType = initialState, action: Chat
         case ACTIONS_TYPE.SET_MESSAGES:
             return {
                 ...state, messages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )
-                ].filter((m, index, arr) => index >= arr.length - 100)
+                ].filter((m, index, arr) => index >= arr.length - 100),
+                /*oldMessages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )]*/
             }
         case ACTIONS_TYPE.CHANGE_STATUS:
             return {
                 ...state, status: action.status
             }
+
+            /*case ACTIONS_TYPE.GET_UNREAD_MESSAGES_COUNT:
+                let oldMEssagesCount = state.messages.length
+                let newMessagesCount = {...state, messages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )
+                    ].length}
+            return {
+                ...state, status: action.status
+            }*/
         default:
             return state
     }
@@ -56,7 +70,10 @@ let _newMessageHandler: ((messages:ChatMessageAPIType[]) => void) | null = null;
 
 const newMessageHandlerCreator = (dispatch:Dispatch) =>{
     if(_newMessageHandler === null){ // это мемоизация
-        _newMessageHandler = (messages) => dispatch(setMessagesAC(messages))
+        _newMessageHandler = (messages) => {
+            dispatch(setMessagesAC(messages))
+        }
+
     }
     return _newMessageHandler
 
