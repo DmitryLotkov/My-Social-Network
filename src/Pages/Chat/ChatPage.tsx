@@ -6,16 +6,22 @@ import MinimizeIcon from '@mui/icons-material/Minimize';
 import {useAppSelector} from "../../store/store";
 import {ChatMessageType, StatusType} from "../../store/chatReducer";
 
-const ChatPage = () => {
+const ChatPage = React.memo(() => {
     const myId = useAppSelector(state => state.Auth.data.id);
     const messages = useAppSelector(state => state.ChatPage.messages).filter(m => m.userId !== myId);
     const status = useAppSelector<StatusType>(state => state.ChatPage.status);
 
-    const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+    const [isChatOpen, setIsChatOpen] = useState<boolean>(true);
     const [startMessages, setStartMessages] = useState<ChatMessageType[]>(messages);
-    const chatMessagesCount = messages.length - startMessages.length;
+    const newMessagesCount = messages.length - startMessages.length;
 
-    const collapseChat = () => setIsChatOpen(!isChatOpen);
+    const collapseChat = () => {
+        setIsChatOpen(!isChatOpen);
+        setStartMessages(messages) //удалим флаг новых сообщений, засинхронизировав стейт по клику на свенуть
+    };
+    /*console.log(newMessagesCount)
+    console.log("startMessages", startMessages.length)
+    console.log("newMessages", messages.length)*/
 
     useEffect(() => {
         if (status === 'ready' && startMessages.length === 0) {
@@ -27,8 +33,8 @@ const ChatPage = () => {
         <div className={isChatOpen ? styles.chatPageBlockOpen : styles.chatPageBlockCollapsed}>
             <div className={styles.chatTitle}>
                 <div>Public chat</div>
-                <div className={chatMessagesCount > 0 && !isChatOpen ? styles.messageFlag : styles.noMessageFlag}>
-                    <div>{chatMessagesCount}</div>
+                <div className={newMessagesCount > 0 && !isChatOpen ? styles.messageFlag : styles.noMessageFlag}>
+                    <div>{newMessagesCount}</div>
                 </div>
                 <IconButton onClick={collapseChat} className={styles.minimizeIcon}>
                     <MinimizeIcon/>
@@ -37,6 +43,6 @@ const ChatPage = () => {
             <Chat/>
         </div>
     )
-}
+})
 
 export default ChatPage

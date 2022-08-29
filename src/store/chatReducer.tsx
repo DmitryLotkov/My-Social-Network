@@ -21,14 +21,13 @@ type InitialStateType = {
     messages: ChatMessageType[];
     oldMessages: ChatMessageType[];
     status: StatusType;
-   // isFirstRendering:boolean
+
 }
 
 const initialState: InitialStateType = {
     messages: [] as Array<ChatMessageType>,
     status: "pending",
     oldMessages: [] as Array<ChatMessageType>,
-    //isFirstRendering: true
 }
 
 //reducer
@@ -37,21 +36,13 @@ export const chatReducer = (state: InitialStateType = initialState, action: Chat
         case ACTIONS_TYPE.SET_MESSAGES:
             return {
                 ...state, messages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )
-                ].filter((m, index, arr) => index >= arr.length - 100),
-                /*oldMessages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )]*/
+                ]
+                   /* .filter((m, index, arr) => index >= arr.length - 100)*/
             }
         case ACTIONS_TYPE.CHANGE_STATUS:
             return {
                 ...state, status: action.status
             }
-
-            /*case ACTIONS_TYPE.GET_UNREAD_MESSAGES_COUNT:
-                let oldMEssagesCount = state.messages.length
-                let newMessagesCount = {...state, messages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )
-                    ].length}
-            return {
-                ...state, status: action.status
-            }*/
         default:
             return state
     }
