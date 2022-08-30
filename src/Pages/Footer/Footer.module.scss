@@ -8,7 +8,7 @@
   padding-bottom: 1rem;
   background-color: $mainBackGroundColor;
   color: $defaultTextColor;
-  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
+  @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-min-width) {
     display: none;
     background-color: $whiteColor;
     padding-left: 30px;

@@ -1,6 +1,7 @@
 import {AppRootStateType} from "../../../store/store";
 import {UserType} from "../../../store/UsersReducer";
 import {ProfileDataType} from "../../../store/ProfileReducer";
+import {ChatMessageType, StatusType} from "../../../store/chatReducer";
 
 export const statusSelector = (state:AppRootStateType):string =>{
     return state.ProfilePage.status;
@@ -35,4 +36,14 @@ export const totalUserCountSelector = (state:AppRootStateType):number =>{
 export const followingArrSelector = (state:AppRootStateType):Array<string> =>{
     return state.UsersPage.following;
 }
+export const chatMessageSelector = (state:AppRootStateType):Array<ChatMessageType> =>{
+    return state.ChatPage.messages;
+}
+export const chatStatusSelector = (state:AppRootStateType):StatusType =>{
+    return state.ChatPage.status;
+}
+export const chatStartMessageCountSelector = (state:AppRootStateType):number =>{
+    return state.ChatPage.startMessagesCount;
+}
+
 

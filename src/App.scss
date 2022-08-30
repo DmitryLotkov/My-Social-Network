@@ -11,9 +11,10 @@ body {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  /*height: 100%*/;
 
-  @media (min-width: $mobile-min-width) and (max-width: $mobile-max-width) {
-    height: max-content;
+  @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-min-width) {
+    padding-bottom: 110px;
     background-color: $whiteColor;
   }
   /*@media (min-width: $tablet-and-mobile-min-width) and (max-width: $tablet-and-mobile-max-width) {

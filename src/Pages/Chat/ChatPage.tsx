@@ -6,13 +6,19 @@ import MinimizeIcon from '@mui/icons-material/Minimize';
 import {useAppSelector} from "../../store/store";
 import {setStartMessagesCountAC, StatusType} from "../../store/chatReducer";
 import {useDispatch} from "react-redux";
+import {
+    chatMessageSelector,
+    chatStartMessageCountSelector,
+    chatStatusSelector,
+    myIDSelector
+} from "../../components/Common/Selectors/Selectors";
 
 
 const ChatPage = React.memo(() => {
-    const myId = useAppSelector(state => state.Auth.data.id);
-    const messages = useAppSelector(state => state.ChatPage.messages).filter(m => m.userId !== myId);
-    const status = useAppSelector<StatusType>(state => state.ChatPage.status);
-    const startMessagesCount = useAppSelector<number>(state => state.ChatPage.startMessagesCount);
+    const myId = useAppSelector(myIDSelector);
+    const messages = useAppSelector(chatMessageSelector).filter(m => m.userId !== myId);
+    const status = useAppSelector<StatusType>(chatStatusSelector);
+    const startMessagesCount = useAppSelector<number>(chatStartMessageCountSelector);
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
     const [startMessagesLength, setStartMessagesLength] = useState<number>(messages.length);
     const newMessagesCount = messages.length - startMessagesCount;
