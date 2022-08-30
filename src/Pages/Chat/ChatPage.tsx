@@ -4,30 +4,31 @@ import styles from "./ChatPage.module.scss"
 import {IconButton} from "@mui/material";
 import MinimizeIcon from '@mui/icons-material/Minimize';
 import {useAppSelector} from "../../store/store";
-import {ChatMessageType, StatusType} from "../../store/chatReducer";
+import {setStartMessagesCountAC, StatusType} from "../../store/chatReducer";
+import {useDispatch} from "react-redux";
+
 
 const ChatPage = React.memo(() => {
     const myId = useAppSelector(state => state.Auth.data.id);
     const messages = useAppSelector(state => state.ChatPage.messages).filter(m => m.userId !== myId);
     const status = useAppSelector<StatusType>(state => state.ChatPage.status);
-
+    const startMessagesCount = useAppSelector<number>(state => state.ChatPage.startMessagesCount);
     const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
-    const [startMessages, setStartMessages] = useState<ChatMessageType[]>(messages);
-    const newMessagesCount = messages.length - startMessages.length;
+    const [startMessagesLength, setStartMessagesLength] = useState<number>(messages.length);
+    const newMessagesCount = messages.length - startMessagesCount;
+    const dispatch = useDispatch();
 
     const collapseChat = () => {
         setIsChatOpen(!isChatOpen);
-        setStartMessages(messages) //удалим флаг новых сообщений, засинхронизировав стейт по клику на кнопку свенуть
+        dispatch(setStartMessagesCountAC(messages.length)); //удалим флаг новых сообщений, засинхронизировав стейт по клику на кнопку свенуть
     };
-    /*console.log(newMessagesCount)
-    console.log("startMessages", startMessages.length)
-    console.log("newMessages", messages.length)*/
 
     useEffect(() => {
-        if (status === 'ready' && startMessages.length === 0) {
-            setStartMessages(messages)
+        if (status === 'ready' && startMessagesLength === 0) {
+            setStartMessagesLength(messages.length);
+            dispatch(setStartMessagesCountAC(messages.length)); // записать стартовые сообещения в стейт
         }
-    }, [status, messages]);
+    }, [status, messages, dispatch]);
 
     return (
         <div className={isChatOpen ? styles.chatPageBlockOpen : styles.chatPageBlockCollapsed}>

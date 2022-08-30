@@ -7,41 +7,52 @@ import {v1} from "uuid";
 //types
 export enum ACTIONS_TYPE {
     SET_MESSAGES = "CHAT/SET-MESSAGES",
+    SAVE_MESSAGES_COUNT = "CHAT/SAVE-MESSAGES-COUNT",
     CHANGE_STATUS = "CHAT/CHANGE-STATUS",
 
 }
+
 export type StatusType = "pending" | "ready" | "error";
 export type ChatActionsType =
     ReturnType<typeof setMessagesAC> |
-    ReturnType<typeof changeStatusAC>
+    ReturnType<typeof changeStatusAC> |
+    ReturnType<typeof setStartMessagesCountAC>
 
-export type ChatMessageType = ChatMessageAPIType & {id: string}
+
+export type ChatMessageType = ChatMessageAPIType & { id: string }
 
 type InitialStateType = {
     messages: ChatMessageType[];
-    oldMessages: ChatMessageType[];
+    startMessagesCount: number;
     status: StatusType;
-
 }
 
 const initialState: InitialStateType = {
     messages: [] as Array<ChatMessageType>,
+    startMessagesCount: 0,
     status: "pending",
-    oldMessages: [] as Array<ChatMessageType>,
 }
 
 //reducer
 export const chatReducer = (state: InitialStateType = initialState, action: ChatActionsType): InitialStateType => {
     switch (action.type) {
         case ACTIONS_TYPE.SET_MESSAGES:
+            if (action.messages.length === 1) {
+                return {
+                    ...state, messages: [...state.messages, ...action.messages.map(m => ({...m, id: v1()}))
+                    ]/* .filter((m, index, arr) => index >= arr.length - 100)*/
+                }
+            }
             return {
-                ...state, messages: [...state.messages, ...action.messages.map( m => ({...m, id: v1()}) )
-                ]
-                   /* .filter((m, index, arr) => index >= arr.length - 100)*/
+                ...state, messages: action.messages.map(m => ({...m, id: v1()}))
             }
         case ACTIONS_TYPE.CHANGE_STATUS:
             return {
                 ...state, status: action.status
+            }
+        case ACTIONS_TYPE.SAVE_MESSAGES_COUNT:
+            return {
+                ...state, startMessagesCount: action.startMessagesCount
             }
         default:
             return state
@@ -50,17 +61,18 @@ export const chatReducer = (state: InitialStateType = initialState, action: Chat
 //action creators
 
 export const setMessagesAC = (messages: ChatMessageAPIType[]) => ({type: ACTIONS_TYPE.SET_MESSAGES, messages}) as const;
+export const setStartMessagesCountAC = (startMessagesCount: number) => ({type: ACTIONS_TYPE.SAVE_MESSAGES_COUNT,
+    startMessagesCount
+}) as const;
 export const changeStatusAC = (status: StatusType) => ({type: ACTIONS_TYPE.CHANGE_STATUS, status}) as const;
-
-
 
 
 //thunks
 
-let _newMessageHandler: ((messages:ChatMessageAPIType[]) => void) | null = null;
+let _newMessageHandler: ((messages: ChatMessageAPIType[]) => void) | null = null;
 
-const newMessageHandlerCreator = (dispatch:Dispatch) =>{
-    if(_newMessageHandler === null){ // это мемоизация
+const newMessageHandlerCreator = (dispatch: Dispatch) => {
+    if (_newMessageHandler === null) { // это мемоизация
         _newMessageHandler = (messages) => {
             dispatch(setMessagesAC(messages))
         }
@@ -70,10 +82,10 @@ const newMessageHandlerCreator = (dispatch:Dispatch) =>{
 
 }
 
-let _statusChangedHandler: ((status:StatusType) => void) | null = null;
+let _statusChangedHandler: ((status: StatusType) => void) | null = null;
 
-const statusChangedHandlerCreator = (dispatch:Dispatch) =>{
-    if(_statusChangedHandler === null){ // это мемоизация
+const statusChangedHandlerCreator = (dispatch: Dispatch) => {
+    if (_statusChangedHandler === null) { // это мемоизация
         _statusChangedHandler = (status) => dispatch(changeStatusAC(status))
     }
     return _statusChangedHandler
@@ -81,31 +93,28 @@ const statusChangedHandlerCreator = (dispatch:Dispatch) =>{
 }
 export const startMessagesListeningTC = () => async (dispatch: AppThunkDispatch) => {
 
-    try{
+    try {
         chatAPI.start();
         chatAPI.subscribe("messageReceived", newMessageHandlerCreator(dispatch));
         chatAPI.subscribe("statusChanged", statusChangedHandlerCreator(dispatch));
-    }
-    catch (e){
+    } catch (e) {
         console.log(e)
     }
 
 }
 export const stopMessagesListeningTC = () => async (dispatch: AppThunkDispatch) => {
-    try{
+    try {
         chatAPI.unSubscribe("messageReceived", newMessageHandlerCreator(dispatch));
         chatAPI.unSubscribe("statusChanged", statusChangedHandlerCreator(dispatch));
         chatAPI.stop();
-    }
-    catch (e){
+    } catch (e) {
         console.log(e)
     }
 }
-export const sendMessageTC = (message:string) => async () => {
-    try{
+export const sendMessageTC = (message: string) => async () => {
+    try {
         chatAPI.sendMessage(message)
-    }
-    catch (e){
+    } catch (e) {
         console.log(e)
     }
 
