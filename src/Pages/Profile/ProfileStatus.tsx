@@ -2,8 +2,8 @@ import React, {ChangeEvent, useState} from 'react';
 import styles from "./Profile.module.scss";
 import {useDispatch} from "react-redux";
 import {updateUserStatusTC} from "../../store/ProfileReducer";
-import {myIDSelector, statusSelector} from "../Common/Selectors/Selectors";
 import {useAppSelector} from "../../store/store";
+import {myIDSelector, statusSelector} from "../../components/Common/Selectors/Selectors";
 
 
 export const ProfileStatus = () => {

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import styles from "./Post.module.scss"
-import {MyProfilePhoto} from "../../../Common/MyProfilePhoto/MyProfilePhoto";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import {deleteMyPostAC} from "../../../../store/UserPostsReducer";
 import CloseIcon from "@mui/icons-material/Close";
 import {useDispatch} from "react-redux";
 import {IconButton} from "@mui/material";
+import {MyProfilePhoto} from "../../../../components/Common/MyProfilePhoto/MyProfilePhoto";
 
 export const maxLikesCount = 300;
 type MyPostsPropsType = {

@@ -1,6 +1,5 @@
 import React from 'react';
 import {useAppSelector} from "../../../store/store";
-import {profileSelector} from "../../Common/Selectors/Selectors";
 import style from "./ContactBlock.module.scss"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGithub} from "@fortawesome/free-brands-svg-icons/faGithub";
@@ -10,6 +9,7 @@ import {faFacebook} from "@fortawesome/free-brands-svg-icons/faFacebook";
 import {faFirefoxBrowser, faYoutube} from "@fortawesome/free-brands-svg-icons";
 import {faInstagram} from "@fortawesome/free-brands-svg-icons/faInstagram";
 import {faGoogle} from "@fortawesome/free-brands-svg-icons/faGoogle";
+import {profileSelector} from "../../../components/Common/Selectors/Selectors";
 
 export const ContactBlock = () => {
     const profile = useAppSelector(profileSelector);

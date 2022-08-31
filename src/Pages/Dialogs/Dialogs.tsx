@@ -3,9 +3,9 @@ import styles from "./Dialogs.module.scss"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {addMessageAC, DialogsStateType} from "../../store/DialogsReducer";
-import {TextAreaForm} from "../Common/TextAreaForm/TextAreaForm";
-import {placeholderText} from "../Common/TextAreaForm/textAreaData";
 import {useDispatch} from "react-redux";
+import { placeholderText } from "../../components/Common/TextAreaForm/textAreaData";
+import {TextAreaForm} from "../../components/Common/TextAreaForm/TextAreaForm";
 
 type DialogsPropsType = {
     DialogPage: DialogsStateType

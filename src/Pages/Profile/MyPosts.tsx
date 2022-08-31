@@ -1,8 +1,9 @@
 import React from "react";
 import {Post} from "./MyPosts/Post/Post";
 import styles from "./MyPosts.module.scss"
-import {PostType} from "../OldComponents/OldStore";
-import {TextAreaForm} from "../Common/TextAreaForm/TextAreaForm";
+import {PostType} from "../../store/ProfileReducer";
+import {TextAreaForm} from "../../components/Common/TextAreaForm/TextAreaForm";
+
 
 
 export type MyPostsPropsType = {

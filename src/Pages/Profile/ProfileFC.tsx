@@ -3,18 +3,15 @@ import styles from "./Profile.module.scss"
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {useDispatch} from "react-redux";
 import {MyPosts} from "./MyPosts";
-import {placeholderText} from "../Common/TextAreaForm/textAreaData";
+
 import {useAppSelector} from "../../store/store";
 import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
 import {addPostActionAC} from "../../store/UserPostsReducer";
 import ChatPage from "../../Pages/Chat/ChatPage";
+import {placeholderText} from "../../components/Common/TextAreaForm/textAreaData";
 
 
-type ProfilePropsType = {
-    userID: number | null
-}
-
-export const ProfileFC = React.memo((props: ProfilePropsType) => {
+export const ProfileFC = React.memo(() => {
     const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
     const profile = useAppSelector(state => state.ProfilePage.profile);
     const dispatch = useDispatch();

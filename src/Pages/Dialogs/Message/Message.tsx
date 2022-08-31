@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../Dialogs.module.scss"
-import {MyProfilePhoto} from "../../Common/MyProfilePhoto/MyProfilePhoto";
+import {MyProfilePhoto} from "../../../components/Common/MyProfilePhoto/MyProfilePhoto";
+
 
 
 export type MessageType = {

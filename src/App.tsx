@@ -3,7 +3,6 @@ import './App.scss';
 import {Route, Routes, Navigate} from "react-router-dom";
 import {useAppSelector} from "./store/store";
 import UsersContainerFC from './Pages/Users/UsersContainerFC';
-import {ProfileContainerFC} from "./components/Profile/ProfileContainerFC";
 import PhotosContainer from "./Pages/Photos/PhotosContainer";
 import {useDispatch} from "react-redux";
 import {initializeAppTC} from "./store/AuthReducer";
@@ -18,9 +17,10 @@ import {Login} from "./Pages/Login/Login";
 import {Footer} from "./Pages/Footer/Footer";
 import {EditProfile} from "./Pages/EditProfile/EditProfile";
 import {EventsContainer} from "./Pages/Events/EventsContainer";
+import {ProfileContainerFC} from "./Pages/Profile/ProfileContainerFC";
 
 
-const SuspendedDialogContainer = React.lazy(() => import("./components/Dialogs/DialogContainerFC"));
+const SuspendedDialogContainer = React.lazy(() => import("./Pages/Dialogs/DialogContainerFC"));
 
 export const PATH = {
     HOME: "/",

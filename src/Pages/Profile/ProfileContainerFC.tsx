@@ -1,11 +1,12 @@
 import React, {FC, useEffect} from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {ProfileFC} from "./ProfileFC";
-import {isLoggedInSelector} from "../Common/Selectors/Selectors";
+
 import {useAppSelector} from "../../store/store";
 import {PATH} from "../../App";
 import {getProfileTC, getUserStatusTC} from "../../store/ProfileReducer";
 import {useDispatch} from "react-redux";
+import {isLoggedInSelector} from "../../components/Common/Selectors/Selectors";
 
 
 export const ProfileContainerFC: FC = React.memo(() => {
@@ -28,7 +29,7 @@ export const ProfileContainerFC: FC = React.memo(() => {
     if (!isLoggedIn) {
         return <Navigate to={PATH.LOGIN}/>
     }
-    return <ProfileFC userID={userId}/>
+    return <ProfileFC/>
 })
 
 

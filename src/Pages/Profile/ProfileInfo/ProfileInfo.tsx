@@ -13,15 +13,17 @@ import {useAppSelector} from "../../../store/store";
 import Button from "@mui/material/Button";
 import {useDispatch} from "react-redux";
 import {setAppErrorAC} from "../../../store/AppReducer";
-import {myIDSelector} from "../../Common/Selectors/Selectors";
+
 import {useParams} from "react-router-dom";
 import {maxPictureSize} from "../../../constants";
 import {ContactBlock} from "../ContactBlock/ContactBlock";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Popover from "@mui/material/Popover";
 import {ChatBlock} from "../OnlineFriends/ChatBlock";
-import {OnlineFriendType} from "../../OldComponents/OldStore";
+
 import chatStyles from "../OnlineFriends/ChatBlock.module.scss";
+import {myIDSelector} from "../../../components/Common/Selectors/Selectors";
+import {OnlineFriendType} from "../../../store/UserPostsReducer";
 
 
 type profileInfoPropsType = {

@@ -1,11 +1,11 @@
 import React from "react";
 import {useFormik} from "formik";
 import styles from "./TextAreaForm.module.scss";
-import {MyPostsPropsType} from "../../Profile/MyPosts";
 import {maxMessageLength} from "./textAreaData";
 import {TextField} from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import IconButton from "@mui/material/IconButton";
+import { MyPostsPropsType } from "../../../Pages/Profile/MyPosts";
 
 type TexAreaPostType = MyPostsPropsType & {
     webSocketStatusDisabled?: boolean
