@@ -1,17 +1,15 @@
 import React from 'react';
-import styles from "./Photos.module.scss";
 
-import Photos from "./Photos";
+import Photos from './Photos';
+import styles from './Photos.module.scss';
 
+const PhotosContainer = () => (
+  /* const Redirect = WithAuthRedirect(Photos) */
+  <div className={styles.content}>
+    {/* <Redirect/> */}
+    <Photos />
+  </div>
+);
 
-function PhotosContainer() {
-    /*const Redirect = WithAuthRedirect(Photos)*/
-    return(
-        <div className={styles.content}>
-            {/*<Redirect/>*/}
-            <Photos/>
-        </div>
-    );
-}
-/*compose<React.ComponentType>(WithAuthRedirect)(PhotosContainer);*/
-export default PhotosContainer
+/* compose<React.ComponentType>(WithAuthRedirect)(PhotosContainer); */
+export default PhotosContainer;

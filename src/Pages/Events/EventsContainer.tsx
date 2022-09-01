@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-import {Events} from "./Events";
+import { Events } from './Events';
 
-export function EventsContainer(){
-   /* const Redirect = WithAuthRedirect(Events);*/
-    return(
-        <div>
-            {/*<Redirect/>*/}
-            <Events/>
-        </div>
-    );
-}
+export const EventsContainer: FC = () => (
+  /* const Redirect = WithAuthRedirect(Events); */
+  <div>
+    {/* <Redirect/> */}
+    <Events />
+  </div>
+);

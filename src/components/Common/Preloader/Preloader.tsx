@@ -1,13 +1,13 @@
-import React from "react"
-import styles from "./Preloader.module.scss"
+import React from 'react';
+
 import CircularProgress from '@mui/material/CircularProgress';
 
-export function Preloader (){
-    return (
-        <div className={styles.main}>
-            <div className={styles.progress}>
-                <CircularProgress size={50}/>
-            </div>
-        </div>
-    );
-}
+import styles from './Preloader.module.scss';
+
+export const Preloader = () => (
+  <div className={styles.main}>
+    <div className={styles.progress}>
+      <CircularProgress size={50} />
+    </div>
+  </div>
+);

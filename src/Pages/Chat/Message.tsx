@@ -1,35 +1,51 @@
-import {ChatMessageAPIType} from "../../api/chatAPI";
-import React from "react";
-import styles from "./Message.module.scss"
-import {useAppSelector} from "../../store/store";
-import defaultUserImage from "../../Images/defaultUserImage.jpg"
-type MessagePropsType = {
-    message: ChatMessageAPIType
-    userId: number
-}
-export const Message = React.memo(({message, userId}: MessagePropsType) => {
-    const myId = useAppSelector<number>(state => state.Auth.data.id);
+import React from 'react';
 
-    return (
-        <div className={styles.devChatMessageBlock}>
-            <div className={myId === userId ? styles.myImgAndMessage: styles.someUserImgAndMessage}>
-                {myId === userId
-                    ? <>
-                    <div className={myId === userId ? styles.myNameAndMessage : styles.someUserNameAndMessage}>
-                        <div className={styles.userName}>{message.userName}</div>
-                        <div>{message.message}</div>
-                    </div>
-                    <img style={{marginLeft: "10px"}} src={message.photo} alt={"chatUserPhoto"}/>
-                </>
-                :<>
-                    <img src={message.photo || defaultUserImage} alt={"chatUserPhoto"}/>
-                    <div className={myId === userId ? styles.myNameAndMessage : styles.someUserNameAndMessage}>
-                        <div className={styles.userName}>{message.userName}</div>
-                        <div>{message.message}</div>
-                    </div>
-                </>
-                }
+import { ChatMessageAPIType } from '../../api/chatAPI';
+import defaultUserImage from '../../Images/defaultUserImage.jpg';
+import { useAppSelector } from '../../store/store';
+
+import styles from './Message.module.scss';
+
+type MessagePropsType = {
+  message: ChatMessageAPIType;
+  userId: number;
+};
+export const Message = React.memo(({ message, userId }: MessagePropsType) => {
+  const myId = useAppSelector<number>(state => state.Auth.data.id);
+
+  return (
+    <div className={styles.devChatMessageBlock}>
+      <div
+        className={
+          myId === userId ? styles.myImgAndMessage : styles.someUserImgAndMessage
+        }
+      >
+        {myId === userId ? (
+          <>
+            <div
+              className={
+                myId === userId ? styles.myNameAndMessage : styles.someUserNameAndMessage
+              }
+            >
+              <div className={styles.userName}>{message.userName}</div>
+              <div>{message.message}</div>
             </div>
-        </div>
-    );
+            <img style={{ marginLeft: '10px' }} src={message.photo} alt="chatUserPhoto" />
+          </>
+        ) : (
+          <>
+            <img src={message.photo || defaultUserImage} alt="chatUserPhoto" />
+            <div
+              className={
+                myId === userId ? styles.myNameAndMessage : styles.someUserNameAndMessage
+              }
+            >
+              <div className={styles.userName}>{message.userName}</div>
+              <div>{message.message}</div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 });

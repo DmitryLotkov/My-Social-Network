@@ -1,40 +1,43 @@
-import React, {useEffect} from "react";
-import {useAppSelector} from "../../store/store";
+import React, { FC, useEffect } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { TextAreaForm } from '../../components/Common/TextAreaForm/TextAreaForm';
 import {
-    sendMessageTC,
-    startMessagesListeningTC,
-    StatusType,
-    stopMessagesListeningTC
-} from "../../store/chatReducer";
-import {useDispatch} from "react-redux";
-import {TextAreaForm} from "../../components/Common/TextAreaForm/TextAreaForm";
-import {Messages} from "./Messages";
+  sendMessageTC,
+  startMessagesListeningTC,
+  StatusType,
+  stopMessagesListeningTC,
+} from '../../store/chatReducer';
+import { useAppSelector } from '../../store/store';
 
-export const Chat = React.memo(() => {
+import { Messages } from './Messages';
 
-    const status = useAppSelector<StatusType>(state => state.ChatPage.status);
-    const dispatch = useDispatch();
+export const Chat: FC = React.memo(() => {
+  const status = useAppSelector<StatusType>(state => state.ChatPage.status);
+  const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(startMessagesListeningTC());
-        return () => {
-            dispatch(stopMessagesListeningTC())
-        }
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(startMessagesListeningTC());
+    return () => {
+      dispatch(stopMessagesListeningTC());
+    };
+  }, [dispatch]);
 
+  const sendMessageHandler = (message: string): (() => Promise<void>) =>
+    dispatch(sendMessageTC(message));
 
-    const sendMessageHandler = (message: string) => dispatch(sendMessageTC(message));
-
-    return (
-        <div>
-            {status === "error" && <div>Some error occurred. Please refresh the gage</div>}
-            <>
-                <Messages/>
-                <TextAreaForm webSocketStatusDisabled={status !== "ready"}
-                              placeholderText={"Press Ctrl + Enter to send message"}
-                              callBack={sendMessageHandler}/>
-            </>
-
-        </div>
-    );
+  return (
+    <div>
+      {status === 'error' && <div>Some error occurred. Please refresh the gage</div>}
+      <>
+        <Messages />
+        <TextAreaForm
+          webSocketStatusDisabled={status !== 'ready'}
+          placeholderText="Press Ctrl + Enter to send message"
+          callBack={sendMessageHandler}
+        />
+      </>
+    </div>
+  );
 });

@@ -1,37 +1,36 @@
-import React from "react";
-import styles from "./Profile.module.scss"
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {useDispatch} from "react-redux";
-import {MyPosts} from "./MyPosts";
+import React from 'react';
 
-import {useAppSelector} from "../../store/store";
-import AnyUserPosts from "./AnyUserPosts/AnyUserPosts";
-import {addPostActionAC} from "../../store/UserPostsReducer";
-import ChatPage from "../../Pages/Chat/ChatPage";
-import {placeholderText} from "../../components/Common/TextAreaForm/textAreaData";
+import { useDispatch } from 'react-redux';
 
+import { placeholderText } from '../../components/Common/TextAreaForm/textAreaData';
+import { useAppSelector } from '../../store/store';
+import { addPostActionAC } from '../../store/UserPostsReducer';
+import ChatPage from '../Chat/ChatPage';
+
+import AnyUserPosts from './AnyUserPosts/AnyUserPosts';
+import { MyPosts } from './MyPosts';
+import styles from './Profile.module.scss';
+import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 
 export const ProfileFC = React.memo(() => {
-    const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
-    const profile = useAppSelector(state => state.ProfilePage.profile);
-    const dispatch = useDispatch();
-    const addMessage = (text: string) => dispatch(addPostActionAC(text));
+  const postsData = useAppSelector(state => state.HardcodedUsers.myPostsData);
+  const profile = useAppSelector(state => state.ProfilePage.profile);
+  const dispatch = useDispatch();
+  const addMessage = (text: string) => dispatch(addPostActionAC(text));
 
-    return (
-        <div className={styles.profileWrapper}>
+  return (
+    <div className={styles.profileWrapper}>
+      <ProfileInfo profile={profile} />
 
-            <ProfileInfo profile={profile}/>
-
-            <div className={styles.allPostsBlock}>
-                <MyPosts
-                    placeholderText={placeholderText.profileAreaText}
-                    callBack={addMessage}
-                    postsData={postsData}/>
-                <AnyUserPosts/>
-                <ChatPage/>
-            </div>
-
-        </div>
-    )
-
-})
+      <div className={styles.allPostsBlock}>
+        <MyPosts
+          placeholderText={placeholderText.profileAreaText}
+          callBack={addMessage}
+          postsData={postsData}
+        />
+        <AnyUserPosts />
+        <ChatPage />
+      </div>
+    </div>
+  );
+});

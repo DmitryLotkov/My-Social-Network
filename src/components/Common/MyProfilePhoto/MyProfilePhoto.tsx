@@ -1,27 +1,42 @@
-import React from "react";
-import {useSelector} from "react-redux";
-import {useAppSelector} from "../../../store/store";
-import styles from "./MyProfilePhoto.module.scss";
-import defaultUserPhoto from "../../../Images/defaultUserImage.jpg";
-import { useNavigate } from "react-router-dom";
-import {myIDSelector} from "../Selectors/Selectors";
+import React from 'react';
 
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-export const MyProfilePhoto = React.memo(() =>{
-    const navigate = useNavigate();
-    const myPhoto = useAppSelector<string | undefined>(state => state.Auth.myProfile?.photos?.small);
-    const myLoginName = useAppSelector<string | undefined>(state => state.Auth.myProfile?.fullName);
-    const userID = useSelector(myIDSelector);
-    const navigateToMyMage = () => navigate(`/profile/${userID}`);
+import defaultUserPhoto from '../../../Images/defaultUserImage.jpg';
+import { useAppSelector } from '../../../store/store';
+import { myIDSelector } from '../Selectors/Selectors';
 
-    return (
-        <div onClick={navigateToMyMage} className={styles.myProfilePhotoWrapper}>
-            <img className={styles.mySmallPhoto} src={myPhoto || defaultUserPhoto} alt={"userPhoto"}/>
-            <div >
-                <strong>{myLoginName}</strong>
-                <div className={styles.jobDescription}>Frontend developer</div>
-            </div>
+import styles from './MyProfilePhoto.module.scss';
 
-        </div>
-    )
-})
+export const MyProfilePhoto = React.memo(() => {
+  const navigate = useNavigate();
+  const myPhoto = useAppSelector<string | undefined>(
+    state => state.Auth.myProfile?.photos?.small,
+  );
+  const myLoginName = useAppSelector<string | undefined>(
+    state => state.Auth.myProfile?.fullName,
+  );
+  const userID = useSelector(myIDSelector);
+  const navigateToMyMage = () => navigate(`/profile/${userID}`);
+
+  return (
+    <div
+      onKeyUp={navigateToMyMage}
+      tabIndex={0}
+      role="button"
+      onClick={navigateToMyMage}
+      className={styles.myProfilePhotoWrapper}
+    >
+      <img
+        className={styles.mySmallPhoto}
+        src={myPhoto || defaultUserPhoto}
+        alt="userPhoto"
+      />
+      <div>
+        <strong>{myLoginName}</strong>
+        <div className={styles.jobDescription}>Frontend developer</div>
+      </div>
+    </div>
+  );
+});

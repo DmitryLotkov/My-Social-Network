@@ -1,11 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-
-
-export function Events(){
-    return(
-        <div >
-            <div>Events</div>
-        </div>
-    );
-}
+export const Events: FC = () => (
+  <div>
+    <div>Events</div>
+  </div>
+);
