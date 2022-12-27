@@ -39,7 +39,9 @@
         "@typescript-eslint/no-use-before-define": "off",
         //"@typescript-eslint/explicit-function-return-type": ["error", {"allowExpressions": true}],
         "@typescript-eslint/explicit-function-return-type": "off",
-        "prettier/prettier": "error",
+        "prettier/prettier": ["error",{
+            "endOfLine": "auto"}
+        ],
         "react/require-default-props": "off",
         "jsx-a11y/label-has-for": "off",
         "jsx-a11y/label-has-associated-control": "off",

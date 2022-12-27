@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 
 import { Preloader } from '../Common/Preloader/Preloader';
 
-function withSuspense<T>(Component: React.ComponentType<T>) {
+function withSuspense<T>(Component: React.ComponentType & any) {
   return (props: T): ReactElement => (
     <React.Suspense fallback={<Preloader />}>
-      <Component {...props} />
+      <Component {...props}>{}</Component>
     </React.Suspense>
   );
 }

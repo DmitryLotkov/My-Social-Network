@@ -29,7 +29,7 @@ export const Chat: FC = React.memo(() => {
 
   return (
     <div>
-      {status === 'error' && <div>Some error occurred. Please refresh the gage</div>}
+      {status === 'error' && <div>Some error occurred. Please refresh the page</div>}
       <>
         <Messages />
         <TextAreaForm
