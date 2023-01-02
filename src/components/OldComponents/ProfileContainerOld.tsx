@@ -1,47 +1,39 @@
-import React from "react";
-import axios from "axios";
-import {connect} from "react-redux";
-import {AppRootStateType} from "../../store/store";
-import {setUserProfileAC, ProfileDataType} from "../../store/ProfileReducer";
-import {Dispatch} from "redux";
+import React from 'react';
 
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import { actions, ProfileDataType } from '../../store/ProfileReducer';
+import { AppRootStateType } from '../../store/store';
 
 export type ProfileContainerPropsType = {
-    setUserProfile: (data: ProfileDataType) => void
-    profile: ProfileDataType
+  setUserProfile: (data: ProfileDataType) => void;
+};
+class ProfileContainerOld extends React.Component<ProfileContainerPropsType> {
+  componentDidMount() {
+    const { setUserProfile } = this.props;
+    axios
+      .get(`https://social-network.samuraijs.com/api/1.0//profile/2`)
+      .then(response => {
+        setUserProfile(response.data);
+      });
+  }
 
-}
-class ProfileContainerOld extends React.Component<ProfileContainerPropsType>{
-
-    componentDidMount(){
-
-        axios.get(`https://social-network.samuraijs.com/api/1.0//profile/2`).then(response => {
-
-            this.props.setUserProfile(response.data);
-            }
-        )
-    }
-
-   /*render(){
+  /* render(){
        return (
            <ProfileFC userID={myUserID}/>
        )
-   }*/
+   } */
 }
-let mapStateToProps = (state: AppRootStateType) => ({
-    profile: state.ProfilePage.profile
-})
-let mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        setUserProfile: (data: ProfileDataType )=>{
-            console.log(data);
-            dispatch(setUserProfileAC(data))
-        }
-    }
-}
+const mapStateToProps = (state: AppRootStateType) => ({
+  profile: state.ProfilePage.profile,
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setUserProfile: (data: ProfileDataType) => {
+    console.log(data);
+    dispatch(actions.setUserProfileAC(data));
+  },
+});
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainerOld)
-
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainerOld);

@@ -48,8 +48,8 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
   const onlineFriends = useAppSelector<Array<OnlineFriendType>>(
     state => state.HardcodedUsers.onlineFriends,
   );
-
-  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [base64Avatar, setLocalAvatar] = useState<any>(userPhoto);
   const [fileAvatar, setFileAvatar] = useState<any>();
   const [openPopover, setOpenPopover] = useState(false);
@@ -57,7 +57,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
   const show =
     props.profile && Object.values(props.profile.contacts).every(item => item !== null);
 
-  const handleCloseModal = () => setOpen(false);
+  const handleCloseModal = () => setOpenModal(false);
   const handleClosePopover = () => setOpenPopover(false);
   const handleOpenPopover = () => setOpenPopover(true);
   const uploadPhoto = () => photoRef.current && photoRef.current.click();
@@ -95,19 +95,28 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
       );
     }
   };
-  const menuHandler = () => setOpen(true);
+  const menuHandler = () => setOpenModal(true);
   const onlineFriendsArr = onlineFriends.map(f => (
     <ChatBlock key={f.id} avatar={f.avatar} />
   ));
   return (
     <div className={styles.profileInfoWrapper}>
       <div className={styles.profilePhoto}>
-        <div className={styles.avatarWrapper}>
+        <div
+          className={styles.avatarWrapper}
+          onMouseOver={() => setOpenMenu(true)}
+          onMouseLeave={() => setOpenMenu(false)}
+          onFocus={() => undefined}
+        >
           {props.profile && (
             <img src={props.profile.photos?.large ?? defaultUserPhoto} alt="userPhoto" />
           )}
           {(userId === myId || Number.isNaN(userId)) && (
-            <button type="button" className={styles.menu} onClick={menuHandler}>
+            <button
+              type="button"
+              className={openMenu ? styles.visibleMenu : styles.hiddenMenu}
+              onClick={menuHandler}
+            >
               <p>Change photo</p>
             </button>
           )}
@@ -117,7 +126,6 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
       <div className={styles.statusBlock}>
         <div className={styles.profileName}>
           {props.profile && <strong>{props.profile.fullName}</strong>}
-          {/* <img src={smallLogo} alt="smallLogo"/> */}
           <CheckCircleOutlineIcon
             className={styles.popover}
             ref={popoverAnchor}
@@ -139,7 +147,7 @@ export const ProfileInfo = React.memo((props: profileInfoPropsType) => {
         <span className={chatStyles.Title}>Chat online</span>
         {onlineFriendsArr}
       </div>
-      <Modal open={open} onClose={handleCloseModal}>
+      <Modal open={openModal} onClose={handleCloseModal}>
         <Box sx={style}>
           <Box>
             <Box

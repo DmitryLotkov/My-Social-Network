@@ -19,11 +19,8 @@
     height: 135px;
     box-sizing: border-box;
     background-repeat: no-repeat;
-    cursor: pointer;
     width: 100%;
     display: flex;
-    /*justify-content: center;
-    align-items: center;*/
     position: relative;
     border-radius: $borderRadius;
     @media (min-width: $mobile-min-width) and (max-width: $ipad-pro-min-width) {
@@ -56,17 +53,23 @@
     }
 
 
-    .menu {
-      background: rgba(0, 0, 0, 0.50);
+    .hiddenMenu {
+      background: rgba(59, 58, 58, 0.5);
       display: none;
       position: absolute;
       width: 120px;
       height: 50px;
       top: 60px;
+      left: 20px;
       transition: 1s;
+      border: 1px solid #4b4a4a;
       border-radius: $borderRadius;
+      cursor: pointer;
     }
-
+    .visibleMenu {
+      @extend .hiddenMenu;
+      display: block;
+    }
     p {
       color: #f4f7fc;
     }

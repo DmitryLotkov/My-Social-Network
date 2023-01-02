@@ -7,26 +7,14 @@ import {
 
 import { setAppStatusAC } from './AppReducer';
 import { setMyProfileAC } from './AuthReducer';
-import { AppStoreType, AppThunkDispatch } from './store';
+import { AppStoreType, AppThunkDispatch, InferActionsTypes } from './store';
 
 // types
-enum ACTIONS_TYPE {
-  SET_PROFILE = 'PROFILE/SET-PROFILE',
-  SAVE_MY_PROFILE_PHOTO = 'PROFILE/SAVE-MY-PROFILE_PHOTO',
-  UPDATE_NEW_POST_TEXT = 'PROFILE/UPDATE-NEW-POST-TEXT',
-  SET_SOME_USER_PROFILE = 'PROFILE/SET-SOME-USER-PROFILE',
-  SET_STATUS = 'PROFILE/SET-STATUS',
-}
 
-export type ProfileActionsType =
-  | ReturnType<typeof updateNewPostTextAC>
-  | ReturnType<typeof setUserProfileAC>
-  | ReturnType<typeof savePhotoAC>
-  | ReturnType<typeof setStatusAC>;
-
-export type PostTextType = {
+export type ProfileActionsType = InferActionsTypes<typeof actions>;
+/* export type PostTextType = {
   text: string;
-};
+}; */
 export type ProfilePageType = {
   profile: ProfileDataType;
   status: string;
@@ -61,20 +49,13 @@ export type ProfileDataType = {
 };
 
 // actions
-export const updateNewPostTextAC = (text: PostTextType) =>
-  ({ type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, text } as const);
-export const setUserProfileAC = (profile: ProfileDataType) =>
-  ({
-    type: ACTIONS_TYPE.SET_SOME_USER_PROFILE,
-    profile,
-  } as const);
-export const savePhotoAC = (photos: userProfilePhotosType) =>
-  ({
-    type: ACTIONS_TYPE.SAVE_MY_PROFILE_PHOTO,
-    photos,
-  } as const);
-export const setStatusAC = (status: string) =>
-  ({ type: ACTIONS_TYPE.SET_STATUS, status } as const);
+export const actions = {
+  /* updateNewPostTextAC: (text: PostTextType) =>
+    ({ type: 'PROFILE/UPDATE-NEW-POST-TEXT', text } as const), */
+  setUserProfileAC: (profile: ProfileDataType) =>
+    ({ type: 'PROFILE/SET-SOME-USER-PROFILE', profile } as const),
+  setStatusAC: (status: string) => ({ type: 'PROFILE/SET-STATUS', status } as const),
+};
 
 const initialState: ProfilePageType = {
   status: '',
@@ -105,12 +86,10 @@ export const profileReducer = (
   action: ProfileActionsType,
 ): ProfilePageType => {
   switch (action.type) {
-    case ACTIONS_TYPE.SET_SOME_USER_PROFILE:
+    case 'PROFILE/SET-SOME-USER-PROFILE':
       return { ...state, profile: action.profile };
-    case ACTIONS_TYPE.SET_STATUS:
+    case 'PROFILE/SET-STATUS':
       return { ...state, status: action.status };
-    case ACTIONS_TYPE.SAVE_MY_PROFILE_PHOTO:
-      return { ...state, profile: { ...state.profile, photos: action.photos } };
     default:
       return state;
   }
@@ -125,7 +104,7 @@ export const getProfileTC =
       if (isMyProfile) {
         dispatch(setMyProfileAC(res.data));
       } else {
-        dispatch(setUserProfileAC(res.data));
+        dispatch(actions.setUserProfileAC(res.data));
       }
       dispatch(setAppStatusAC('succeeded'));
     } catch (error: any) {
@@ -140,7 +119,7 @@ export const getUserStatusTC =
     try {
       const res = await profileAPI.getStatus(userId);
       if (res.status === 200) {
-        dispatch(setStatusAC(res.data));
+        dispatch(actions.setStatusAC(res.data));
         dispatch(setAppStatusAC('succeeded'));
       } else {
         handleServerAppError(res.data, dispatch);
@@ -158,7 +137,7 @@ export const updateUserStatusTC =
     try {
       const res = await profileAPI.updateStatus(status);
       if (res.data.resultCode === 0) {
-        dispatch(setStatusAC(status));
+        dispatch(actions.setStatusAC(status));
         dispatch(setAppStatusAC('succeeded'));
       } else {
         handleServerAppError(res.data, dispatch);
@@ -174,7 +153,6 @@ export const uploadAvatarTC =
   async (dispatch: AppThunkDispatch, getState: () => AppStoreType) => {
     dispatch(setAppStatusAC('loading'));
     const userId = getState().Auth.data.id;
-
     try {
       const res = await profileAPI.uploadAvatar(photoFile);
       if (res.data.resultCode === 0) {
